@@ -19,10 +19,10 @@ export const CargoDetail = () => {
       <div className="py-[30px] border-y-2 border-y-gray-400">
         <div className="p-3 border border-gray-400 font-medium text-gray-500">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-2xl">СРОЧНО</h3>
+            <h3 className="text-xl">СРОЧНО</h3>
             <button>II</button>
           </div>
-          <p>
+          <p className="text-lg">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
             ipsam magnam voluptatibus nesciunt doloremque est? Fugiat, animi
             quae repellendus odit, nihil corrupti possimus ullam eum commodi,
@@ -57,6 +57,9 @@ export const CargoDetail = () => {
           </div>
         </div>
       </div>
+      <button className="block w-3/4 sm:w-3/5 mx-auto p-4 bg-[#041e90] rounded-xl font-semibold text-sm sm:text-xl text-white mt-8">
+        Показать контакты
+      </button>
     </section>
   );
 };
