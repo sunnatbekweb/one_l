@@ -5,7 +5,7 @@ import { FaRotate, FaSliders } from "react-icons/fa6";
 
 export const PopularRoutes = () => {
   return (
-    <section className="my-[15px] mx-auto">
+    <section className="py-[15px] mx-auto">
       <div>
         <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
           Самые популярные направления
@@ -37,7 +37,7 @@ export const PopularRoutes = () => {
               <select
                 name="sort_by"
                 id="sort_by"
-                className="px-2.5 py-1.5 cursor-pointer border-2 border-[#ccc] rounded-md"
+                className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
               >
                 <option value="0">Времени создания</option>
                 <option value="1">Дате загрузки</option>
@@ -47,7 +47,9 @@ export const PopularRoutes = () => {
           </div>
         </div>
         <div>
-          <PopularCard />
+          {[...Array(5)].map((_, index) => (
+            <PopularCard key={index} />
+          ))}
           <Pagination />
         </div>
       </div>

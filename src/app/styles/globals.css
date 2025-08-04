@@ -21,6 +21,7 @@
 
 main {
   width: 95%;
+  min-height: calc(100vh - 160px);
   padding: 15px 0;
   margin: 0 auto;
 }
@@ -47,6 +48,6 @@ button {
 
 @media screen and (min-width: 1024px) {
   .main-container {
-    width: 50%;
+    width: 790px;
   }
 }

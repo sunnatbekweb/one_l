@@ -1,0 +1,54 @@
+.headerBookmark {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgba(44, 44, 44, 0.873);
+}
+
+
+
+/* bookmark-empty.module.css */
+.bookmarkEmptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  height: 70vh;
+  box-sizing: border-box;
+}
+
+.bookmarkEmptyImage {
+  max-width: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.bookmarkEmptyTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.bookmarkEmptyDescription {
+  font-size: 1rem;
+  max-width: 450px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.goHomeButton {
+  background-color: #0077cc;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goHomeButton:hover {
+  background-color: #005fa3;
+}
