@@ -3,7 +3,7 @@ import { SearchForm } from "@/entities/SearchForm";
 
 export const SearchContainer = () => {
   return (
-    <section className="w-full py-[5px] mx-auto bg-white p-[18px] rounded-xl shadow-lg border-2 border-[#ccc]">
+    <section className="w-full mx-auto bg-white p-[18px] rounded-xl shadow-lg border-2 border-[#ccc]">
       <div>
         <SearchTab />
         <SearchForm />

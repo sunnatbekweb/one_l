@@ -1,4 +1,4 @@
-import { PopularCard } from "@/entities/PopularCard";
+import { CargoCard } from "@/entities/CargoCard";
 // import { BookmarkEmpty } from "@/widgets/BookmarkEmpty";
 
 export const Bookmarks = () => {
@@ -12,7 +12,7 @@ export const Bookmarks = () => {
           {/* <BookmarkEmpty/> */}
           <div className="mt-7">
             {[...Array(5)].map((_, index) => (
-              <PopularCard key={index} />
+              <CargoCard index={index} key={index} />
             ))}
           </div>
         </div>

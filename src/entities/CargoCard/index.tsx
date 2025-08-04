@@ -8,8 +8,9 @@ import {
 } from "react-icons/fa";
 import styles from "./style.module.css";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-export const PopularCard = () => {
+export const CargoCard = ({ index }: { index: number }) => {
   return (
     <div className={styles["search-result"]}>
       <div className={styles["search-result__header"]}>
@@ -66,9 +67,12 @@ export const PopularCard = () => {
           📦 Овощи и фрукты
         </span>
         <div>
-          <button className={`${styles["search-result__more"]} btn-more`}>
+          <Link
+            to={`/cargo/${index}`}
+            className={`${styles["search-result__more"]} btn-more`}
+          >
             Подробнее
-          </button>
+          </Link>
         </div>
         <span className={styles["search-result__company"]}>
           <span className={styles["check-cont"]}>

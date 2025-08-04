@@ -1,4 +1,4 @@
-import { PopularCard } from "@/entities/PopularCard";
+import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/pagination";
 import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
@@ -48,7 +48,7 @@ export const PopularRoutes = () => {
         </div>
         <div>
           {[...Array(5)].map((_, index) => (
-            <PopularCard key={index} />
+            <CargoCard index={index} key={index} />
           ))}
           <Pagination />
         </div>
