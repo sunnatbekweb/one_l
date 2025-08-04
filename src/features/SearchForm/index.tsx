@@ -14,7 +14,7 @@ export const SearchForm = () => {
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
       />
-      <button className="mt-4 p-5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300">
+      <button className="mt-4 px-5 py-3.5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300">
         Поиск
       </button>
     </form>

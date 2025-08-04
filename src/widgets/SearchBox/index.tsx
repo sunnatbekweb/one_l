@@ -1,4 +1,4 @@
-import { SearchTab } from "@/entities/ui/SearchTab";
+import { SearchTab } from "@/entities/SearchTab";
 import { SearchForm } from "@/features/SearchForm";
 
 export const SearchContainer = () => {
