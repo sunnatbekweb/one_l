@@ -1,12 +1,12 @@
 import { SearchContainer } from "@/widgets/SearchBox";
-import { PopularRoutes } from "@/widgets/PopularRoutes";
+import { Cargo } from "@/widgets/Cargo";
 import { SearchInfo } from "@/widgets/SearchInfo";
 
 export const Search = () => {
   return (
     <>
       <SearchContainer />
-      <PopularRoutes />
+      <Cargo />
       <SearchInfo />
     </>
   );

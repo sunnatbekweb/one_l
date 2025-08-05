@@ -6,9 +6,9 @@ import {
   FaTruck,
   FaWeightHanging,
 } from "react-icons/fa";
-import styles from "./style.module.css";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import styles from "./style.module.css";
 
 export const CargoCard = ({ index }: { index: number }) => {
   return (

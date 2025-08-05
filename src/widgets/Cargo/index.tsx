@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
 import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/pagination";
 import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
+import { fetchCargos } from "./model/cargoSlice";
 
-export const PopularRoutes = () => {
+export const Cargo = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { cargos, isloading, error } = useSelector(
+    (state: RootState) => state.cargos
+  );
+  const [currentPage, setCurrentPage] = useState(0);
+  console.log(cargos, isloading, error);
+
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+    dispatch(fetchCargos(currentPage + 1));
+  };
+
+  useEffect(() => {
+    dispatch(fetchCargos(currentPage + 1));
+  }, [dispatch]);
+
   return (
     <section className="py-[15px] mx-auto">
       <div>
@@ -46,11 +66,30 @@ export const PopularRoutes = () => {
             </div>
           </div>
         </div>
-        <div>
-          {[...Array(5)].map((_, index) => (
-            <CargoCard index={index} key={index} />
-          ))}
-          <Pagination />
+        <div className={``}>
+          {isloading ? (
+            <div className="text-center">Загрузка...</div>
+          ) : error ? (
+            <div className="text-red-500 text-center">{error}</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {cargos.results.length > 0 ? (
+                cargos.results.map((cargo) => (
+                  <div>
+                    <CargoCard key={cargo.id} index={cargo.id} />
+                    <Pagination
+                      pageCount={cargos.count}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-full text-center">
+                  Нет грузов для отображения
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>
