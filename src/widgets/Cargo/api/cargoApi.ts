@@ -1,3 +1,4 @@
+import type { Cargo } from "@/shared/types/cargo";
 import axios from "axios";
 
 export interface Cargos {
@@ -5,17 +6,6 @@ export interface Cargos {
   next: string | null;
   previous: string | null;
   results: Cargo[];
-}
-
-interface Cargo {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  created_at: string;
-  cargo_type: string;
-  weight: number;
-  volume: number;
 }
 
 export const getCargos = async (page: number) => {

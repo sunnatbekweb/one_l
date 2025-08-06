@@ -13,16 +13,15 @@ export const Cargo = () => {
     (state: RootState) => state.cargos
   );
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(cargos, isloading, error);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
-    dispatch(fetchCargos(currentPage + 1));
+    dispatch(fetchCargos(selected + 1));
   };
 
   useEffect(() => {
     dispatch(fetchCargos(currentPage + 1));
-  }, [dispatch]);
+  }, [currentPage, dispatch]);
 
   return (
     <section className="py-[15px] mx-auto">
@@ -66,23 +65,24 @@ export const Cargo = () => {
             </div>
           </div>
         </div>
-        <div className={``}>
+        <div>
           {isloading ? (
             <div className="text-center">Загрузка...</div>
           ) : error ? (
             <div className="text-red-500 text-center">{error}</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1">
               {cargos.results.length > 0 ? (
-                cargos.results.map((cargo) => (
-                  <div>
-                    <CargoCard key={cargo.id} index={cargo.id} />
-                    <Pagination
-                      pageCount={cargos.count}
-                      onPageChange={handlePageChange}
-                    />
-                  </div>
-                ))
+                <div>
+                  {cargos.results.map((cargo) => (
+                    <CargoCard key={cargo.id} cargo={cargo}/>
+                  ))}
+                  <Pagination
+                    pageCount={cargos.count}
+                    onPageChange={handlePageChange}
+                    forcePage={currentPage}
+                  />
+                </div>
               ) : (
                 <div className="col-span-full text-center">
                   Нет грузов для отображения

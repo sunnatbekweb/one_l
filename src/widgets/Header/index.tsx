@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaAngleDown, FaBars, FaGlobe } from "react-icons/fa";
 import styles from "./style.module.css";
+import { LangDropdown } from "./ui/LangDropdown";
 
 export const Header = () => {
   return (
@@ -20,7 +21,7 @@ export const Header = () => {
             </div>
           </div>
 
-          <div>
+          <div className="relative">
             <div className={`${styles.setLang}`}>
               <div className={`${styles.headerSelect}`}>
                 <FaGlobe fontSize={20} />
@@ -28,6 +29,7 @@ export const Header = () => {
               </div>
               <div className={`${styles.setLangCont}`}></div>
             </div>
+            <LangDropdown />
           </div>
 
           <div>

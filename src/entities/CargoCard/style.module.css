@@ -144,6 +144,10 @@
   display: flex;
   gap: 5px;
   font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* сколько строк */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .search-result__company {

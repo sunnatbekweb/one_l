@@ -4,9 +4,14 @@ import styles from "./style.module.css";
 interface PaginationProps {
   pageCount: number;
   onPageChange: (selectedItem: { selected: number }) => void;
+  forcePage: number;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({ pageCount, onPageChange }) => {
+export const Pagination: React.FC<PaginationProps> = ({
+  pageCount,
+  onPageChange,
+  forcePage,
+}) => {
   return (
     <div className="w-full max-w-xl mx-auto">
       <ReactPaginate
@@ -16,7 +21,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pageCount, onPageChange 
         onPageChange={onPageChange}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
-        pageCount={pageCount}
+        pageCount={Math.ceil(pageCount / 5)}
+        forcePage={forcePage}
         containerClassName={styles.pagination}
         pageClassName={styles.page}
         activeClassName={styles.active}

@@ -8,9 +8,18 @@ import {
 } from "react-icons/fa";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import type { Cargo } from "@/shared/types/cargo";
+import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import styles from "./style.module.css";
 
-export const CargoCard = ({ index }: { index: number }) => {
+interface CargoCardProps {
+  cargo: Cargo;
+}
+
+export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
+  const formattedDate = formatCustomDate(cargo.date);
+  const relativeCreatedAt = formatRelativeDate(cargo.created_at);
+
   return (
     <div className={styles["search-result"]}>
       <div className={styles["search-result__header"]}>
@@ -19,56 +28,72 @@ export const CargoCard = ({ index }: { index: number }) => {
           <FaRegBell fontSize={18} />
           <span className="flex items-center gap-x-1">
             <FaRegClock fontSize={18} />
-            <span className="text-sm text-gray-500">2 минуты назад</span>
+            <span className="text-sm text-gray-500">{relativeCreatedAt}</span>
           </span>
         </span>
-        <span className={styles["search-result__price"]}>5 000 USD</span>
+        <span className={styles["search-result__price"]}>
+          {cargo.price.toLocaleString()} USD
+        </span>
       </div>
 
       <div className={styles["search-result__route"]}>
         <div className={styles["search-result__city"]}>
-          <span className={`fi fi-ru fis ${styles["flag-icon"]}`}></span>
-          <strong>Москва</strong>
+          <span
+            className={`fi fi-${cargo.origin_country.toLowerCase()} fis ${
+              styles["flag-icon"]
+            }`}
+          ></span>
+          <strong>{cargo.origin}</strong>
         </div>
         <div className={styles["search-result__distance"]}>
           <span>📍</span>
           <div className={styles["distance-center"]}>
             <div className={styles["distance-center-line"]}></div>
-            <div>3 200 км</div>
+            <div>{cargo.km.toLocaleString()} км</div>
           </div>
           <span>📍</span>
         </div>
         <div className={styles["search-result__city"]}>
-          <span className={`fi fi-uz fis ${styles["flag-icon"]}`}></span>
-          <strong>Ташкент</strong>
+          <span
+            className={`fi fi-${cargo.destination_country.toLowerCase()} fis ${
+              styles["flag-icon"]
+            }`}
+          ></span>
+          <strong>{cargo.destination}</strong>
         </div>
       </div>
 
       <div className={styles["search-result__details"]}>
         <div className="flex items-center gap-x-1">
-          <FaRegCalendarAlt /> <span>02.08.2025</span>
+          <FaRegCalendarAlt />
+          <span>{formattedDate}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaTruck /> <span>Реф</span>
+          <FaTruck />
+          <span>{cargo.car_type}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaWeightHanging /> <span>20 т</span>
+          <FaWeightHanging />
+          <span>{cargo.weight} т</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaMaximize /> <span>82 м³</span>
+          <FaMaximize />
+          <span>{cargo.volume} м³</span>
         </div>
-        <div className="flex items-center gap-x-1">
-          <FaTemperatureHalf /> <span>+4°C</span>
-        </div>
+        {/* Температура — если у тебя есть поле для неё */}
+        {cargo.temperature && (
+          <div className="flex items-center gap-x-1">
+            <FaTemperatureHalf />
+            <span>{cargo.temperature}°C</span>
+          </div>
+        )}
       </div>
 
       <div className={styles["search-result__footer"]}>
-        <span className={styles["search-result__cargo"]}>
-          📦 Овощи и фрукты
-        </span>
+        <span className={styles["search-result__cargo"]}>📦 {cargo.type}</span>
         <div>
           <Link
-            to={`/cargo/${index}`}
+            to={`/cargo/${cargo.id}`}
             className={`${styles["search-result__more"]} btn-more`}
           >
             Подробнее
@@ -76,7 +101,7 @@ export const CargoCard = ({ index }: { index: number }) => {
         </div>
         <span className={styles["search-result__company"]}>
           <span className={styles["check-cont"]}>
-            ООО "Пример-Логистика"
+            {cargo.username}
             <img
               src="https://img.icons8.com/?size=512&id=2sZ0sdlG9kWP&format=png"
               alt="image-icon"
