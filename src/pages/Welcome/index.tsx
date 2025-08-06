@@ -1,10 +1,15 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const Welcome = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  if (params.id && params.lang) navigate("/");
+  useEffect(() => {
+    if (params.id && params.lang) {
+      navigate("/");
+    }
+  }, [params.id, params.lang, navigate]);
 
   return (
     <div>
