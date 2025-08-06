@@ -1,7 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const Welcome = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
+  if (params.id && params.lang) navigate("/");
 
   return (
     <div>
