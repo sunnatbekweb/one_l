@@ -14,7 +14,7 @@ export const Welcome = () => {
 
       const timer = setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
