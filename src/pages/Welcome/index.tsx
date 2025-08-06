@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+import { WelcomePageContent } from "@/widgets/WelcomeContent";
 
 export const Welcome = () => {
   const params = useParams();
@@ -11,18 +13,8 @@ export const Welcome = () => {
     }
   }, [params.id, params.lang, navigate]);
 
-  return (
-    <div>
-      <div>
-        <span>
-          User id: <strong>{params.id}</strong>
-        </span>
-      </div>
-      <div>
-        <span>
-          Language: <strong>{params.lang}</strong>
-        </span>
-      </div>
-    </div>
-  );
+  Cookies.set("user_id", params.id ?? "");
+  Cookies.set("lang", params.lang ?? "ru");
+
+  return <WelcomePageContent />;
 };
