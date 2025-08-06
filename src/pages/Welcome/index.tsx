@@ -9,12 +9,16 @@ export const Welcome = () => {
 
   useEffect(() => {
     if (params.id && params.lang) {
-      navigate("/");
+      Cookies.set("user_id", params.id ?? "");
+      Cookies.set("lang", params.lang ?? "ru");
+
+      const timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+
+      return () => clearTimeout(timer);
     }
   }, [params.id, params.lang, navigate]);
-
-  Cookies.set("user_id", params.id ?? "");
-  Cookies.set("lang", params.lang ?? "ru");
 
   return <WelcomePageContent />;
 };
