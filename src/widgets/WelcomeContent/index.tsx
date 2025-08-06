@@ -4,7 +4,7 @@ export const WelcomePageContent = () => {
       <div className="flex items-center gap-x-5">
         <div className="w-18 h-18">
           <img
-            src="../../../public/favicon.ico"
+            src="/favicon.ico"
             className="w-full h-full object-contain"
             alt="Logo icon"
           />

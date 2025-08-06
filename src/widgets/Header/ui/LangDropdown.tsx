@@ -20,7 +20,7 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
       onMouseLeave={onClose}
       className={`absolute top-[70%] left-1/2 -translate-x-1/2 overflow-hidden ${
         isOpen ? "visible opacity-100" : "invisible opacity-0"
-      } transition-all duration-300 w-16 bg-white text-black border border-gray-500 rounded p-1 shadow-xl`}
+      } transition-all duration-300 w-16 bg-white border border-gray-500 rounded p-1 shadow-xl`}
     >
       <button
         onClick={() => handleLanguageChange("ru")}
@@ -30,8 +30,8 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
           <img src={flag_ru} alt="Flag RU" className="w-full object-cover" />
         </div>
         <span
-          className={`font-medium text-sm ${
-            i18n.language === "ru" && "text-[#041e90]"
+          className={`font-semibold text-sm ${
+            i18n.language === "ru" ? "text-[#041e90]" : "text-gray-600"
           }`}
         >
           RU
@@ -45,8 +45,8 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
           <img src={flag_uz} alt="Flag UZ" className="w-full object-cover" />
         </div>
         <span
-          className={`font-medium text-sm ${
-            i18n.language === "uz-Latn" && "text-[#041e90]"
+          className={`font-semibold text-sm ${
+            i18n.language === "uz-Latn" ? "text-[#041e90]" : "text-gray-600"
           }`}
         >
           UZ
@@ -64,8 +64,8 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
           />
         </div>
         <span
-          className={`font-medium text-sm ${
-            i18n.language === "uz-Cyrl" && "text-[#041e90]"
+          className={`font-semibold text-sm ${
+            i18n.language === "uz-Cyrl" ? "text-[#041e90]" : "text-gray-600"
           }`}
         >
           УЗ
