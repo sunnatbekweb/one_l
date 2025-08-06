@@ -3,6 +3,7 @@ import App from "../App";
 import { Search } from "@/pages/Search";
 import { Bookmarks } from "@/pages/Bookmarks";
 import { CargoDetail } from "@/pages/CargoDetail";
+import { Welcome } from "@/pages/Welcome";
 
 export const router = createBrowserRouter([
   {
@@ -22,5 +23,9 @@ export const router = createBrowserRouter([
         element: <CargoDetail />,
       },
     ],
+  },
+  {
+    path: "/:id/:lang/",
+    element: <Welcome />,
   },
 ]);

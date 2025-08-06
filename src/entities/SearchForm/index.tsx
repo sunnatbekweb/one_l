@@ -1,28 +1,69 @@
+import { useForm } from "react-hook-form";
 import { InputPrimary } from "@/shared/ui/Input";
 import { FaLocationDot } from "react-icons/fa6";
 import { Select } from "@/shared/ui/select";
 import { FaTruck } from "react-icons/fa";
-import { ExchangeButton } from "@/features/InputValueExchange/ui/ExchangeButton";
+import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
+
+interface FormValues {
+  origin: string;
+  destination: string;
+  transport_type: string;
+}
 
 export const SearchForm = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: {
+      origin: "",
+      destination: "",
+      transport_type: "",
+    },
+  });
+
+  const onSubmit = (data: FormValues) => {
+    console.log("Form submitted:", data);
+  };
+
+  const valueChange = () => {
+    const currentOrigin = getValues("origin");
+    const currentDestination = getValues("destination");
+    setValue("origin", currentDestination);
+    setValue("destination", currentOrigin);
+  };
+
   return (
-    <form className="flex flex-col gap-y-4">
+    <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="relative flex flex-col gap-y-4">
         <InputPrimary
           type="text"
           placeholder="Откуда"
           icon={<FaLocationDot />}
+          {...register("origin")}
         />
-        <ExchangeButton />
-        <InputPrimary type="text" placeholder="Куда" icon={<FaLocationDot />} />
+        <ValueExchangeButton valueChange={valueChange} />
+        <InputPrimary
+          type="text"
+          placeholder="Куда"
+          icon={<FaLocationDot />}
+          {...register("destination")}
+        />
       </div>
+
       <Select
-        name="transport_type"
-        id="transport_type"
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
+        {...register("transport_type")}
       />
-      <button className="mt-4 px-5 py-3.5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300">
+
+      <button
+        type="submit"
+        className="mt-4 px-5 py-3.5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300"
+      >
         Поиск
       </button>
     </form>
