@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { cargoReducer } from "@/widgets/Cargo/model/cargoSlice";
-import { bookmarkReducer } from "@/widgets/BookmarkList/model/bookmarkSlice";
+import { bookmarkReducer } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { statisticsReducer } from "@/widgets/SearchInfo/model/statisticsSlice";
-import { createBookmarkReducer } from "@/entities/CargoCard/model/bookmarkSlice";
+import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmarkSlice";
 
 export const store = configureStore({
   reducer: {

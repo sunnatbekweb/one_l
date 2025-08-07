@@ -1,4 +1,5 @@
 import {
+  FaBookmark,
   FaRegBell,
   FaRegBookmark,
   FaRegCalendarAlt,
@@ -9,12 +10,14 @@ import {
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { Cargo } from "@/shared/types/cargo";
-import type { AppDispatch } from "@/app/store";
-import { sendBookmarkCargo } from "./model/bookmarkSlice";
+import type { AppDispatch, RootState } from "@/app/store";
+import { sendBookmarkCargo } from "../../widgets/BookmarkList/model/postBookmarkSlice";
 import Cookies from "js-cookie";
 import styles from "./style.module.css";
+import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
+import { removeBookmarkCargo } from "@/widgets/BookmarkList/model/deleteBookmarkSlice";
 
 interface CargoCardProps {
   cargo: Cargo;
@@ -24,14 +27,32 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const formattedDate = formatCustomDate(cargo.date);
   const relativeCreatedAt = formatRelativeDate(cargo.created_at);
+  const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
+
+  const isBookmarked = bookmarks.some(
+    (bookmark) => bookmark.cargo.id === cargo.id
+  );
 
   const handleBookmark = () => {
-    dispatch(
-      sendBookmarkCargo({
-        user: Number(Cookies.get("user_id")),
-        cargo: cargo.id,
-      })
-    );
+    const userId = Number(Cookies.get("user_id"));
+
+    if (isBookmarked) {
+      const bookmark = bookmarks.find((b) => b.cargo.id === cargo.id);
+      if (bookmark) {
+        dispatch(removeBookmarkCargo(bookmark.id)).then(() => {
+          dispatch(fetchBookmarks());
+        });
+      }
+    } else {
+      dispatch(
+        sendBookmarkCargo({
+          user: userId,
+          cargo: cargo.id,
+        })
+      ).then(() => {
+        dispatch(fetchBookmarks());
+      });
+    }
   };
 
   return (
@@ -39,7 +60,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
       <div className={styles["search-result__header"]}>
         <span className={styles["search-result__time"]}>
           <button onClick={() => handleBookmark()}>
-            <FaRegBookmark fontSize={18} />
+            {isBookmarked ? (
+              <FaBookmark fontSize={18} />
+            ) : (
+              <FaRegBookmark fontSize={18} />
+            )}
           </button>
           <FaRegBell fontSize={18} />
           <span className="flex items-center gap-x-1">

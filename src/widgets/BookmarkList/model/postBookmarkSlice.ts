@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postBookmarkCargo } from "../api/bookmarkApi";
+import { postBookmarkCargo } from "../api/postBookmarkApi";
+import { fetchBookmarks } from "./getBookmarkSlice";
 
 interface FavouriteState {
   isLoading: boolean;
@@ -15,7 +16,10 @@ const initialState: FavouriteState = {
 
 export const sendBookmarkCargo = createAsyncThunk(
   "favourite/sendBookmarkCargo",
-  postBookmarkCargo
+  async (payload: { user: number; cargo: number }, { dispatch }) => {
+    await postBookmarkCargo(payload);
+    dispatch(fetchBookmarks());
+  }
 );
 
 const bookmarkSlice = createSlice({

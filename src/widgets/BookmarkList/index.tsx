@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { fetchBookmarks } from "./model/bookmarkSlice";
+import { fetchBookmarks } from "./model/getBookmarkSlice";
 import { CargoCard } from "@/entities/CargoCard";
 import { BookmarkEmpty } from "@/entities/BookmarkEmpty";
 

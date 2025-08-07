@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { bookmarkState } from "@/shared/types/sliceState";
-import { getBookmarks } from "../api/bookmarkApi";
+import { getBookmarks } from "../api/getBookmarkApi";
 
 const initialState: bookmarkState = {
   bookmarks: [],
