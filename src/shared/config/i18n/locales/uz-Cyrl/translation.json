@@ -18,5 +18,9 @@
     "line2": "ЮК ВА ТРАНСПОРТ ҚИДИРИШ УЧУН"
   },
   "popular_directions": "Энг машҳур йўналишлар",
-  "bookmarks_title": "Saqlanganlar"
+  "statistics": {
+    "users": "Фойдаланувчилар",
+    "cargos": "Юклар"
+  },
+  "bookmarks_title": "Сакланганлар"
 }

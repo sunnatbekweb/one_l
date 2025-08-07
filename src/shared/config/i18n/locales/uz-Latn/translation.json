@@ -18,5 +18,9 @@
     "line2": "YUK VA TRANSPORT QIDIRISH UCHUN"
   },
   "popular_directions": "Eng mashhur yo‘nalishlar",
-  "bookmarks_title": ""
+  "statistics": {
+    "users": "Foydalanuvchilar",
+    "cargos": "Yuklar"
+  },
+  "bookmarks_title": "Saqlanganlar"
 }
