@@ -18,11 +18,15 @@
     "line2": "ДЛЯ ПОИСКА ГРУЗОВ И ТРАНСПОРТА"
   },
   "popular_directions": "Самые популярные направления",
-
   "statistics": {
     "users": "Пользователей",
     "cargos": "Грузов"
   },
-
-  "bookmarks_title": "Избранные"
+  "nav": {
+    "search": "Поиск",
+    "bookmarks": "Избранные",
+    "add": "Добавить",
+    "notifications": "Уведомление",
+    "applications": "Заявки"
+  }
 }

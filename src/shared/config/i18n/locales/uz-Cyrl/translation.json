@@ -22,5 +22,11 @@
     "users": "Фойдаланувчилар",
     "cargos": "Юклар"
   },
-  "bookmarks_title": "Сакланганлар"
+  "nav": {
+    "search": "Қидириш",
+    "bookmarks": "Сакланганлар",
+    "add": "Қўшиш",
+    "notifications": "Билдиришномалар",
+    "applications": "Аризалар"
+  }
 }

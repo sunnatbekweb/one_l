@@ -22,5 +22,11 @@
     "users": "Foydalanuvchilar",
     "cargos": "Yuklar"
   },
-  "bookmarks_title": "Saqlanganlar"
+  "nav": {
+    "search": "Qidirish",
+    "bookmarks": "Saqlanganlar",
+    "add": "Qo‘shish",
+    "notifications": "Bildirishnomalar",
+    "applications": "Arizalar"
+  }
 }

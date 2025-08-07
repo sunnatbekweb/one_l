@@ -24,6 +24,7 @@ export const Cargo = () => {
 
   useEffect(() => {
     dispatch(fetchCargos(currentPage + 1));
+    Cookies.set("current_page", String(currentPage));
   }, [currentPage, dispatch]);
 
   return (
