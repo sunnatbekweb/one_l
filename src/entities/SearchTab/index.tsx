@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 export const SearchTab = () => {
   const [activeTab, setActiveTab] = useState("cargo");
-  const { t } = useTranslation();
+  const { t } = useTranslation("");
 
   return (
     <div className="w-3/5 p-1 mx-auto mb-6 bg-[#ccc] rounded-4xl relative font-medium">
@@ -11,7 +11,7 @@ export const SearchTab = () => {
         onClick={() => setActiveTab("cargo")}
         className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-10"
       >
-        {t("cargo")}
+        {t("tab.cargo")}
       </button>
       <div
         className={`w-1/2 h-[calc(100%-8px)] p-3 bg-white rounded-4xl absolute top-1 text-center transition-transform duration-300`}
@@ -27,7 +27,7 @@ export const SearchTab = () => {
         onClick={() => setActiveTab("transport")}
         className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-10"
       >
-        {t("transport")}
+        {t("tab.transport")}
       </button>
     </div>
   );

@@ -1,12 +1,5 @@
-import type { Cargo } from "@/shared/types/cargo";
+import type { Cargos } from "@/shared/types/apiType";
 import axios from "axios";
-
-export interface Cargos {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Cargo[];
-}
 
 export const getCargos = async (page: number) => {
   const response = await axios.get<Cargos>(

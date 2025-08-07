@@ -1,4 +1,22 @@
 {
-      "cargo": "Yuk",
-      "transport": "Transport"
+  "tab": {
+    "cargo": "Yuk",
+    "transport": "Transport"
+  },
+  "form": {
+    "from": "Qayerdan",
+    "to": "Qayerga",
+    "search": "Qidirish"
+  },
+  "info_title_top": {
+    "line1": "ZAMONAVIY LOGISTIKA UCHUN",
+    "line2": "RAQAMLI PLATFORMA"
+  },
+  "info_description": "Yuk yoki transportni bir necha bosishda toping va tashishni real vaqtda nazorat qiling!",
+  "bottom_title": {
+    "line1": "1LOG - YAGONА EKOTIZIM",
+    "line2": "YUK VA TRANSPORT QIDIRISH UCHUN"
+  },
+  "popular_directions": "Eng mashhur yo‘nalishlar",
+  "bookmarks_title": ""
 }

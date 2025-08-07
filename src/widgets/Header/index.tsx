@@ -1,12 +1,14 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { FaAngleDown, FaBars, FaGlobe } from "react-icons/fa";
-import styles from "./style.module.css";
 import { LangDropdown } from "./ui/LangDropdown";
-import { useState } from "react";
+import styles from "./style.module.css";
 
 export const Header = () => {
   const [openLangDropdown, setOpenLangDropdown] = useState(false);
   const closeDropdown = () => setOpenLangDropdown(false);
+  const { i18n } = useTranslation();
 
   return (
     <header className={`${styles.headerSection}`}>
@@ -33,7 +35,7 @@ export const Header = () => {
             >
               <div className={`${styles.headerSelect}`}>
                 <FaGlobe fontSize={20} />
-                <span>RU</span>
+                <span className="uppercase">{i18n.language.slice(0, 2)}</span>
               </div>
               <div className={`${styles.setLangCont}`}></div>
               <LangDropdown isOpen={openLangDropdown} onClose={closeDropdown} />

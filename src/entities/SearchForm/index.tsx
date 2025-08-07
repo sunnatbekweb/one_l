@@ -4,6 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Select } from "@/shared/ui/select";
 import { FaTruck } from "react-icons/fa";
 import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   origin: string;
@@ -12,18 +13,15 @@ interface FormValues {
 }
 
 export const SearchForm = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-  } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, getValues } = useForm<FormValues>({
     defaultValues: {
       origin: "",
       destination: "",
       transport_type: "",
     },
   });
+
+  const { t } = useTranslation("");
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
@@ -41,14 +39,14 @@ export const SearchForm = () => {
       <div className="relative flex flex-col gap-y-4">
         <InputPrimary
           type="text"
-          placeholder="Откуда"
+          placeholder={t("form.from")}
           icon={<FaLocationDot />}
           {...register("origin")}
         />
         <ValueExchangeButton valueChange={valueChange} />
         <InputPrimary
           type="text"
-          placeholder="Куда"
+          placeholder={t("form.to")}
           icon={<FaLocationDot />}
           {...register("destination")}
         />
@@ -64,7 +62,7 @@ export const SearchForm = () => {
         type="submit"
         className="mt-4 px-5 py-3.5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300"
       >
-        Поиск
+        {t("form.search")}
       </button>
     </form>
   );

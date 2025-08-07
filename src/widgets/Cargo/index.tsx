@@ -6,6 +6,7 @@ import { Pagination } from "@/shared/ui/pagination";
 import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { fetchCargos } from "./model/cargoSlice";
+import { useTranslation } from "react-i18next";
 
 export const Cargo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,7 @@ export const Cargo = () => {
     (state: RootState) => state.cargos
   );
   const [currentPage, setCurrentPage] = useState(0);
+  const { t } = useTranslation();
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
@@ -27,7 +29,7 @@ export const Cargo = () => {
     <section className="py-[15px] mx-auto">
       <div>
         <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
-          Самые популярные направления
+          {t("popular_directions")}
         </h2>
         <div className="my-5">
           <p>
@@ -75,7 +77,7 @@ export const Cargo = () => {
               {cargos.results.length > 0 ? (
                 <div>
                   {cargos.results.map((cargo) => (
-                    <CargoCard key={cargo.id} cargo={cargo}/>
+                    <CargoCard key={cargo.id} cargo={cargo} />
                   ))}
                   <Pagination
                     pageCount={cargos.count}
