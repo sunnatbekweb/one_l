@@ -6,15 +6,15 @@ import {
   FaTruck,
   FaWeightHanging,
 } from "react-icons/fa";
+import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import type { Cargo } from "@/shared/types/cargo";
-import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
-import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
+import type { Cargo } from "@/shared/types/cargo";
 import type { AppDispatch } from "@/app/store";
 import { sendBookmarkCargo } from "./model/bookmarkSlice";
 import Cookies from "js-cookie";
+import styles from "./style.module.css";
 
 interface CargoCardProps {
   cargo: Cargo;

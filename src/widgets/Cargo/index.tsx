@@ -7,6 +7,7 @@ import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { fetchCargos } from "./model/cargoSlice";
 import { useTranslation } from "react-i18next";
+import Cookies from "js-cookie";
 
 export const Cargo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +34,8 @@ export const Cargo = () => {
         </h2>
         <div className="my-5">
           <p>
-            Найдено <strong>0</strong> Грузов по вашему запросу:
+            Найдено <strong>0</strong> Грузов по вашему запросу: User id:{" "}
+            <strong>{Cookies.get("user_id")}</strong>
           </p>
           <div>
             <div className="flex items-center justify-between ">
