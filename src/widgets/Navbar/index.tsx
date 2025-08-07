@@ -2,8 +2,11 @@ import { NavLink } from "react-router-dom";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 
 export const Navbar = () => {
+  const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
   return (
     <nav className={`${styles.navbarSection}`}>
       <div className={`container ${styles.navbarCont}`}>
@@ -17,9 +20,11 @@ export const Navbar = () => {
         >
           <FaBookmark fontSize={20} />
           <span>Избранные</span>
-          <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
-            0
-          </strong>
+          {bookmarks.length > 0 && (
+            <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
+              {bookmarks.length}
+            </strong>
+          )}
         </NavLink>
         <NavLink to={"/add"} className={`${styles.navMenuBtn} navbarMenuBtn`}>
           <FaCirclePlus fontSize={20} />
@@ -31,7 +36,7 @@ export const Navbar = () => {
         >
           <FaBell fontSize={20} />
           <span>Уведомление</span>
-        </NavLink>
+        </NavLink>``
         <NavLink
           to={"applications/"}
           className={`${styles.navMenuBtn} navbarMenuBtn`}
