@@ -1,18 +1,16 @@
 import { useEffect } from "react";
-import type { AppDispatch, RootState } from "@/app/store";
 import { useTranslation } from "react-i18next";
-import { StatisticsCard } from "@/entities/StatisticsCard";
+import type { AppDispatch, RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
+import { StatisticsCard } from "@/entities/StatisticsCard";
 import { fetchStatistics } from "./model/statisticsSlice";
+import { FaUsers } from "react-icons/fa";
+import { BsFillBoxFill } from "react-icons/bs";
 
 export const SearchInfo = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { statistics, isloading, error } = useSelector(
-    (state: RootState) => state.statistics
-  );
-
-  console.log(statistics, isloading, error);
+  const { statistics } = useSelector((state: RootState) => state.statistics);
 
   useEffect(() => {
     dispatch(fetchStatistics());
@@ -32,10 +30,12 @@ export const SearchInfo = () => {
           <StatisticsCard
             users={statistics.users}
             text={t("statistics.users")}
+            icon={<FaUsers fontSize={35} />}
           />
           <StatisticsCard
             cargos={statistics.cargos}
             text={t("statistics.cargos")}
+            icon={<BsFillBoxFill fontSize={35} />}
           />
         </div>
         <h2 className="flex flex-col gap-y-2.5 font-bold text-3xl">
