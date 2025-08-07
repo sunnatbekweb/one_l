@@ -35,7 +35,11 @@ export const Header = () => {
             >
               <div className={`${styles.headerSelect}`}>
                 <FaGlobe fontSize={20} />
-                <span className="uppercase">{i18n.language.slice(0, 2)}</span>
+                <span className="uppercase">
+                  {i18n.language === "uz-Cyrl"
+                    ? "УЗ"
+                    : i18n.language.slice(0, 2)}
+                </span>
               </div>
               <div className={`${styles.setLangCont}`}></div>
               <LangDropdown isOpen={openLangDropdown} onClose={closeDropdown} />

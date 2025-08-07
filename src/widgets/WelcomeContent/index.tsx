@@ -1,3 +1,5 @@
+import styles from "./loader.module.css";
+
 export const WelcomePageContent = () => {
   return (
     <main className="main-container h-screen grid place-content-center">
@@ -10,6 +12,9 @@ export const WelcomePageContent = () => {
           />
         </div>
         <h1 className="font-bold text-6xl italic">1LOG</h1>
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-[10%]">
+          <span className={styles.loader}></span>
+        </div>
       </div>
     </main>
   );

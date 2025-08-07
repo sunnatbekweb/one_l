@@ -12,11 +12,11 @@ export const Welcome = () => {
       Cookies.set("user_id", params.id ?? "");
       Cookies.set("lang", params.lang ?? "ru");
 
-      const timer = setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      // const timer = setTimeout(() => {
+      //   navigate("/");
+      // }, 3000);
 
-      return () => clearTimeout(timer);
+      // return () => clearTimeout(timer);
     }
   }, [params.id, params.lang, navigate]);
 
