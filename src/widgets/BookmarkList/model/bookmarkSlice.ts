@@ -1,14 +1,9 @@
-import type { cargoState } from "@/shared/types/sliceState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { bookmarkState } from "@/shared/types/sliceState";
 import { getBookmarks } from "../api/bookmarkApi";
 
-const initialState: cargoState = {
-  cargos: {
-    count: 0,
-    next: null,
-    previous: null,
-    results: [],
-  },
+const initialState: bookmarkState = {
+  bookmarks: [],
   isloading: false,
   error: null,
 };
@@ -30,7 +25,7 @@ const bookmarkSlice = createSlice({
       })
       .addCase(fetchBookmarks.fulfilled, (state, action) => {
         state.isloading = false;
-        state.cargos = action.payload;
+        state.bookmarks = action.payload;
       })
       .addCase(fetchBookmarks.rejected, (state, action) => {
         state.isloading = false;

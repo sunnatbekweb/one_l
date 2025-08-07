@@ -5,10 +5,9 @@ import { fetchBookmarks } from "./model/bookmarkSlice";
 import { CargoCard } from "@/entities/CargoCard";
 import { BookmarkEmpty } from "@/entities/BookmarkEmpty";
 
-
 export const BookmarkList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { cargos, isloading, error } = useSelector(
+  const { bookmarks, isloading, error } = useSelector(
     (state: RootState) => state.bookmarks
   );
 
@@ -24,10 +23,10 @@ export const BookmarkList = () => {
         <div className="text-red-500 text-center">{error}</div>
       ) : (
         <div className="grid grid-cols-1">
-          {cargos?.results?.length > 0 ? (
+          {bookmarks?.length > 0 ? (
             <div>
-              {cargos?.results?.map((cargo) => (
-                <CargoCard key={cargo.id} cargo={cargo} />
+              {bookmarks.map((bookmark) => (
+                <CargoCard key={bookmark.id} cargo={bookmark.cargo} />
               ))}
             </div>
           ) : (
