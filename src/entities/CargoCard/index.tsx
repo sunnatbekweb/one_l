@@ -11,20 +11,36 @@ import { Link } from "react-router-dom";
 import type { Cargo } from "@/shared/types/cargo";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import styles from "./style.module.css";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/app/store";
+import { sendBookmarkCargo } from "./model/bookmarkSlice";
+import Cookies from "js-cookie";
 
 interface CargoCardProps {
   cargo: Cargo;
 }
 
 export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const formattedDate = formatCustomDate(cargo.date);
   const relativeCreatedAt = formatRelativeDate(cargo.created_at);
+
+  const handleBookmark = () => {
+    dispatch(
+      sendBookmarkCargo({
+        user: Number(Cookies.get("user_id")),
+        cargo: cargo.id,
+      })
+    );
+  };
 
   return (
     <div className={styles["search-result"]}>
       <div className={styles["search-result__header"]}>
         <span className={styles["search-result__time"]}>
-          <FaRegBookmark fontSize={18} />
+          <button onClick={() => handleBookmark()}>
+            <FaRegBookmark fontSize={18} />
+          </button>
           <FaRegBell fontSize={18} />
           <span className="flex items-center gap-x-1">
             <FaRegClock fontSize={18} />
