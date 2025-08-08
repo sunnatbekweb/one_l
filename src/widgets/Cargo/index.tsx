@@ -7,6 +7,8 @@ import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { fetchCargos } from "./model/cargoSlice";
 import { useTranslation } from "react-i18next";
+import { SearchFilter } from "@/shared/ui/Modal/searchFilter";
+import { SearchSettings } from "@/shared/ui/Modal/SearchSettings";
 
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
@@ -19,6 +21,8 @@ export const Cargo = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [currentPage, setCurrentPage] = useState(0);
+  const [filterModal, setFilterModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
@@ -40,7 +44,7 @@ export const Cargo = () => {
           <div className="my-5">
             <p>
               Найдено <strong>{cargos.results.length}</strong> Грузов по вашему
-              запросу:
+              запросу
             </p>
             <div>
               <div className="flex items-center justify-between ">
@@ -49,14 +53,31 @@ export const Cargo = () => {
                   <span>Обновить</span>
                 </button>
                 <div className="flex items-center">
-                  <button className="flex flex-col gap-y-1.5 items-center p-2.5">
+                  {/* Filter modal */}
+                  <button
+                    onClick={() => setFilterModal(true)}
+                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                  >
                     <FaFilter fontSize={20} />
                     <span className="font-medium text-sm">Фильтры</span>
                   </button>
-                  <button className="flex flex-col gap-y-1.5 items-center p-2.5">
+                  <SearchFilter
+                    modal={filterModal}
+                    close={() => setFilterModal(false)}
+                  />
+
+                  {/* Settings modal */}
+                  <button
+                    onClick={() => setSettingsModal(true)}
+                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                  >
                     <FaSliders fontSize={20} />
                     <span className="font-medium text-sm">Параметры</span>
                   </button>
+                  <SearchSettings
+                    modal={settingsModal}
+                    close={() => setSettingsModal(false)}
+                  />
                 </div>
               </div>
               <div className="flex items-center justify-between">

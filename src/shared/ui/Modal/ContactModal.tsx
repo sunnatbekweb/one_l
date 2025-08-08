@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
 import { updateCargoActions } from "@/widgets/Cargo/model/cargoPatchSlice";
@@ -8,8 +9,8 @@ import {
   FaTelegram,
   FaUser,
 } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import "./modal.css";
 
 interface ModalProps {
   modal: boolean;
@@ -27,25 +28,8 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
 Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
 
   return (
-    <div
-      onClick={close}
-      className={`
-        fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.6)] flex items-center justify-center
-        transition-opacity duration-300
-        ${
-          modal
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }
-      `}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={`
-          bg-white text-black rounded-xl w-[95%] sm:w-[95%] md:w-[75%] lg:w-1/2 p-5 sm:p-10  transition-transform duration-300
-          ${modal ? "scale-100" : "scale-50"}
-        `}
-      >
+    <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
+      <div onClick={(e) => e.stopPropagation()} className="modal_content">
         <h2 className="text-center font-semibold text-2xl">Контакты</h2>
         <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:px-6 mt-4 sm:mt-8 mb-2">
           <div className="flex items-center gap-x-4">

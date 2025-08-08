@@ -4,7 +4,7 @@
   bottom: 0;
   background-color: rgba(151, 150, 150, 0.682);
   backdrop-filter: blur(5px);
-  z-index: 200;
+  z-index: 1;
 }
 
 .navbarCont {
