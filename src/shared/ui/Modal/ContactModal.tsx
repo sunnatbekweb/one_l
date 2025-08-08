@@ -1,4 +1,6 @@
+import type { AppDispatch } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
+import { updateCargoActions } from "@/widgets/Cargo/model/cargoPatchSlice";
 import {
   FaGlobe,
   FaPhoneSquareAlt,
@@ -6,6 +8,7 @@ import {
   FaTelegram,
   FaUser,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 interface ModalProps {
@@ -15,6 +18,14 @@ interface ModalProps {
 }
 
 export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
+
+Смотри сам: https://t.me/one_log_bot
+
+Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
+
   return (
     <div
       onClick={close}
@@ -53,6 +64,14 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 to={cargo?.source || "https://t.me/"}
                 target="_blank"
                 className="text-sky-700"
+                onClick={() =>
+                  dispatch(
+                    updateCargoActions({
+                      cargoId: 4000,
+                      data: { chatted_telegram: true },
+                    })
+                  )
+                }
               >
                 Telegram
               </Link>
@@ -64,8 +83,12 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <Link
               to={`tel:${cargo?.phone}`}
-              target="_blank"
               className="text-sm sm:text-xl"
+              onClick={() =>
+                dispatch(
+                  updateCargoActions({ cargoId: 4000, data: { phoned: true } })
+                )
+              }
             >
               {cargo?.phone}
             </Link>
@@ -89,7 +112,17 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             <div>
               <FaShareSquare className="text-xl sm:text-3xl" />
             </div>
-            <span className="text-sm sm:text-xl">Поделиться с другом</span>
+            <Link
+              to={`https://t.me/share/url?text=${encodeURIComponent(message)}`}
+              onClick={() =>
+                dispatch(
+                  updateCargoActions({ cargoId: 4000, data: { shared: true } })
+                )
+              }
+              className="text-sm sm:text-xl"
+            >
+              Поделиться с другом
+            </Link>
           </div>
         </div>
       </div>

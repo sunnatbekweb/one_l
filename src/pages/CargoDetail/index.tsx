@@ -19,7 +19,7 @@ export const CargoDetail = () => {
 
   useEffect(() => {
     dispatch(fetchCargo(Number(id)));
-  }, [dispatch]);
+  }, [dispatch, isModalOpen]);
 
   return (
     <section className="py-[15px]">
