@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCargos, type CargoParams } from "../api/cargoApi";
+import { getCargos } from "../api/cargoApi";
 import type { cargoState } from "@/shared/types/sliceState";
+import type { CargoParams } from "@/shared/types/cargo";
 
 const initialState: cargoState = {
   cargos: {

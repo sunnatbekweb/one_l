@@ -7,7 +7,7 @@ import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { fetchCargos } from "./model/cargoSlice";
 import { useTranslation } from "react-i18next";
-import { SearchFilter } from "@/shared/ui/Modal/searchFilter";
+import { SearchFilter } from "@/shared/ui/Modal/SearchFilterModal";
 import { SearchSettings } from "@/shared/ui/Modal/SearchSettings";
 
 export const Cargo = () => {

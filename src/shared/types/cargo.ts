@@ -26,3 +26,14 @@ export interface Cargo {
   whatsup: string | null;
   info: string;
 }
+
+export type CargoParams = {
+  page?: number;
+  type?: string;
+  origin?: string;
+  destination?: string;
+  created_at?: string;
+  date?: string;
+  weight?: string;
+  volume?: string;
+};
