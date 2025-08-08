@@ -1,14 +1,21 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useTranslation } from "react-i18next";
+import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
-import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    dispatch(fetchBookmarks());
+  }, [dispatch]);
 
   return (
     <nav className={`${styles.navbarSection}`}>

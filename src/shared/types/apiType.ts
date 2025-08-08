@@ -6,3 +6,9 @@ export interface Cargos {
   previous: string | null;
   results: Cargo[];
 }
+
+export interface CargoType {
+  type: string | number | undefined;
+}
+
+

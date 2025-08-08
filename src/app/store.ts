@@ -3,6 +3,7 @@ import { cargoReducer } from "@/widgets/Cargo/model/cargoSlice";
 import { bookmarkReducer } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { statisticsReducer } from "@/widgets/SearchInfo/model/statisticsSlice";
 import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmarkSlice";
+import { typeReducer } from "@/entities/SearchForm/model/cargoTypeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     bookmarks: bookmarkReducer,
     statistics: statisticsReducer,
     bookmark: createBookmarkReducer,
+    types: typeReducer,
   },
 });
 

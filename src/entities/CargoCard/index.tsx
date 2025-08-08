@@ -83,7 +83,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             className={`fi fi-${cargo.origin_country.toLowerCase()} fis ${
               styles["flag-icon"]
             }`}
-          ></span>
+          >🚩</span>
           <strong>{cargo.origin}</strong>
         </div>
         <div className={styles["search-result__distance"]}>
@@ -99,7 +99,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             className={`fi fi-${cargo.destination_country.toLowerCase()} fis ${
               styles["flag-icon"]
             }`}
-          ></span>
+          >🚩</span>
           <strong>{cargo.destination}</strong>
         </div>
       </div>

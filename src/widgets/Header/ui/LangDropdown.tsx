@@ -31,7 +31,7 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         </div>
         <span
           className={`font-semibold text-sm ${
-            i18n.language === "ru" ? "text-[#041e90]" : "text-gray-600"
+            i18n.language === "ru" ? "text-blue-900" : "text-gray-600"
           }`}
         >
           RU

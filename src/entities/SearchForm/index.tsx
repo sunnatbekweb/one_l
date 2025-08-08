@@ -5,6 +5,10 @@ import { Select } from "@/shared/ui/select";
 import { FaTruck } from "react-icons/fa";
 import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useEffect } from "react";
+import { fetchCargoType } from "./model/cargoTypeSlice";
 
 interface FormValues {
   origin: string;
@@ -13,6 +17,8 @@ interface FormValues {
 }
 
 export const SearchForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { type } = useSelector((state: RootState) => state.types);
   const { register, handleSubmit, setValue, getValues } = useForm<FormValues>({
     defaultValues: {
       origin: "",
@@ -33,6 +39,10 @@ export const SearchForm = () => {
     setValue("origin", currentDestination);
     setValue("destination", currentOrigin);
   };
+
+  useEffect(() => {
+    dispatch(fetchCargoType());
+  }, [dispatch]);
 
   return (
     <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -55,6 +65,7 @@ export const SearchForm = () => {
       <Select
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
+        types={type}
         {...register("transport_type")}
       />
 
