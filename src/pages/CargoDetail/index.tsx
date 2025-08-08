@@ -12,17 +12,16 @@ export const CargoDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { cargos } = useSelector((state: RootState) => state.cargos);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const cargo = cargos.results.find((cargo) => cargo.id === Number(id));
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (cargos.results.length === 0) {
-      dispatch(fetchCargos(Number(Cookies.get("current_page")) + 1));
+      dispatch(fetchCargos({ page: Number(Cookies.get("current_page")) + 1 }));
     }
   }, [dispatch, cargos.results.length]);
-
-  const cargo = cargos.results.find((cargo) => cargo.id === Number(id));
 
   return (
     <section className="py-[15px]">

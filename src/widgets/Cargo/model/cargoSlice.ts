@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCargos } from "../api/cargoApi";
+import { getCargos, type CargoParams } from "../api/cargoApi";
 import type { cargoState } from "@/shared/types/sliceState";
 
 const initialState: cargoState = {
@@ -13,7 +13,11 @@ const initialState: cargoState = {
   error: null,
 };
 
-export const fetchCargos = createAsyncThunk("cargos/fetchCargos", getCargos);
+export const fetchCargos = createAsyncThunk(
+  "cargos/fetchCargos",
+  async (params: CargoParams) => await getCargos(params)
+);
+
 
 const cargosSlice = createSlice({
   name: "cargos",

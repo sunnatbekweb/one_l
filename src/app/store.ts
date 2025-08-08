@@ -4,6 +4,7 @@ import { bookmarkReducer } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { statisticsReducer } from "@/widgets/SearchInfo/model/statisticsSlice";
 import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmarkSlice";
 import { typeReducer } from "@/entities/SearchForm/model/cargoTypeSlice";
+import { filterReducer } from "@/features/filters/model/filterSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     statistics: statisticsReducer,
     bookmark: createBookmarkReducer,
     types: typeReducer,
+    filters: filterReducer,
   },
 });
 

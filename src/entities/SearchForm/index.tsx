@@ -1,19 +1,20 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { InputPrimary } from "@/shared/ui/Input";
-import { FaLocationDot } from "react-icons/fa6";
-import { Select } from "@/shared/ui/select";
-import { FaTruck } from "react-icons/fa";
-import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { useEffect } from "react";
 import { fetchCargoType } from "./model/cargoTypeSlice";
+import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
+import { setFilters } from "@/features/filters/model/filterSlice";
+import { Select } from "@/shared/ui/select";
+import { InputPrimary } from "@/shared/ui/Input";
+import { FaTruck } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 interface FormValues {
   origin: string;
   destination: string;
-  transport_type: string;
+  type: string;
 }
 
 export const SearchForm = () => {
@@ -23,14 +24,14 @@ export const SearchForm = () => {
     defaultValues: {
       origin: "",
       destination: "",
-      transport_type: "",
+      type: "",
     },
   });
 
-  const { t } = useTranslation("");
+  const { t } = useTranslation();
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form submitted:", data);
+    dispatch(setFilters(data));
   };
 
   const valueChange = () => {
@@ -66,7 +67,7 @@ export const SearchForm = () => {
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
         types={type}
-        {...register("transport_type")}
+        {...register("type")}
       />
 
       <button

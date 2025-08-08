@@ -10,66 +10,73 @@ import { useTranslation } from "react-i18next";
 import Cookies from "js-cookie";
 
 export const Cargo = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const filters = useSelector((state: RootState) => state.filters);
+  const isFilterActive =
+    filters.origin !== "" || filters.destination !== "" || filters.type !== "";
   const { cargos, isloading, error } = useSelector(
     (state: RootState) => state.cargos
   );
-  const [currentPage, setCurrentPage] = useState(0);
+
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
-    dispatch(fetchCargos(selected + 1));
+    dispatch(fetchCargos({ page: selected + 1, ...filters }));
   };
 
   useEffect(() => {
-    dispatch(fetchCargos(currentPage + 1));
-    Cookies.set("current_page", String(currentPage));
-  }, [currentPage, dispatch]);
+    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+    Cookies.set("current_page", String(currentPage + 1));
+  }, [currentPage, filters]);
 
   return (
     <section className="py-[15px] mx-auto">
       <div>
-        <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
-          {t("popular_directions")}
-        </h2>
-        <div className="my-5">
-          <p>
-            Найдено <strong>0</strong> Грузов по вашему запросу: User id:{" "}
-            <strong>{Cookies.get("user_id")}</strong>
-          </p>
-          <div>
-            <div className="flex items-center justify-between ">
-              <button className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium">
-                <FaRotate />
-                <span>Обновить</span>
-              </button>
-              <div className="flex items-center">
-                <button className="flex flex-col gap-y-1.5 items-center p-2.5">
-                  <FaFilter fontSize={20} />
-                  <span className="font-medium text-sm">Фильтры</span>
+        {!isFilterActive ? (
+          <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
+            {t("popular_directions")}
+          </h2>
+        ) : (
+          <div className="my-5">
+            <p>
+              Найдено <strong>{cargos.results.length}</strong> Грузов по вашему
+              запросу: User id: <strong>{Cookies.get("user_id")}</strong>
+            </p>
+            <div>
+              <div className="flex items-center justify-between ">
+                <button className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium">
+                  <FaRotate />
+                  <span>Обновить</span>
                 </button>
-                <button className="flex flex-col gap-y-1.5 items-center p-2.5">
-                  <FaSliders fontSize={20} />
-                  <span className="font-medium text-sm">Параметры</span>
-                </button>
+                <div className="flex items-center">
+                  <button className="flex flex-col gap-y-1.5 items-center p-2.5">
+                    <FaFilter fontSize={20} />
+                    <span className="font-medium text-sm">Фильтры</span>
+                  </button>
+                  <button className="flex flex-col gap-y-1.5 items-center p-2.5">
+                    <FaSliders fontSize={20} />
+                    <span className="font-medium text-sm">Параметры</span>
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>Упорядочить по</div>
+
+                <select
+                  name="sort_by"
+                  id="sort_by"
+                  className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
+                >
+                  <option value="0">Времени создания</option>
+                  <option value="1">Дате загрузки</option>
+                  <option value="2">Стоимости</option>
+                </select>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div>Упорядочить по</div>
-
-              <select
-                name="sort_by"
-                id="sort_by"
-                className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
-              >
-                <option value="0">Времени создания</option>
-                <option value="1">Дате загрузки</option>
-                <option value="2">Стоимости</option>
-              </select>
-            </div>
           </div>
-        </div>
+        )}
         <div>
           {isloading ? (
             <div className="text-center">Загрузка...</div>

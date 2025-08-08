@@ -19,7 +19,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         >
           <option value="">Все типы Груза</option>
           {types.map((t, index) => (
-            <option key={index} value="1">
+            <option key={index} value={t.type}>
               {t.type}
             </option>
           ))}
