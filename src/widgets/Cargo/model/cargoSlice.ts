@@ -18,7 +18,6 @@ export const fetchCargos = createAsyncThunk(
   async (params: CargoParams) => await getCargos(params)
 );
 
-
 const cargosSlice = createSlice({
   name: "cargos",
   initialState,

@@ -1,4 +1,3 @@
-// src/features/Cargo/api/cargoApi.ts
 import type { Cargos } from "@/shared/types/apiType";
 import axios from "axios";
 
@@ -20,5 +19,13 @@ export const getCargos = async (params: CargoParams) => {
   const response = await axios.get<Cargos>(
     `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/cargos/?${query.toString()}`
   );
+  return response.data;
+};
+
+export const getCargoById = async (id: number) => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/cargo/${id}/`
+  );
+
   return response.data;
 };

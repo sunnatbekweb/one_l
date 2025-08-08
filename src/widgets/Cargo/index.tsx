@@ -7,7 +7,6 @@ import { FaFilter } from "react-icons/fa";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { fetchCargos } from "./model/cargoSlice";
 import { useTranslation } from "react-i18next";
-import Cookies from "js-cookie";
 
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
@@ -28,7 +27,6 @@ export const Cargo = () => {
 
   useEffect(() => {
     dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
-    Cookies.set("current_page", String(currentPage + 1));
   }, [currentPage, filters]);
 
   return (
@@ -42,7 +40,7 @@ export const Cargo = () => {
           <div className="my-5">
             <p>
               Найдено <strong>{cargos.results.length}</strong> Грузов по вашему
-              запросу: User id: <strong>{Cookies.get("user_id")}</strong>
+              запросу:
             </p>
             <div>
               <div className="flex items-center justify-between ">

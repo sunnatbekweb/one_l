@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 interface ModalProps {
   modal: boolean;
   close: () => void;
-  cargo: Cargo | undefined;
+  cargo: Cargo | null;
 }
 
 export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
