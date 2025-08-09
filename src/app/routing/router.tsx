@@ -3,6 +3,9 @@ import App from "../App";
 import { Search } from "@/pages/Search";
 import { Bookmarks } from "@/pages/Bookmarks";
 import { CargoDetail } from "@/pages/CargoDetail";
+import { Add } from "@/pages/Add";
+import { Notifications } from "@/pages/Notifications";
+import { Applications } from "@/pages/Applications";
 import { Welcome } from "@/pages/Welcome";
 
 export const router = createBrowserRouter([
@@ -21,6 +24,18 @@ export const router = createBrowserRouter([
       {
         path: "/cargo/:id",
         element: <CargoDetail />,
+      },
+      {
+        path: "/add",
+        element: <Add />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "/applications",
+        element: <Applications />,
       },
     ],
   },

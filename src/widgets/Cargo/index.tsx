@@ -29,6 +29,10 @@ export const Cargo = () => {
     dispatch(fetchCargos({ page: selected + 1, ...filters }));
   };
 
+  const handleUpdate = () => {
+    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+  };
+
   useEffect(() => {
     dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
   }, [currentPage, filters]);
@@ -48,7 +52,11 @@ export const Cargo = () => {
             </p>
             <div>
               <div className="flex items-center justify-between ">
-                <button className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium">
+                <button
+                  onClick={handleUpdate}
+                  disabled={isloading}
+                  className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
+                >
                   <FaRotate />
                   <span>Обновить</span>
                 </button>

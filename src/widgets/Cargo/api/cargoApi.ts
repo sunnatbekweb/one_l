@@ -1,5 +1,6 @@
 import type { Cargos } from "@/shared/types/apiType";
 import type { CargoParams } from "@/shared/types/cargo";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 
 export const getCargos = async (params: CargoParams) => {
@@ -15,16 +16,13 @@ export const getCargos = async (params: CargoParams) => {
   if (params.volume) query.append("volume", params.volume);
 
   const response = await axios.get<Cargos>(
-    `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/cargos/?${query.toString()}`
+    `${baseUrl}/cargos/?${query.toString()}`
   );
   return response.data;
 };
 
-
 export const getCargoById = async (id: number) => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/cargo/${id}/`
-  );
+  const response = await axios.get(`${baseUrl}/cargo/${id}/`);
 
   return response.data;
 };

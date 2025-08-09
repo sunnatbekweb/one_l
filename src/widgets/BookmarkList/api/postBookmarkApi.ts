@@ -1,3 +1,4 @@
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 
 interface FavouritePayload {
@@ -6,9 +7,6 @@ interface FavouritePayload {
 }
 
 export const postBookmarkCargo = async (data: FavouritePayload) => {
-  const response = await axios.post(
-    `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/user/favourite/`,
-    data
-  );
+  const response = await axios.post(`${baseUrl}/user/favourite/`, data);
   return response.data;
 };

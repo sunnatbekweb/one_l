@@ -1,3 +1,4 @@
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 
 export type UpdateData = {
@@ -20,7 +21,7 @@ export const patchCargoActions = async (cargoId: number, data: UpdateData) => {
 
   try {
     const response = await axios.patch(
-      `https://1log.uz/ru/api/v1/cargo/${cargoId}/`,
+      `${baseUrl}/cargo/${cargoId}/`,
       { [field]: value },
       {
         headers: {

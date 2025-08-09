@@ -1,12 +1,11 @@
-import axios from "axios";
-import Cookies from "js-cookie";
 import type { Bookmark } from "@/shared/types/sliceState";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const getBookmarks = async () => {
   const response = await axios.get<Bookmark[]>(
-    `${
-      import.meta.env.VITE_BACKEND_URL
-    }/ru/api/v1/user/favourites/${Cookies.get("user_id")}/`
+    `${baseUrl}/user/favourites/${Cookies.get("user_id")}/`
   );
   return response.data;
 };

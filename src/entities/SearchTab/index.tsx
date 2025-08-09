@@ -9,7 +9,7 @@ export const SearchTab = () => {
     <div className="w-3/5 p-1 mx-auto mb-6 bg-[#ccc] rounded-4xl relative font-medium">
       <button
         onClick={() => setActiveTab("cargo")}
-        className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-10"
+        className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-[1]"
       >
         {t("tab.cargo")}
       </button>
@@ -25,7 +25,7 @@ export const SearchTab = () => {
 
       <button
         onClick={() => setActiveTab("transport")}
-        className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-10"
+        className="w-1/2 p-1.5 sm:p-3 text-sm sm:text-base cursor-pointer relative z-[1]"
       >
         {t("tab.transport")}
       </button>

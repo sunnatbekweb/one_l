@@ -1,8 +1,7 @@
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 
 export const getStatistics = async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/ru/api/v1/user/statistics/`
-  );
+  const response = await axios.get(`${baseUrl}/user/statistics/`);
   return response.data;
 };
