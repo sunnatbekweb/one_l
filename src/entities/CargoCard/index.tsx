@@ -1,14 +1,15 @@
 import React from "react";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
-import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { sendBookmarkCargo } from "@/widgets/BookmarkList/model/postBookmarkSlice";
 import { removeBookmarkCargo } from "@/widgets/BookmarkList/model/deleteBookmarkSlice";
-import type { AppDispatch, RootState } from "@/app/store";
+import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
 import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import {
 	FaBookmark,
 	FaRegBell,
@@ -19,7 +20,6 @@ import {
 	FaWeightHanging
 } from "react-icons/fa";
 import styles from "./style.module.css";
-import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
 
 interface CargoCardProps {
 	cargo: Cargo;
@@ -86,12 +86,16 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 				<div className={styles["search-result__city"]}>
 					{originFlag?.flags?.png && (
 						<img
-							className="w-10 h-full object-cover"
+							className="w-5 sm:w-10 h-full object-cover"
 							src={originFlag.flags.png}
 							alt={originFlag.flags.alt}
 						/>
 					)}
-					<strong>{cargo?.origin}</strong>
+					<strong className={"text-xs sm:text-base"}>
+						{cargo?.origin?.length > 8
+							? cargo?.origin.slice(0, 8) + "..."
+							: cargo?.origin}
+					</strong>
 				</div>
 				<div className={styles["search-result__distance"]}>
 					<span>📍</span>
@@ -104,12 +108,16 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 				<div className={styles["search-result__city"]}>
 					{destinationFlag?.flags?.png && (
 						<img
-							className="w-10 h-full object-cover"
+							className="w-5 sm:w-10 h-full object-cover"
 							src={destinationFlag.flags.png}
 							alt={destinationFlag.flags.alt}
 						/>
 					)}
-					<strong>{cargo?.destination}</strong>
+					<strong className={"text-xs sm:text-base"}>
+						{cargo?.destination?.length > 8
+							? cargo?.destination.slice(0, 8)
+							: cargo?.destination}
+					</strong>
 				</div>
 			</div>
 
@@ -130,7 +138,6 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 					<FaMaximize />
 					<span>{cargo?.volume} м³</span>
 				</div>
-				{/* Температура — если у тебя есть поле для неё */}
 				{cargo?.temperature && (
 					<div className="flex items-center gap-x-1">
 						<FaTemperatureHalf />
@@ -158,7 +165,6 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 							className="inst-icon"
 						/>
 					</span>
-					<span>logistics (10.0)</span>
 				</span>
 			</div>
 		</div>
