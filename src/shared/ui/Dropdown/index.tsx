@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Country } from "@/shared/types/apiType.ts";
 import styles from "./style.module.css";
 
@@ -24,6 +24,7 @@ export const CountriesDropdown = React.forwardRef<
 		ref
 	) => {
 		const [isOpen, setIsOpen] = useState(false);
+		const [searchTerm, setSearchTerm] = useState(value);
 		const containerRef = useRef<HTMLDivElement>(null);
 
 		// Закрытие при клике вне
@@ -41,10 +42,20 @@ export const CountriesDropdown = React.forwardRef<
 				document.removeEventListener("mousedown", handleClickOutside);
 		}, []);
 
-		// Фильтруем страны по введённому значению
-		const filteredCountries = countries.filter(c =>
-			c.name.common.toLowerCase().includes(value.toLowerCase())
-		);
+		// Дебаунс поиска (300мс)
+		useEffect(() => {
+			const timeoutId = setTimeout(() => {
+				onChange(searchTerm);
+			}, 300);
+			return () => clearTimeout(timeoutId);
+		}, [searchTerm]);
+
+		// Мемоизация фильтрации
+		const filteredCountries = useMemo(() => {
+			return countries.filter(c =>
+				c.name.common.toLowerCase().includes(value.toLowerCase())
+			);
+		}, [countries, value]);
 
 		return (
 			<div className={styles["dropdown-container"]} ref={containerRef}>
@@ -53,7 +64,7 @@ export const CountriesDropdown = React.forwardRef<
 						<img
 							src={selectedCountry.flags.svg}
 							alt={selectedCountry.flags.alt}
-							style={{ width: 40, height: 20, objectFit: "cover" }}
+							style={{ width: 30, height: 20, objectFit: "cover" }}
 						/>
 					) : (
 						icon
@@ -63,10 +74,10 @@ export const CountriesDropdown = React.forwardRef<
 				<input
 					ref={ref}
 					{...props}
-					value={value}
+					value={searchTerm}
 					className={styles["input"]}
 					onFocus={() => setIsOpen(true)}
-					onChange={e => onChange(e.target.value)}
+					onChange={e => setSearchTerm(e.target.value)}
 				/>
 
 				{isOpen && (

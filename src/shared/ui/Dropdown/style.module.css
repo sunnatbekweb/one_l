@@ -6,7 +6,7 @@
 	position: absolute;
 	top: 50%;
 	left: 16px;
-	width: 40px;
+	width: 30px;
 	transform: translateY(-50%);
 	color: #8e8d8d;
 	font-size: 20px;
@@ -65,7 +65,7 @@
 }
 
 .image-container {
-	width: 40px;
+	width: 30px;
 }
 
 .image-container img {

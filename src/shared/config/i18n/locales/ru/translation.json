@@ -6,7 +6,15 @@
   "form": {
     "from": "Откуда",
     "to": "Куда",
-    "search": "Поиск"
+    "search": "Поиск",
+    "dateFrom": "Дата с",
+    "dateTo": "Дата по",
+    "weightFrom": "Вес от",
+    "weightTo": "Вес до",
+    "volumeFrom": "Объём от",
+    "volumeTo": "Объём до",
+    "type": "Тип груза",
+    "find": "Найти"
   },
   "info_title_top": {
     "line1": "ЦИФРОВАЯ ПЛАТФОРМА",

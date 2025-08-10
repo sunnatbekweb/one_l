@@ -6,7 +6,16 @@
   "form": {
     "from": "Qayerdan",
     "to": "Qayerga",
-    "search": "Qidirish"
+    "search": "Qidirish",
+    "dateFrom": "Sana dan",
+    "dateTo": "Sana gacha",
+    "weightFrom": "Og‘irlik dan",
+    "weightTo": "Og‘irlik gacha",
+    "volumeFrom": "Hajm dan",
+    "volumeTo": "Hajm gacha",
+    "type": "Yuk turi",
+    "find": "Topish"
+
   },
   "info_title_top": {
     "line1": "ZAMONAVIY LOGISTIKA UCHUN",
