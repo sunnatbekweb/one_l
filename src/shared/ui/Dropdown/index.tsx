@@ -10,9 +10,9 @@ interface DropdownProps
 	icon: React.ReactElement;
 	countries: Country[];
 	selectedCountry: Country | null;
-	value: string; // текущее значение поля (от родителя)
-	onChange: (value: string) => void; // меняем текст
-	onSelect: (country: Country) => void; // выбираем страну
+	value: string;
+	onChange: (value: string) => void;
+	onSelect: (country: Country) => void;
 }
 
 export const CountriesDropdown = React.forwardRef<

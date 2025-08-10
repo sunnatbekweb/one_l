@@ -6,7 +6,7 @@ import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmark
 import { typeReducer } from "@/entities/SearchForm/model/cargoTypeSlice";
 import { filterReducer } from "@/features/filters/model/filterSlice";
 import { oneCargoReducer } from "@/widgets/Cargo/model/oneCargoSlice";
-import { countriesReducer } from "@/shared/model/resCountriesSlice.ts";
+import { countriesReducer } from "@/shared/model/restCountriesSlice.ts";
 
 export const store = configureStore({
 	reducer: {

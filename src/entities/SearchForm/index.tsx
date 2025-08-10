@@ -10,7 +10,7 @@ import { Select } from "@/shared/ui/Select";
 import { CountriesDropdown } from "@/shared/ui/Dropdown";
 import { FaTruck } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { fetchCountries } from "@/shared/model/resCountriesSlice.ts";
+import { fetchCountries } from "@/shared/model/restCountriesSlice.ts";
 import type { Country } from "@/shared/types/apiType.ts";
 
 interface FormValues {
