@@ -28,5 +28,23 @@
     "add": "Добавить",
     "notifications": "Уведомление",
     "applications": "Заявки"
+  },
+  "all_cargo_type": "Все типы груза",
+  "detail": "Подробно",
+  "showContacts": "Показать контакты",
+  "loading": "Загрузка...",
+  "noCargo": "Нет грузов для отображения",
+  "search_head": {
+    "update": "Обновить",
+    "filters": "Фильтр",
+    "settings": "Параметры"
+  },
+  "found_cargos": "Найдено <strong>{{count}}</strong> грузов по вашему запросу",
+  "sort": {
+    "title": "Упорядочить по:",
+    "createdAt": "времени создания,",
+    "loadDate": "дате загрузки",
+    "price": "стоимости",
+    "rating": "рейтингу"
   }
 }

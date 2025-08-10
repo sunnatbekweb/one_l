@@ -7,6 +7,7 @@ import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
@@ -26,12 +27,13 @@ interface CargoCardProps {
 }
 
 export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-
 	const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
 	const isBookmarked = bookmarks.some(
 		bookmark => bookmark.cargo.id === cargo.id
 	);
+
 	const handleBookmark = () => {
 		const userId = Number(Cookies.get("user_id"));
 
@@ -153,16 +155,16 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 						to={`/cargo/${cargo?.id}`}
 						className={`${styles["search-result__more"]} btn-more`}
 					>
-						Подробнее
+						{t("detail")}
 					</Link>
 				</div>
 				<span className={styles["search-result__company"]}>
-					<span className={styles["check-cont"]}>
+					<span className={`flex items-center gap-1 text-xs sm:text-sm`}>
 						{cargo?.username}
 						<img
 							src="https://img.icons8.com/?size=512&id=2sZ0sdlG9kWP&format=png"
 							alt="image-icon"
-							className="inst-icon"
+							className="w-4 h-4 sm:w-5 sm:h-5"
 						/>
 					</span>
 				</span>

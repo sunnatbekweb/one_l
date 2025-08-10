@@ -28,5 +28,23 @@
     "add": "Qo‘shish",
     "notifications": "Bildirishnomalar",
     "applications": "Arizalar"
+  },
+  "all_cargo_type": "Barcha yuk turlari",
+  "detail": "Batafsil",
+  "showContacts": "Kontaktlarni ko‘rsatish",
+  "loading": "Yuklanmoqda...",
+  "noCargo": "Ko‘rsatish uchun yuklar yo‘q",
+  "search_head": {
+    "update": "Yangilash",
+    "filters": "Filtr",
+    "settings": "Sozlamalar"
+  },
+  "found_cargos": "Sizning so‘rovingiz bo‘yicha <strong>{{count}}</strong> ta yuk topildi",
+  "sort": {
+    "title": "Saralash bo‘yicha:",
+    "createdAt": "yaratilgan vaqti,",
+    "loadDate": "yuklash sanasi",
+    "price": "narxi",
+    "rating": "reytingi"
   }
 }

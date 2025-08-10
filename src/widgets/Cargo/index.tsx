@@ -46,10 +46,11 @@ export const Cargo = () => {
 					</h2>
 				) : (
 					<div className="my-5">
-						<p>
-							Найдено <strong>{cargos.results.length}</strong> Грузов по вашему
-							запросу
-						</p>
+						<p
+							dangerouslySetInnerHTML={{
+								__html: t("found_cargos", { count: cargos?.count })
+							}}
+						/>
 						<div>
 							<div className="flex items-center justify-between ">
 								<button
@@ -58,7 +59,7 @@ export const Cargo = () => {
 									className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
 								>
 									<FaRotate />
-									<span>Обновить</span>
+									<span>{t("search_head.update")}</span>
 								</button>
 								<div className="flex items-center">
 									{/* Filter modal */}
@@ -67,7 +68,9 @@ export const Cargo = () => {
 										className="flex flex-col gap-y-1.5 items-center p-2.5"
 									>
 										<FaFilter fontSize={20} />
-										<span className="font-medium text-sm">Фильтры</span>
+										<span className="font-medium text-sm">
+											{t("search_head.filters")}
+										</span>
 									</button>
 									<SearchFilter
 										modal={filterModal}
@@ -80,7 +83,9 @@ export const Cargo = () => {
 										className="flex flex-col gap-y-1.5 items-center p-2.5"
 									>
 										<FaSliders fontSize={20} />
-										<span className="font-medium text-sm">Параметры</span>
+										<span className="font-medium text-sm">
+											{t("search_head.settings")}
+										</span>
 									</button>
 									<SearchSettings
 										modal={settingsModal}
@@ -89,16 +94,17 @@ export const Cargo = () => {
 								</div>
 							</div>
 							<div className="flex items-center justify-between">
-								<div>Упорядочить по</div>
+								<div>{t("sort.title")}</div>
 
 								<select
 									name="sort_by"
 									id="sort_by"
 									className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
 								>
-									<option value="0">Времени создания</option>
-									<option value="1">Дате загрузки</option>
-									<option value="2">Стоимости</option>
+									<option value="0">{t("sort.createdAt")}</option>
+									<option value="1">{t("sort.loadDate")}</option>
+									<option value="2">{t("sort.price")}</option>
+									<option value="3">{t("sort.rating")}</option>
 								</select>
 							</div>
 						</div>
@@ -106,14 +112,14 @@ export const Cargo = () => {
 				)}
 				<div>
 					{isloading ? (
-						<div className="text-center">Загрузка...</div>
+						<div className="text-center">{t("loading")}</div>
 					) : error ? (
 						<div className="text-red-500 text-center">{error}</div>
 					) : (
 						<div className="grid grid-cols-1">
 							{cargos.results.length > 0 ? (
 								<div>
-									{cargos.results.map(cargo => (
+									{cargos?.results.map(cargo => (
 										<CargoCard key={cargo.id} cargo={cargo} />
 									))}
 									<Pagination
@@ -123,9 +129,7 @@ export const Cargo = () => {
 									/>
 								</div>
 							) : (
-								<div className="col-span-full text-center">
-									Нет грузов для отображения
-								</div>
+								<div className="col-span-full text-center">{t("noCargo")}</div>
 							)}
 						</div>
 					)}

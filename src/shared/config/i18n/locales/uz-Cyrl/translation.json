@@ -28,5 +28,23 @@
     "add": "Қўшиш",
     "notifications": "Билдиришномалар",
     "applications": "Аризалар"
+  },
+  "all_cargo_type": "Барча юк турлари",
+  "detail": "Батафсил",
+  "showContacts": "Контактларни кўрсатиш",
+  "loading": "Юкланмоқда...",
+  "noCargo": "Кўрсатиш учун юклар йўқ",
+  "search_head": {
+    "update": "Янгилаш",
+    "filters": "Филтр",
+    "settings": "Созламалар"
+  },
+  "found_cargos": "Сизнинг сўровингиз бўйича <strong>{{count}}</strong> та юк топилди",
+  "sort": {
+    "title": "Саралаш бўйича:",
+    "createdAt": "яратилган вақти,",
+    "loadDate": "юклаш санаси",
+    "price": "нархи",
+    "rating": "рейтинг"
   }
 }
