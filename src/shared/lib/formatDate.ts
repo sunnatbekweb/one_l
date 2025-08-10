@@ -1,28 +1,38 @@
-import { parse, isValid, format, formatDistanceToNow } from "date-fns";
-import { ru } from "date-fns/locale";
+import {
+  parse,
+  isValid,
+  format,
+  formatDistanceToNow,
+  type Locale,
+} from "date-fns";
+import { ru, uz } from "date-fns/locale";
+import i18n from "@/shared/config/i18n";
 
-/**
- * Форматирует дату из строки вида "30/07/2025 09:41" → "30.07 - 09:41"
- */
-export function formatCustomDate(dateStr: string): string {
-  const parsed = parse(dateStr, "dd/MM/yyyy HH:mm", new Date());
-  return isValid(parsed) ? format(parsed, "dd.MM - HH:mm") : "Неизвестно";
+const localesMap: Record<string, Locale> = {
+  ru,
+  "uz-Latn": uz,
+  "uz-Cyrl": ru, // используем русскую как кириллицу
+};
+
+function getLocale(): Locale {
+  const locale = localesMap[i18n.language];
+  return locale || ru; // защита от null/
 }
 
-/**
- * Возвращает относительное время: "3 дня назад"
- * Поддерживает дату вида "30/07/2025 09:41" или ISO-строку
- */
-export function formatRelativeDate(dateStr: string): string {
-  // Пытаемся сначала распарсить европейский формат
-  let parsed = parse(dateStr, "dd/MM/yyyy HH:mm", new Date());
-
-  if (!isValid(parsed)) {
-    // Если не получилось — пробуем стандартный ISO-формат
-    parsed = new Date(dateStr);
+export function formatCustomDate(dateStr: string): string | undefined {
+  if (dateStr !== null) {
+    const parsed = parse(dateStr, "dd/MM/yyyy HH:mm", new Date());
+    return isValid(parsed)
+      ? format(parsed, "dd.MM - HH:mm", { locale: getLocale() })
+      : i18n.t("unknown");
   }
+}
+
+export function formatRelativeDate(dateStr: string): string {
+  let parsed = parse(dateStr, "dd/MM/yyyy HH:mm", new Date());
+  if (!isValid(parsed)) parsed = new Date(dateStr);
 
   return isValid(parsed)
-    ? formatDistanceToNow(parsed, { addSuffix: true, locale: ru })
-    : "неизвестно";
+    ? formatDistanceToNow(parsed, { addSuffix: true, locale: getLocale() })
+    : i18n.t("unknown");
 }

@@ -14,8 +14,8 @@ const initialState: UpdateCargoState = {
 };
 
 export const updateCargoActions = createAsyncThunk<
-  any, // или тип возвращаемого объекта
-  { cargoId: number; data: UpdateData }, // тип передаваемого payload
+  any,
+  { cargoId: number; data: UpdateData },
   { rejectValue: string }
 >("cargo/updateParams", async ({ cargoId, data }, { rejectWithValue }) => {
   try {

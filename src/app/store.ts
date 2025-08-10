@@ -6,17 +6,19 @@ import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmark
 import { typeReducer } from "@/entities/SearchForm/model/cargoTypeSlice";
 import { filterReducer } from "@/features/filters/model/filterSlice";
 import { oneCargoReducer } from "@/widgets/Cargo/model/oneCargoSlice";
+import { countriesReducer } from "@/shared/model/resCountriesSlice.ts";
 
 export const store = configureStore({
-  reducer: {
-    cargos: cargoReducer,
-    cargo: oneCargoReducer,
-    bookmarks: bookmarkReducer,
-    statistics: statisticsReducer,
-    bookmark: createBookmarkReducer,
-    types: typeReducer,
-    filters: filterReducer,
-  },
+	reducer: {
+		cargos: cargoReducer,
+		cargo: oneCargoReducer,
+		bookmarks: bookmarkReducer,
+		statistics: statisticsReducer,
+		bookmark: createBookmarkReducer,
+		types: typeReducer,
+		filters: filterReducer,
+		counties: countriesReducer
+	}
 });
 
 export type RootState = ReturnType<typeof store.getState>;

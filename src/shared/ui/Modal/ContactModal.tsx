@@ -51,7 +51,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 onClick={() =>
                   dispatch(
                     updateCargoActions({
-                      cargoId: 4000,
+                      cargoId: cargo?.id || 0,
                       data: { chatted_telegram: true },
                     })
                   )
@@ -70,7 +70,10 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               className="text-sm sm:text-xl"
               onClick={() =>
                 dispatch(
-                  updateCargoActions({ cargoId: 4000, data: { phoned: true } })
+                  updateCargoActions({
+                    cargoId: cargo?.id || 0,
+                    data: { phoned: true },
+                  })
                 )
               }
             >
@@ -100,7 +103,10 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               to={`https://t.me/share/url?text=${encodeURIComponent(message)}`}
               onClick={() =>
                 dispatch(
-                  updateCargoActions({ cargoId: 4000, data: { shared: true } })
+                  updateCargoActions({
+                    cargoId: cargo?.id || 0,
+                    data: { shared: true },
+                  })
                 )
               }
               className="text-sm sm:text-xl"
