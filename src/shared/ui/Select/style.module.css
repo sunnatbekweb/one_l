@@ -20,7 +20,10 @@
 	position: absolute;
 	top: 50%;
 	left: 16px;
+	width: 40px;
 	transform: translateY(-50%);
 	font-size: 20px;
 	color: #8e8d8d;
+	display: flex;
+	justify-content: center;
 }

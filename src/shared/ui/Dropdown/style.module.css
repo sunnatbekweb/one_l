@@ -10,7 +10,8 @@
 	transform: translateY(-50%);
 	color: #8e8d8d;
 	font-size: 20px;
-	border: 1px solid #8e8d8d;
+	display: flex;
+	justify-content: center;
 }
 
 .icon img {
