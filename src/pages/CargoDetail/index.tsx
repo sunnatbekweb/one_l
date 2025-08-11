@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
+import {
+	FaEye,
+	FaPhoneAlt,
+	FaShareSquare,
+	FaTelegram,
+	FaTruck
+} from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
 import { useTranslation } from "react-i18next";
+import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
+import styles from "@/entities/CargoCard/style.module.css";
 
 export const CargoDetail = () => {
 	const { id } = useParams();
@@ -22,6 +30,11 @@ export const CargoDetail = () => {
 	useEffect(() => {
 		dispatch(fetchCargo(Number(id)));
 	}, [dispatch, isModalOpen]);
+
+	const { flag: originFlag } = useCountryFlag(cargo?.origin_country || "");
+	const { flag: destinationFlag } = useCountryFlag(
+		cargo?.destination_country || ""
+	);
 
 	return (
 		<section className="py-[15px]">
@@ -42,10 +55,55 @@ export const CargoDetail = () => {
 					<div className="text-red-500 text-center">{error}</div>
 				) : (
 					<>
+						<div className={`${styles["search-result__route"]} mb-10`}>
+							<div className={styles["search-result__city"]}>
+								{originFlag?.flags?.png && (
+									<img
+										className="w-5 sm:w-10 h-full object-cover"
+										src={originFlag.flags.png}
+										alt={originFlag.flags.alt}
+									/>
+								)}
+								<strong className={"text-xs sm:text-base"}>
+									{cargo?.origin?.length || 0 > 8
+										? cargo?.origin.slice(0, 8) + "..."
+										: cargo?.origin}
+								</strong>
+							</div>
+							<div className={styles["search-result__distance"]}>
+								<span>📍</span>
+								<div className={styles["distance-center"]}>
+									<div className={styles["distance-center-line"]}></div>
+									<div>{cargo?.km?.toLocaleString()} км</div>
+								</div>
+								<span>📍</span>
+							</div>
+							<div className={styles["search-result__city"]}>
+								{destinationFlag?.flags?.png && (
+									<img
+										className="w-5 sm:w-10 h-full object-cover"
+										src={destinationFlag.flags.png}
+										alt={destinationFlag.flags.alt}
+									/>
+								)}
+								<strong className={"text-xs sm:text-base"}>
+									{cargo?.destination?.length || 0 > 8
+										? cargo?.destination.slice(0, 8)
+										: cargo?.destination}
+								</strong>
+							</div>
+						</div>
+						<div className={"my-10 font-medium text-lg gird grid-cols-2"}>
+							<span>📦 {cargo?.type}</span>
+							<div className="flex items-center gap-x-1">
+								<FaTruck />
+								<span>{cargo?.car_type}</span>
+							</div>
+						</div>
 						<div className="p-3 border border-gray-400 font-medium text-gray-500">
 							<div className="flex items-center justify-between mb-3">
-								<h3 className="text-xl">СРОЧНО</h3>
-								<button>II</button>
+								{/*<h3 className="text-xl">СРОЧНО</h3>*/}
+								{/*<button>II</button>*/}
 							</div>
 							<p className="text-lg">{cargo?.info}</p>
 						</div>
