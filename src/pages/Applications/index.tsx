@@ -1,3 +1,5 @@
+import { PageNotReady } from "@/entities/PageNotReady";
+
 export const Applications = () => {
-  return <div>Applications</div>;
+  return <PageNotReady />;
 };

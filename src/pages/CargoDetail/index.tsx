@@ -5,16 +5,21 @@ import type { AppDispatch, RootState } from "@/app/store";
 import {
   FaEye,
   FaPhoneAlt,
+  FaRegCalendarAlt,
   FaShareSquare,
   FaTelegram,
   FaTruck,
+  FaWeightHanging,
 } from "react-icons/fa";
+import { MdPriceCheck } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
 import { useTranslation } from "react-i18next";
 import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
 import styles from "@/entities/CargoCard/style.module.css";
+import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
+import { formatCustomDate } from "@/shared/lib/formatDate";
 
 export const CargoDetail = () => {
   const { id } = useParams();
@@ -23,13 +28,16 @@ export const CargoDetail = () => {
   const { cargo, isLoading, error } = useSelector(
     (state: RootState) => state.cargo
   );
+  const formattedDate = formatCustomDate(cargo?.date || "");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    dispatch(fetchCargo(Number(id)));
-  }, [dispatch, isModalOpen]);
+    if (!isModalOpen) {
+      dispatch(fetchCargo(Number(id)));
+    }
+  }, [isModalOpen, dispatch, id]);
 
   const { flag: originFlag } = useCountryFlag(cargo?.origin_country || "");
   const { flag: destinationFlag } = useCountryFlag(
@@ -65,9 +73,7 @@ export const CargoDetail = () => {
                   />
                 )}
                 <strong className={"text-xs sm:text-base"}>
-                  {cargo?.origin?.length || 0 > 8
-                    ? cargo?.origin.slice(0, 8) + "..."
-                    : cargo?.origin}
+                  {cargo?.origin}
                 </strong>
               </div>
               <div className={styles["search-result__distance"]}>
@@ -87,23 +93,45 @@ export const CargoDetail = () => {
                   />
                 )}
                 <strong className={"text-xs sm:text-base"}>
-                  {cargo?.destination?.length || 0 > 8
-                    ? cargo?.destination.slice(0, 8)
-                    : cargo?.destination}
+                  {cargo?.destination}
                 </strong>
               </div>
             </div>
-            <div className={"my-10 font-medium text-lg gird grid-cols-2"}>
-              <span>📦 {cargo?.type}</span>
-              <div className="flex items-center gap-x-1">
-                <FaTruck />
+            <div
+              className={"my-10 font-medium grid grid-cols-2 gap-x-4 gap-y-8"}
+            >
+              <p>📦 {cargo?.type}</p>
+              <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                <FaTruck className="text-xl sm:text-3xl text-green-500" />
                 <span>{cargo?.car_type}</span>
               </div>
+              <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                <FaWeightHanging className="text-xl sm:text-3xl text-gray-600" />
+                <span>{cargo?.weight} т</span>
+              </div>
+              <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                <FaMaximize className="text-xl sm:text-3xl text-gray-600" />
+                <span>{cargo?.volume} м³</span>
+              </div>
+              <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                <FaRegCalendarAlt className="text-xl sm:text-3xl text-gray-600" />
+                <span>{formattedDate}</span>
+              </div>
+              <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                <MdPriceCheck className="text-xl sm:text-3xl text-gray-600" />
+                <span>{cargo?.price} USD</span>
+              </div>
+              {cargo?.temperature && (
+                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
+                  <FaTemperatureHalf className="text-xl sm:text-3xl text-[#c6dcff]" />
+                  <span>{cargo?.temperature}°C</span>
+                </div>
+              )}
             </div>
             <div className="p-3 border border-gray-400 font-medium text-gray-500">
               <div className="flex items-center justify-between mb-3">
-                {/*<h3 className="text-xl">СРОЧНО</h3>*/}
-                {/*<button>II</button>*/}
+                <h3 className="text-xl">СРОЧНО</h3>
+                <button>II</button>
               </div>
               <p className="text-lg">{cargo?.info}</p>
             </div>

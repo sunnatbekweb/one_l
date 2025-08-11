@@ -24,7 +24,7 @@ export function formatCustomDate(dateStr: string): string | undefined {
     const parsed = parse(dateStr, "dd/MM/yyyy HH:mm", new Date());
     return isValid(parsed)
       ? format(parsed, "dd.MM - HH:mm", { locale: getLocale() })
-      : i18n.t("unknown");
+      : "";
   }
 }
 

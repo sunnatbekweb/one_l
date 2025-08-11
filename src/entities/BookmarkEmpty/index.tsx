@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import styles from "./style.module.css";
+import { useTranslation } from "react-i18next";
 
 export const BookmarkEmpty = () => {
+  const { t } = useTranslation();
   return (
     <div className={styles.bookmarkEmptyContainer}>
       <img
@@ -11,15 +13,15 @@ export const BookmarkEmpty = () => {
       />
 
       <h2 className={styles.bookmarkEmptyTitle} data-i18n="bookmark.emptyTitle">
-        Saqlanganlar hozircha yo‘q
+        {t("empty.title")}
       </h2>
 
       <p className={styles.bookmarkEmptyDescription}>
-        Barcha saqlangan yuklar shu sahifada ko‘rinadi.
+        {t("empty.subtitle")}
       </p>
 
       <Link to="/" className={styles.goHomeButton}>
-        Asosiy sahifaga
+        {t("page_block.link")}
       </Link>
     </div>
   );

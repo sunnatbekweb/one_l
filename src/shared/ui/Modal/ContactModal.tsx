@@ -12,6 +12,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import "./modal.css";
+import { useTranslation } from "react-i18next";
 
 interface ModalProps {
   modal: boolean;
@@ -21,6 +22,7 @@ interface ModalProps {
 
 export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t, i18n } = useTranslation();
 
   const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
 
@@ -31,7 +33,9 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
       <div onClick={(e) => e.stopPropagation()} className="modal_content">
-        <h2 className="text-center font-semibold text-2xl">Контакты</h2>
+        <h2 className="text-center font-semibold text-2xl">
+          {t("contactModal.title")}
+        </h2>
         <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:px-6 mt-4 sm:mt-8 mb-2">
           <div className="flex items-center gap-x-4">
             <div>
@@ -44,9 +48,9 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
             </div>
             <span className="text-sm sm:text-xl">
-              Написать в{" "}
+              {i18n.language === "ru" ? t("contactModal.write_in") : ""}
               <Link
-                to={cargo?.source || "https://t.me/"}
+                to={`https://t.me/${cargo?.username}` || "https://t.me/"}
                 target="_blank"
                 className="text-[#659df2]"
                 onClick={() =>
@@ -60,6 +64,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               >
                 Telegram
               </Link>
+              {i18n.language !== "ru" ? ` ${t("contactModal.write_in")}` : ""}
             </span>
           </div>
           <div className="flex items-center gap-x-4">
@@ -86,7 +91,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               <FaGlobe className="text-xl sm:text-3xl" />
             </div>
             <span className="text-sm sm:text-xl">
-              Источник:{" "}
+              {t("contactModal.source")}:{" "}
               <Link
                 to={cargo?.source || "https://t.me/"}
                 target="_blank"
@@ -112,7 +117,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               }
               className="text-sm sm:text-xl"
             >
-              Поделиться с другом
+              {t("contactModal.share")}
             </Link>
           </div>
         </div>

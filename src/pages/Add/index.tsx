@@ -1,3 +1,5 @@
+import { PageNotReady } from "@/entities/PageNotReady";
+
 export const Add = () => {
-  return <div>Add</div>;
+  return <PageNotReady />;
 };

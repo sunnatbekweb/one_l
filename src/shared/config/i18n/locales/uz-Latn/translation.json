@@ -14,8 +14,10 @@
     "volumeFrom": "Hajm dan",
     "volumeTo": "Hajm gacha",
     "type": "Yuk turi",
-    "find": "Topish"
-
+    "find": "Topish",
+    "settingsTitle": "Qidiruv sozlamalari",
+    "filtersTitle": "Qidiruv filtrlari",
+    "filtersSubtitle": "Arizalarni qidirish uchun filterni tanlang"
   },
   "info_title_top": {
     "line1": "ZAMONAVIY LOGISTIKA UCHUN",
@@ -55,5 +57,22 @@
     "loadDate": "yuklash sanasi",
     "price": "narxi",
     "rating": "reytingi"
+  },
+  "page_block": {
+    "top_text": "Ishlab chiqilmoqda",
+    "title": "Sahifa tez orada paydo bo‘ladi",
+    "link": "Asosiy sahifaga"
+  },
+  "contactModal": {
+    "title": "Kontaktlar",
+    "write_in": " ga yozish",
+    "source": "Manba",
+    "share": "Do‘stlar bilan ulashish"
+  },
+  "empty": {
+    "title": "Saqlanganlar hozircha yo‘q",
+    "subtitle": "Barcha saqlangan yuklar shu sahifada ko‘rinadi.",
+    "noCargo": "Yuklar topilmadi",
+    "cargoSubtitle": "Barcha yuklar shu yerda ko‘rinadi."
   }
 }

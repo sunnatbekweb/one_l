@@ -30,10 +30,8 @@ export const patchCargoActions = async (cargoId: number, data: UpdateData) => {
       }
     );
 
-    console.log("Обновление успешно:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Ошибка при PATCH:", error);
     throw error;
   }
 };
