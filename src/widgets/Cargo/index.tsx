@@ -38,7 +38,7 @@ export const Cargo = () => {
 	}, [currentPage, filters]);
 
 	return (
-		<section className="py-[15px] mx-auto">
+		<section className="py-[15px] mx-auto" id={"pagination_top"}>
 			<div>
 				{!isFilterActive ? (
 					<h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
