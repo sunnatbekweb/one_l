@@ -114,27 +114,41 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
 						<div className="grid grid-cols-2 gap-4">
 							<label htmlFor="weight" className="flex flex-col gap-2">
 								<span>{t("form.weightFrom")}:</span>
-								<input
-									type="text"
-									name="weight"
-									id="weight"
-									placeholder="Т"
+								<select
+									name={"weight"}
+									id={"weight"}
 									onChange={handleChange}
 									value={formData.weight}
-									className="border px-3 py-1.5 rounded-sm"
-								/>
+									className={"border px-3 py-1.5 rounded-sm"}
+								>
+									<option selected={true} disabled={true} value={""}>
+										Т
+									</option>
+									{[...Array(30)].map((_, index) => (
+										<option value={index + 1} key={index}>
+											{index + 1} т
+										</option>
+									))}
+								</select>
 							</label>
 							<label htmlFor="volume" className="flex flex-col gap-2">
 								<span>{t("form.volumeFrom")}:</span>
-								<input
-									type="text"
-									name="volume"
-									id="volume"
-									placeholder="м³"
+								<select
+									name={"volume"}
+									id={"volume"}
 									onChange={handleChange}
 									value={formData.volume}
-									className="border px-3 py-1.5 rounded-sm"
-								/>
+									className={"border px-3 py-1.5 rounded-sm"}
+								>
+									<option selected={true} disabled={true} value="">
+										м³
+									</option>
+									{[...Array(150)].map((_, index) => (
+										<option value={index + 1} key={index}>
+											{index + 1} м³
+										</option>
+									))}
+								</select>
 							</label>
 						</div>
 						<label htmlFor="type" className="flex flex-col gap-2">

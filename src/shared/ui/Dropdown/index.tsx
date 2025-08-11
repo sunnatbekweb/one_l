@@ -27,7 +27,10 @@ export const CountriesDropdown = React.forwardRef<
 		const [searchTerm, setSearchTerm] = useState(value);
 		const containerRef = useRef<HTMLDivElement>(null);
 
-		// Закрытие при клике вне
+		useEffect(() => {
+			setSearchTerm(value);
+		}, [value]);
+
 		useEffect(() => {
 			const handleClickOutside = (event: MouseEvent) => {
 				if (
@@ -42,20 +45,20 @@ export const CountriesDropdown = React.forwardRef<
 				document.removeEventListener("mousedown", handleClickOutside);
 		}, []);
 
-		// Дебаунс поиска (300мс)
 		useEffect(() => {
 			const timeoutId = setTimeout(() => {
-				onChange(searchTerm);
+				if (searchTerm !== value) {
+					onChange(searchTerm);
+				}
 			}, 300);
 			return () => clearTimeout(timeoutId);
-		}, [searchTerm]);
+		}, [searchTerm, onChange, value]);
 
-		// Мемоизация фильтрации
 		const filteredCountries = useMemo(() => {
-			return countries.filter(c =>
-				c.name.common.toLowerCase().includes(value.toLowerCase())
-			);
-		}, [countries, value]);
+			const q = searchTerm.trim().toLowerCase();
+			if (!q) return countries;
+			return countries.filter(c => c.name.common.toLowerCase().includes(q));
+		}, [countries, searchTerm]);
 
 		return (
 			<div className={styles["dropdown-container"]} ref={containerRef}>
@@ -88,6 +91,7 @@ export const CountriesDropdown = React.forwardRef<
 								className={styles["dropdown-content"]}
 								onMouseDown={e => {
 									e.preventDefault();
+									setSearchTerm(c.name.common);
 									onSelect(c);
 									setIsOpen(false);
 								}}
