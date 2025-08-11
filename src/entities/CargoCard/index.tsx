@@ -80,7 +80,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           </span>
         </span>
         <span className={styles["search-result__price"]}>
-          {cargo?.price?.toLocaleString()} USD
+          {cargo?.price?.toLocaleString()}
         </span>
       </div>
 
@@ -93,10 +93,8 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
               alt={originFlag.flags.alt}
             />
           )}
-          <strong className={"text-xs sm:text-base"}>
-            {cargo?.origin?.length > 8
-              ? cargo?.origin.slice(0, 8) + "..."
-              : cargo?.origin}
+          <strong className={"text-xs sm:text-base line-clamp-1"}>
+            {cargo?.origin}
           </strong>
         </div>
         <div className={styles["search-result__distance"]}>
@@ -115,10 +113,8 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
               alt={destinationFlag.flags.alt}
             />
           )}
-          <strong className={"text-xs sm:text-base"}>
-            {cargo?.destination?.length > 8
-              ? cargo?.destination.slice(0, 8)
-              : cargo?.destination}
+          <strong className={"text-xs sm:text-base line-clamp-1"}>
+            {cargo?.destination}
           </strong>
         </div>
       </div>
@@ -134,11 +130,16 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         </div>
         <div className="flex items-center gap-x-1">
           <FaWeightHanging />
-          <span>{cargo?.weight} т</span>
+          <span>
+            {cargo?.weight > 1000 ? cargo.weight / 1000 : cargo?.weight}т
+          </span>
         </div>
         <div className="flex items-center gap-x-1">
           <FaMaximize />
-          <span>{cargo?.volume} м³</span>
+          <span>
+            {cargo?.volume > 1000 ? cargo.volume / 1000 : cargo?.volume}
+            м³
+          </span>
         </div>
         {cargo?.temperature && (
           <div className="flex items-center gap-x-1">
