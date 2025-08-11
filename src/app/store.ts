@@ -9,16 +9,16 @@ import { oneCargoReducer } from "@/widgets/Cargo/model/oneCargoSlice";
 import { countriesReducer } from "@/shared/model/restCountriesSlice.ts";
 
 export const store = configureStore({
-	reducer: {
-		cargos: cargoReducer,
-		cargo: oneCargoReducer,
-		bookmarks: bookmarkReducer,
-		statistics: statisticsReducer,
-		bookmark: createBookmarkReducer,
-		types: typeReducer,
-		filters: filterReducer,
-		counties: countriesReducer
-	}
+  reducer: {
+    cargos: cargoReducer,
+    cargo: oneCargoReducer,
+    bookmarks: bookmarkReducer,
+    statistics: statisticsReducer,
+    bookmark: createBookmarkReducer,
+    types: typeReducer,
+    filters: filterReducer,
+    counties: countriesReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

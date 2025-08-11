@@ -3,6 +3,6 @@ import { baseUrl } from "@/shared/lib/updatedBackendUrl.ts";
 import axios from "axios";
 
 export const getCargoTypes = async () => {
-	const response = await axios.get<CargoType[]>(`${baseUrl}/cargo-types/`);
-	return response.data;
+  const response = await axios.get<CargoType[]>(`${baseUrl}/cargo-types/`);
+  return response.data;
 };

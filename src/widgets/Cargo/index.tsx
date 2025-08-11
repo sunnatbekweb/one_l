@@ -11,130 +11,130 @@ import { SearchFilter } from "@/shared/ui/Modal/SearchFilterModal";
 import { SearchSettings } from "@/shared/ui/Modal/SearchSettings";
 
 export const Cargo = () => {
-	const filters = useSelector((state: RootState) => state.filters);
-	const isFilterActive =
-		filters.origin !== "" || filters.destination !== "" || filters.type !== "";
-	const { cargos, isloading, error } = useSelector(
-		(state: RootState) => state.cargos
-	);
+  const filters = useSelector((state: RootState) => state.filters);
+  const isFilterActive =
+    filters.origin !== "" || filters.destination !== "" || filters.type !== "";
+  const { cargos, isloading, error } = useSelector(
+    (state: RootState) => state.cargos
+  );
 
-	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
-	const [currentPage, setCurrentPage] = useState(0);
-	const [filterModal, setFilterModal] = useState(false);
-	const [settingsModal, setSettingsModal] = useState(false);
+  const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filterModal, setFilterModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
 
-	const handlePageChange = ({ selected }: { selected: number }) => {
-		setCurrentPage(selected);
-		dispatch(fetchCargos({ page: selected + 1, ...filters }));
-	};
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+    dispatch(fetchCargos({ page: selected + 1, ...filters }));
+  };
 
-	const handleUpdate = () => {
-		dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
-	};
+  const handleUpdate = () => {
+    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+  };
 
-	useEffect(() => {
-		dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
-	}, [currentPage, filters]);
+  useEffect(() => {
+    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+  }, [currentPage, filters]);
 
-	return (
-		<section className="py-[15px] mx-auto" id={"pagination_top"}>
-			<div>
-				{!isFilterActive ? (
-					<h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
-						{t("popular_directions")}
-					</h2>
-				) : (
-					<div className="my-5">
-						<p
-							dangerouslySetInnerHTML={{
-								__html: t("found_cargos", { count: cargos?.count })
-							}}
-						/>
-						<div>
-							<div className="flex items-center justify-between ">
-								<button
-									onClick={handleUpdate}
-									disabled={isloading}
-									className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
-								>
-									<FaRotate />
-									<span>{t("search_head.update")}</span>
-								</button>
-								<div className="flex items-center">
-									{/* Filter modal */}
-									<button
-										onClick={() => setFilterModal(true)}
-										className="flex flex-col gap-y-1.5 items-center p-2.5"
-									>
-										<FaFilter fontSize={20} />
-										<span className="font-medium text-sm">
-											{t("search_head.filters")}
-										</span>
-									</button>
-									<SearchFilter
-										modal={filterModal}
-										close={() => setFilterModal(false)}
-									/>
+  return (
+    <section className="py-[15px] mx-auto" id={"pagination_top"}>
+      <div>
+        {!isFilterActive ? (
+          <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
+            {t("popular_directions")}
+          </h2>
+        ) : (
+          <div className="my-5">
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t("found_cargos", { count: cargos?.count }),
+              }}
+            />
+            <div>
+              <div className="flex items-center justify-between ">
+                <button
+                  onClick={handleUpdate}
+                  disabled={isloading}
+                  className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
+                >
+                  <FaRotate />
+                  <span>{t("search_head.update")}</span>
+                </button>
+                <div className="flex items-center">
+                  {/* Filter modal */}
+                  <button
+                    onClick={() => setFilterModal(true)}
+                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                  >
+                    <FaFilter fontSize={20} />
+                    <span className="font-medium text-sm">
+                      {t("search_head.filters")}
+                    </span>
+                  </button>
+                  <SearchFilter
+                    modal={filterModal}
+                    close={() => setFilterModal(false)}
+                  />
 
-									{/* Settings modal */}
-									<button
-										onClick={() => setSettingsModal(true)}
-										className="flex flex-col gap-y-1.5 items-center p-2.5"
-									>
-										<FaSliders fontSize={20} />
-										<span className="font-medium text-sm">
-											{t("search_head.settings")}
-										</span>
-									</button>
-									<SearchSettings
-										modal={settingsModal}
-										close={() => setSettingsModal(false)}
-									/>
-								</div>
-							</div>
-							<div className="flex items-center justify-between">
-								<div>{t("sort.title")}</div>
+                  {/* Settings modal */}
+                  <button
+                    onClick={() => setSettingsModal(true)}
+                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                  >
+                    <FaSliders fontSize={20} />
+                    <span className="font-medium text-sm">
+                      {t("search_head.settings")}
+                    </span>
+                  </button>
+                  <SearchSettings
+                    modal={settingsModal}
+                    close={() => setSettingsModal(false)}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>{t("sort.title")}</div>
 
-								<select
-									name="sort_by"
-									id="sort_by"
-									className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
-								>
-									<option value="0">{t("sort.createdAt")}</option>
-									<option value="1">{t("sort.loadDate")}</option>
-									<option value="2">{t("sort.price")}</option>
-									<option value="3">{t("sort.rating")}</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				)}
-				<div>
-					{isloading ? (
-						<div className="text-center">{t("loading")}</div>
-					) : error ? (
-						<div className="text-red-500 text-center">{error}</div>
-					) : (
-						<div className="grid grid-cols-1">
-							{cargos.results.length > 0 ? (
-								<div>
-									{cargos?.results.map(cargo => (
-										<CargoCard key={cargo.id} cargo={cargo} />
-									))}
-									<Pagination
-										pageCount={cargos.count}
-										onPageChange={handlePageChange}
-										forcePage={currentPage}
-									/>
-								</div>
-							) : (
-								<div className="col-span-full text-center">{t("noCargo")}</div>
-							)}
-						</div>
-					)}
-				</div>
-			</div>
-		</section>
-	);
+                <select
+                  name="sort_by"
+                  id="sort_by"
+                  className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
+                >
+                  <option value="0">{t("sort.createdAt")}</option>
+                  <option value="1">{t("sort.loadDate")}</option>
+                  <option value="2">{t("sort.price")}</option>
+                  <option value="3">{t("sort.rating")}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+        <div>
+          {isloading ? (
+            <div className="text-center">{t("loading")}</div>
+          ) : error ? (
+            <div className="text-red-500 text-center">{error}</div>
+          ) : (
+            <div className="grid grid-cols-1">
+              {cargos.results.length > 0 ? (
+                <div>
+                  {cargos?.results.map((cargo) => (
+                    <CargoCard key={cargo.id} cargo={cargo} />
+                  ))}
+                  <Pagination
+                    pageCount={cargos.count}
+                    onPageChange={handlePageChange}
+                    forcePage={currentPage}
+                  />
+                </div>
+              ) : (
+                <div className="col-span-full text-center">{t("noCargo")}</div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
 };
