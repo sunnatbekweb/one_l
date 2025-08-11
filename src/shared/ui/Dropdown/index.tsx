@@ -27,9 +27,35 @@ export const CountriesDropdown = React.forwardRef<
     const [searchTerm, setSearchTerm] = useState(value);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-      setSearchTerm(value);
-    }, [value]);
+    const popularCountries = useMemo(() => {
+      const targetNames = [
+        "Uzbekistan",
+        "Russia",
+        "Kazakhstan",
+        "Kyrgyzstan",
+        "Tajikistan",
+      ];
+      return countries.filter((c) =>
+        targetNames.some(
+          (name) => c.name.common.toLowerCase() === name.toLowerCase()
+        )
+      );
+    }, [countries]);
+
+    const filteredCountries = useMemo(() => {
+      const q = searchTerm.trim().toLowerCase();
+      const list = q
+        ? countries.filter((c) => c.name.common.toLowerCase().includes(q))
+        : countries;
+
+      if (!q) {
+        return [
+          ...popularCountries,
+          ...list.filter((c) => !popularCountries.includes(c)),
+        ];
+      }
+      return list;
+    }, [countries, searchTerm, popularCountries]);
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -46,6 +72,8 @@ export const CountriesDropdown = React.forwardRef<
     }, []);
 
     useEffect(() => {
+      setSearchTerm(value);
+
       const timeoutId = setTimeout(() => {
         if (searchTerm !== value) {
           onChange(searchTerm);
@@ -53,12 +81,6 @@ export const CountriesDropdown = React.forwardRef<
       }, 300);
       return () => clearTimeout(timeoutId);
     }, [searchTerm, onChange, value]);
-
-    const filteredCountries = useMemo(() => {
-      const q = searchTerm.trim().toLowerCase();
-      if (!q) return countries;
-      return countries.filter((c) => c.name.common.toLowerCase().includes(q));
-    }, [countries, searchTerm]);
 
     return (
       <div className={styles["dropdown-container"]} ref={containerRef}>
