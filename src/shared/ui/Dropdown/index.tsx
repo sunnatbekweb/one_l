@@ -58,6 +58,10 @@ export const CountriesDropdown = React.forwardRef<
     }, [countries, searchTerm, popularCountries]);
 
     useEffect(() => {
+      setSearchTerm(value);
+    }, [value]);
+
+    useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (
           containerRef.current &&
@@ -72,8 +76,6 @@ export const CountriesDropdown = React.forwardRef<
     }, []);
 
     useEffect(() => {
-      setSearchTerm(value);
-
       const timeoutId = setTimeout(() => {
         if (searchTerm !== value) {
           onChange(searchTerm);
