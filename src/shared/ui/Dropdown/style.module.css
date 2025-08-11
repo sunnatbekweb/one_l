@@ -51,8 +51,8 @@
 
 .dropdown-content {
   display: flex;
-  padding: 10px 12px;
-  height: 50px;
+  padding: 6px 12px;
+  height: fit-content;
   align-items: center;
   column-gap: 20px;
   cursor: pointer;
@@ -76,5 +76,5 @@
 
 .name {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
 }
