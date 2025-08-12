@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
-import { formatCustomDate } from "@/shared/lib/formatDate";
+// import { formatCustomDate } from "@/shared/lib/formatDate";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { useTranslation } from "react-i18next";
 import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
 import { IoIosArrowBack, IoMdResize } from "react-icons/io";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+// import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 export const CargoDetail = () => {
   const { id } = useParams();
@@ -18,7 +18,7 @@ export const CargoDetail = () => {
   const { cargo, isLoading, error } = useSelector(
     (state: RootState) => state.cargo
   );
-  const formattedDate = formatCustomDate(cargo?.date || "");
+  // const formattedDate = formatCustomDate(cargo?.date || "");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
