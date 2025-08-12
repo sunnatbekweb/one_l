@@ -58,8 +58,8 @@ export const CargoDetail = () => {
                   <IoMdResize />
                 </button>
               </div>
-              <p className={`text-lg ${showInfo && "mb-10"}`}>{cargo?.info}</p>
-              <div className={`flex-col gap-4 ${showInfo ? "flex" : "hidden"}`}>
+              <p className={`text-lg ${!showInfo && "line-clamp-1"}`}>{cargo?.info}</p>
+              {/* <div className={`flex-col gap-4 ${showInfo ? "flex" : "hidden"}`}>
                 <div className="flex items-center gap-x-3">
                   <strong className={"text-lg line-clamp-1"}>
                     {cargo?.origin}
@@ -93,7 +93,7 @@ export const CargoDetail = () => {
                   {cargo?.price && <p>{cargo?.price}</p>}
                   {cargo?.temperature && <p>{cargo?.temperature}°C</p>}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="mt-[30px] flex items-center justify-center gap-6">
