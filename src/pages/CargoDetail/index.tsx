@@ -3,24 +3,12 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
-import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
 import { formatCustomDate } from "@/shared/lib/formatDate";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { useTranslation } from "react-i18next";
-import {
-  FaEye,
-  FaPhoneAlt,
-  FaRegCalendarAlt,
-  FaShareSquare,
-  FaTelegram,
-  FaTruck,
-  FaWeightHanging,
-} from "react-icons/fa";
-import { AiFillDollarCircle } from "react-icons/ai";
-import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
-import { BsBoxSeamFill } from "react-icons/bs";
+import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
 import { IoIosArrowBack, IoMdResize } from "react-icons/io";
-import styles from "@/entities/CargoCard/style.module.css";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 export const CargoDetail = () => {
   const { id } = useParams();
@@ -41,11 +29,6 @@ export const CargoDetail = () => {
     }
   }, [isModalOpen, dispatch, id]);
 
-  const { flag: originFlag } = useCountryFlag(cargo?.origin_country || "");
-  const { flag: destinationFlag } = useCountryFlag(
-    cargo?.destination_country || ""
-  );
-
   return (
     <section className="py-[15px]">
       <div className="flex items-center justify-between pb-10">
@@ -65,103 +48,51 @@ export const CargoDetail = () => {
           <div className="text-red-500 text-center">{error}</div>
         ) : (
           <>
-            <div className="p-3 border border-gray-400 font-medium text-gray-500">
+            <div className="p-3 border bg-white border-gray-400 font-medium text-gray-500">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xl">СРОЧНО</h3>
                 <button
                   onClick={() => setShowInfo(!showInfo)}
-                  className="rounded-sm p-1 border border-[#6138f5] text-[#6138f5]"
+                  className={`rounded-sm p-1 border ${showInfo ? "border-[#6138f5] text-[#6138f5]" : "border-gray-400 text-gray-400"} duration-200`}
                 >
                   <IoMdResize />
                 </button>
               </div>
-              <p className="text-lg">{cargo?.info}</p>
-            </div>
-
-            <div
-              className={`transform transition-all duration-300 ${
-                showInfo ? "h-[250px] sm:h-[290px]" : "h-0"
-              } overflow-hidden`}
-            >
-              <div className={`${styles["search-result__route"]} mb-10`}>
-                <div className={styles["search-result__city"]}>
-                  {originFlag?.flags?.png && (
-                    <img
-                      className="w-5 sm:w-10 h-full object-cover"
-                      src={originFlag.flags.png}
-                      alt={originFlag.flags.alt}
-                    />
-                  )}
-                  <strong className={"text-xs sm:text-base line-clamp-1"}>
+              <p className={`text-lg ${showInfo && "mb-10"}`}>{cargo?.info}</p>
+              <div className={`flex-col gap-4 ${showInfo ? "flex" : "hidden"}`}>
+                <div className="flex items-center gap-x-3">
+                  <strong className={"text-lg line-clamp-1"}>
                     {cargo?.origin}
                   </strong>
-                </div>
-                <div className={styles["search-result__distance"]}>
-                  <span>📍</span>
-                  <div className={styles["distance-center"]}>
-                    <div className={styles["distance-center-line"]}></div>
-                    <div>{cargo?.km?.toLocaleString()} км</div>
-                  </div>
-                  <span>📍</span>
-                </div>
-                <div className={styles["search-result__city"]}>
-                  {destinationFlag?.flags?.png && (
-                    <img
-                      className="w-5 sm:w-10 h-full object-cover"
-                      src={destinationFlag.flags.png}
-                      alt={destinationFlag.flags.alt}
-                    />
-                  )}
-                  <strong className={"text-xs sm:text-base line-clamp-1"}>
+                  <HiOutlineArrowNarrowRight />
+                  <strong className={"text-lg line-clamp-1"}>
                     {cargo?.destination}
                   </strong>
+                  {cargo?.km && <div>{cargo?.km?.toLocaleString()} км</div>}
                 </div>
-              </div>
-              <div
-                className={
-                  "my-10 font-medium grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-y-8"
-                }
-              >
-                <div className="text-sm sm:text-lg">
-                  <BsBoxSeamFill className="text-xl sm:text-3xl text-[#ffb000]" />
-                  {cargo?.type}
+                <div className="grid grid-cols-3 gap-4">
+                  {cargo?.type && <p>{cargo?.type}</p>}
+                  {cargo?.car_type && <p>{cargo?.car_type}</p>}
+                  {cargo?.weight && (
+                    <p>
+                      {cargo?.weight && cargo?.weight > 1000
+                        ? cargo.weight / 1000
+                        : cargo?.weight}{" "}
+                      т
+                    </p>
+                  )}
+                  {cargo?.volume && (
+                    <p>
+                      {cargo?.volume && cargo?.volume > 1000
+                        ? cargo.volume / 1000
+                        : cargo?.volume}{" "}
+                      м³
+                    </p>
+                  )}
+                  {formattedDate && <p>{formattedDate}</p>}
+                  {cargo?.price && <p>{cargo?.price}</p>}
+                  {cargo?.temperature && <p>{cargo?.temperature}°C</p>}
                 </div>
-                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                  <FaTruck className="text-xl sm:text-3xl text-green-500" />
-                  <span>{cargo?.car_type}</span>
-                </div>
-                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                  <FaWeightHanging className="text-xl sm:text-3xl text-gray-600" />
-                  <span>
-                    {cargo?.weight && cargo?.weight > 1000
-                      ? cargo.weight / 1000
-                      : cargo?.weight}{" "}
-                    т
-                  </span>
-                </div>
-                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                  <FaMaximize className="text-xl sm:text-3xl text-gray-600" />
-                  <span>
-                    {cargo?.volume && cargo?.volume > 1000
-                      ? cargo.volume / 1000
-                      : cargo?.volume}{" "}
-                    м³
-                  </span>
-                </div>
-                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                  <FaRegCalendarAlt className="text-xl sm:text-3xl text-gray-600" />
-                  <span>{formattedDate}</span>
-                </div>
-                <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                  <AiFillDollarCircle className="text-xl sm:text-3xl text-gray-600" />
-                  <span>{cargo?.price}</span>
-                </div>
-                {cargo?.temperature && (
-                  <div className="flex items-center gap-x-3 text-sm sm:text-lg">
-                    <FaTemperatureHalf className="text-xl sm:text-3xl text-[#c6dcff]" />
-                    <span>{cargo?.temperature}°C</span>
-                  </div>
-                )}
               </div>
             </div>
 
