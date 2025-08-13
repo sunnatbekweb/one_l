@@ -23,6 +23,7 @@ export const RouteCard: React.FC<RouteData> = ({
         destination,
       })
     );
+    sessionStorage.setItem("viewMode", "search");
   };
 
   return (

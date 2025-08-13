@@ -21,14 +21,6 @@ export interface RouteData {
 
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
-  const isFilterActive = Object.values({
-    from_country: filters.from_country,
-    to_country: filters.to_country,
-    origin: filters.origin,
-    destination: filters.destination,
-    type: filters.type,
-  }).some(Boolean);
-
   const { cargos, isloading, error } = useSelector(
     (state: RootState) => state.cargos
   );
@@ -65,7 +57,7 @@ export const Cargo = () => {
   return (
     <section className="py-[15px] mx-auto" id={"pagination_top"}>
       <div>
-        {!isFilterActive ? (
+        {sessionStorage.getItem("viewMode") === "popular" ? (
           <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
             {t("popular_directions")}
           </h2>
@@ -142,7 +134,7 @@ export const Cargo = () => {
             <div className="text-red-500 text-center">{error}</div>
           ) : (
             <div className="grid grid-cols-1">
-              {isFilterActive ? (
+              {sessionStorage.getItem("viewMode") === "search" ? (
                 cargos.results.length > 0 ? (
                   <div>
                     {cargos?.results.map((cargo) => (

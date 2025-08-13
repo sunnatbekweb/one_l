@@ -13,6 +13,8 @@ interface DropdownProps
   value: string;
   onChange: (value: string) => void;
   onSelect: (country: Country) => void;
+  fromAnywhere?: string;
+  anywhere?: string;
 }
 
 export const CountriesDropdown = React.forwardRef<
@@ -20,12 +22,26 @@ export const CountriesDropdown = React.forwardRef<
   DropdownProps
 >(
   (
-    { icon, countries, selectedCountry, value, onChange, onSelect, ...props },
+    {
+      icon,
+      countries,
+      selectedCountry,
+      value,
+      fromAnywhere,
+      anywhere,
+      onChange,
+      onSelect,
+      ...props
+    },
     ref
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState(value);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [fromAnywhereValue, setFromAnywhereValue] = useState<
+      string | undefined
+    >("");
+    const [anywhereValue, setAnywhereValue] = useState<string | undefined>("");
 
     const popularCountries = useMemo(() => {
       const targetNames = [
@@ -118,25 +134,62 @@ export const CountriesDropdown = React.forwardRef<
           )}
         </div>
 
-        <input
-          ref={ref}
-          {...props}
-          value={searchTerm}
-          className={styles["input"]}
-          onFocus={() => setIsOpen(true)}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        {fromAnywhereValue || anywhereValue ? (
+          <input
+            value={fromAnywhereValue || anywhereValue}
+            className={styles["input"]}
+            onFocus={() => {
+              setFromAnywhereValue("");
+              setAnywhereValue("");
+              setFromAnywhereValue("");
+              setAnywhereValue("");
+              setSearchTerm("");
+              onChange("");
+              setIsOpen(true);
+            }}
+          />
+        ) : (
+          <input
+            ref={ref}
+            {...props}
+            value={searchTerm}
+            className={styles["input"]}
+            onFocus={() => {
+              setFromAnywhereValue("");
+              setAnywhereValue("");
+              setIsOpen(true);
+            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        )}
 
         {isOpen && (
           <div className={styles.dropdown}>
+            <div
+              className={styles["dropdown-content"]}
+              onMouseDown={() => {
+                if (fromAnywhere) {
+                  setFromAnywhereValue(fromAnywhere);
+                  setAnywhereValue("");
+                } else if (anywhere) {
+                  setAnywhereValue(anywhere);
+                  setFromAnywhereValue("");
+                }
+                setIsOpen(false);
+              }}
+            >
+              <span className={styles.name}>{fromAnywhere || anywhere}</span>
+            </div>
+
             {Array.isArray(filteredCountries) ? (
-              // Если идёт поиск — рендерим просто список
               filteredCountries.map((c) => (
                 <div
                   key={c.name.official}
                   className={styles["dropdown-content"]}
                   onMouseDown={(e) => {
                     e.preventDefault();
+                    setFromAnywhereValue("");
+                    setAnywhereValue("");
                     setSearchTerm(c.name.common);
                     onSelect(c);
                     setIsOpen(false);
@@ -149,7 +202,6 @@ export const CountriesDropdown = React.forwardRef<
                 </div>
               ))
             ) : (
-              // Если нет поиска — рендерим популярные и остальные отдельно
               <>
                 <div className="border-y border-gray-400">
                   {filteredCountries.popular.map((c) => (
@@ -158,6 +210,8 @@ export const CountriesDropdown = React.forwardRef<
                       className={styles["dropdown-content"]}
                       onMouseDown={(e) => {
                         e.preventDefault();
+                        setFromAnywhereValue("");
+                        setAnywhereValue("");
                         setSearchTerm(c.name.common);
                         onSelect(c);
                         setIsOpen(false);
@@ -177,6 +231,8 @@ export const CountriesDropdown = React.forwardRef<
                       className={styles["dropdown-content"]}
                       onMouseDown={(e) => {
                         e.preventDefault();
+                        setFromAnywhereValue("");
+                        setAnywhereValue("");
                         setSearchTerm(c.name.common);
                         onSelect(c);
                         setIsOpen(false);

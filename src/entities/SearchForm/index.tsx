@@ -57,6 +57,7 @@ export const SearchForm = () => {
     };
 
     dispatch(setFilters(payload));
+    sessionStorage.setItem("viewMode", "search");
   };
 
   const valueChange = () => {
@@ -92,9 +93,10 @@ export const SearchForm = () => {
           countries={countries}
           value={originValue}
           selectedCountry={originCountry}
+          fromAnywhere="Откуда угодно"
           onChange={(val) => {
             setOriginValue(val);
-            setOriginCountry(null); // сбрасываем флаг при ручном вводе
+            setOriginCountry(null);
             setValue("from_country", val);
           }}
           onSelect={(country) => {
@@ -114,6 +116,7 @@ export const SearchForm = () => {
           countries={countries}
           value={destinationValue}
           selectedCountry={destinationCountry}
+          anywhere="Куда угодно"
           onChange={(val) => {
             setDestinationValue(val);
             setDestinationCountry(null);
