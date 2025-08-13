@@ -85,8 +85,8 @@
 }
 
 .search-result__details {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 5px;
   margin-top: 10px;
   font-size: 13px;
@@ -94,8 +94,20 @@
   font-weight: 500;
 }
 
+.search-result__details > :nth-child(1) {
+  justify-self: start;
+}
+
+.search-result__details > :nth-child(2),
+.search-result__details > :nth-child(3) {
+  justify-self: center;
+}
+
+.search-result__details > :nth-child(4) {
+  justify-self: end;
+}
+
 .search-result__details span {
-  display: flex;
   justify-content: center;
   align-items: center;
   gap: 3px;

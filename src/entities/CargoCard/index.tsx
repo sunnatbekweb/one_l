@@ -137,7 +137,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         </div>
         <div className="flex items-center gap-x-1">
           <FaTruck />
-          <span>{cargo?.car_type}</span>
+          <span className="line-clamp-1">{cargo?.car_type}</span>
         </div>
         <div className="flex items-center gap-x-1">
           <FaWeightHanging />
