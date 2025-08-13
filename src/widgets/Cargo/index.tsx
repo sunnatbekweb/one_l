@@ -21,12 +21,13 @@ export interface RouteData {
 
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
-  const isFilterActive =
-    !!filters.from_country ||
-    !!filters.to_country ||
-    !!filters.origin ||
-    !!filters.destination ||
-    !!filters.type;
+  const isFilterActive = Object.values({
+    from_country: filters.from_country,
+    to_country: filters.to_country,
+    origin: filters.origin,
+    destination: filters.destination,
+    type: filters.type,
+  }).some(Boolean);
 
   const { cargos, isloading, error } = useSelector(
     (state: RootState) => state.cargos

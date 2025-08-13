@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { setLang } from "@/shared/lib/setLang";
 import Cookies from "js-cookie";
 import styles from "./loader.module.css";
+import { useEffect } from "react";
 
 export const Welcome = () => {
   const params = useParams();
@@ -16,7 +16,20 @@ export const Welcome = () => {
     const tg = (window as any).Telegram?.WebApp;
 
     if (tg) {
-      tg.expand();
+      // iOS-da ba'zan kechikib yuklanadi, shuning uchun callback bilan ishlaymiz
+      const initExpand = () => {
+        tg.ready();
+        setTimeout(() => {
+          tg.expand();
+        }, 50); // 50ms delay iOS uchun optimal
+      };
+
+      if (document.readyState === "complete") {
+        initExpand();
+      } else {
+        window.addEventListener("load", initExpand);
+        return () => window.removeEventListener("load", initExpand);
+      }
     }
 
     if (params.id && params.lang) {

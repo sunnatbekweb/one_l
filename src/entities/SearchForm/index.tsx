@@ -54,7 +54,6 @@ export const SearchForm = () => {
       to_country: destinationCountry ? destinationCountry.name.common : "",
       origin: originCountry ? "" : originValue,
       destination: destinationCountry ? "" : destinationValue,
-      page: 1,
     };
 
     dispatch(setFilters(payload));
