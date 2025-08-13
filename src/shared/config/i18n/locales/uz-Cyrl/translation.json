@@ -40,7 +40,7 @@
     "notifications": "Билдиришномалар",
     "applications": "Аризалар"
   },
-  "all_cargo_type": "Барча юк турлари",
+  "all_cargo_type": "Барча транспорт турлари",
   "detail": "Батафсил",
   "showContacts": "Контактларни кўрсатиш",
   "loading": "Юкланмоқда...",
@@ -51,6 +51,8 @@
     "settings": "Созламалар"
   },
   "found_cargos": "Сизнинг сўровингиз бўйича <strong>{{count}}</strong> та юк топилди",
+  "total_ads": "Жами {{total}} эълон",
+  "fraxt": "Фрахт",
   "sort": {
     "title": "Саралаш бўйича:",
     "createdAt": "яратилган вақти,",

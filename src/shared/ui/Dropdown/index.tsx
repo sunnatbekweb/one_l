@@ -31,9 +31,11 @@ export const CountriesDropdown = React.forwardRef<
       const targetNames = [
         "Uzbekistan",
         "Russia",
-        "Kazakhstan",
         "Kyrgyzstan",
+        "Kazakhstan",
         "Tajikistan",
+        "Belarus",
+        "Turkey",
       ];
       return countries.filter((c) =>
         targetNames.some(
@@ -41,20 +43,22 @@ export const CountriesDropdown = React.forwardRef<
         )
       );
     }, [countries]);
-
     const filteredCountries = useMemo(() => {
       const q = searchTerm.trim().toLowerCase();
-      const list = q
-        ? countries.filter((c) => c.name.common.toLowerCase().includes(q))
-        : countries;
 
-      if (!q) {
-        return [
-          ...popularCountries,
-          ...list.filter((c) => !popularCountries.includes(c)),
-        ];
+      if (q) {
+        // При поиске просто фильтруем всё вместе
+        return countries
+          .filter((c) => c.name.common.toLowerCase().includes(q))
+          .sort((a, b) => a.name.common.localeCompare(b.name.common));
       }
-      return list;
+
+      // Когда нет поиска — рендерим популярные отдельно, а остальные по алфавиту
+      const restCountries = countries
+        .filter((c) => !popularCountries.includes(c))
+        .sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+      return { popular: popularCountries, rest: restCountries };
     }, [countries, searchTerm, popularCountries]);
 
     useEffect(() => {
@@ -109,23 +113,68 @@ export const CountriesDropdown = React.forwardRef<
 
         {isOpen && (
           <div className={styles.dropdown}>
-            {filteredCountries.map((c) => (
-              <div
-                key={c.name.official}
-                className={styles["dropdown-content"]}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  setSearchTerm(c.name.common);
-                  onSelect(c);
-                  setIsOpen(false);
-                }}
-              >
-                <div className={styles["image-container"]}>
-                  <img src={c.flags.svg} alt={c.flags.alt} />
+            {Array.isArray(filteredCountries) ? (
+              // Если идёт поиск — рендерим просто список
+              filteredCountries.map((c) => (
+                <div
+                  key={c.name.official}
+                  className={styles["dropdown-content"]}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    setSearchTerm(c.name.common);
+                    onSelect(c);
+                    setIsOpen(false);
+                  }}
+                >
+                  <div className={styles["image-container"]}>
+                    <img src={c.flags.svg} alt={c.flags.alt} />
+                  </div>
+                  <span className={styles.name}>{c.name.common}</span>
                 </div>
-                <span className={styles.name}>{c.name.common}</span>
-              </div>
-            ))}
+              ))
+            ) : (
+              // Если нет поиска — рендерим популярные и остальные отдельно
+              <>
+                <div className="border-y border-gray-400">
+                  {filteredCountries.popular.map((c) => (
+                    <div
+                      key={c.name.official}
+                      className={styles["dropdown-content"]}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setSearchTerm(c.name.common);
+                        onSelect(c);
+                        setIsOpen(false);
+                      }}
+                    >
+                      <div className={styles["image-container"]}>
+                        <img src={c.flags.svg} alt={c.flags.alt} />
+                      </div>
+                      <span className={styles.name}>{c.name.common}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-y border-gray-400">
+                  {filteredCountries.rest.map((c) => (
+                    <div
+                      key={c.name.official}
+                      className={styles["dropdown-content"]}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setSearchTerm(c.name.common);
+                        onSelect(c);
+                        setIsOpen(false);
+                      }}
+                    >
+                      <div className={styles["image-container"]}>
+                        <img src={c.flags.svg} alt={c.flags.alt} />
+                      </div>
+                      <span className={styles.name}>{c.name.common}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

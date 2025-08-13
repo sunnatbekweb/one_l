@@ -8,6 +8,8 @@ export const getCargos = async (params: CargoParams) => {
 
   if (params.page) query.append("page", params.page.toString());
   if (params.type) query.append("type", params.type);
+  if (params.from_country) query.append("from_country", params.from_country);
+  if (params.to_country) query.append("to_country", params.to_country);
   if (params.origin) query.append("origin", params.origin);
   if (params.destination) query.append("destination", params.destination);
   if (params.created_at) query.append("created_at", params.created_at);

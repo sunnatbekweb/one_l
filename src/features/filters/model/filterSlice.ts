@@ -1,12 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface FilterState {
+  page: number;
+  from_country: string;
+  to_country: string;
   origin: string;
   destination: string;
   type: string;
 }
 
 const initialState: FilterState = {
+  page: 1,
+  from_country: "",
+  to_country: "",
   origin: "",
   destination: "",
   type: "",
@@ -16,8 +22,11 @@ const filterSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setFilters(state, action: PayloadAction<FilterState>) {
-      return { ...state, ...action.payload };
+    setFilters(state, action: PayloadAction<Omit<FilterState, "page">>) {
+      return { ...state, ...action.payload, page: 1 };
+    },
+    setPage(state, action: PayloadAction<number>) {
+      state.page = action.payload;
     },
     resetFilters() {
       return initialState;
@@ -25,5 +34,5 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setFilters, resetFilters } = filterSlice.actions;
+export const { setFilters, resetFilters, setPage } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;

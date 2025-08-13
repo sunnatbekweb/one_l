@@ -18,7 +18,9 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           {...props}
-          className="w-full truncate whitespace-nowrap overflow-hidden text-ellipsis border rounded"
+          className={`w-full truncate whitespace-nowrap overflow-hidden text-ellipsis border rounded ${
+            props.value === undefined ? "text-[#959595]" : "text-black"
+          }`}
         >
           <option value="">{t("all_cargo_type")}</option>
           {types.map((t, index) => (

@@ -40,8 +40,8 @@
     "notifications": "Уведомление",
     "applications": "Заявки"
   },
-  "all_cargo_type": "Все типы груза",
-  "detail": "Подробно",
+  "all_cargo_type": "Все типы транспорта",
+  "detail": "Подробнее",
   "showContacts": "Показать контакты",
   "loading": "Загрузка...",
   "noCargo": "Нет грузов для отображения",
@@ -51,6 +51,8 @@
     "settings": "Параметры"
   },
   "found_cargos": "Найдено <strong>{{count}}</strong> грузов по вашему запросу",
+  "total_ads": "Всего {{total}} объявлений",
+  "fraxt": "Фрахт",
   "sort": {
     "title": "Упорядочить по:",
     "createdAt": "времени создания,",

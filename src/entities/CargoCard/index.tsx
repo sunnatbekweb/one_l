@@ -90,7 +90,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
                   : "UZS"}
             </>
           ) : (
-            "Фрахт"
+            t("fraxt")
           )}
         </span>
       </div>

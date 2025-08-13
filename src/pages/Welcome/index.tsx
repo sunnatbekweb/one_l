@@ -13,6 +13,12 @@ export const Welcome = () => {
   useEffect(() => {
     i18n.changeLanguage(setLang());
 
+    const tg = (window as any).Telegram?.WebApp;
+
+    if (tg) {
+      tg.expand();
+    }
+
     if (params.id && params.lang) {
       Cookies.set("user_id", params.id ?? "");
       Cookies.set("lang", params.lang ?? "ru");

@@ -30,8 +30,10 @@ export interface Cargo {
 export type CargoParams = {
   page?: number;
   type?: string;
-  origin?: string;
-  destination?: string;
+  from_country?: string;
+  to_country?: string;
+  origin: string;
+  destination: string;
   created_at?: string;
   date?: string;
   weight?: string;

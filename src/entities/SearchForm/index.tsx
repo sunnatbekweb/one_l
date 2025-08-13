@@ -14,6 +14,8 @@ import { fetchCountries } from "@/shared/model/restCountriesSlice.ts";
 import type { Country } from "@/shared/types/apiType.ts";
 
 interface FormValues {
+  from_country: string;
+  to_country: string;
   origin: string;
   destination: string;
   type: string;
@@ -25,7 +27,13 @@ export const SearchForm = () => {
   const { countries } = useSelector((state: RootState) => state.counties);
 
   const { register, handleSubmit, setValue, getValues } = useForm<FormValues>({
-    defaultValues: { origin: "", destination: "", type: "" },
+    defaultValues: {
+      from_country: "",
+      to_country: "",
+      origin: "",
+      destination: "",
+      type: "",
+    },
   });
 
   const { t } = useTranslation();
@@ -40,15 +48,24 @@ export const SearchForm = () => {
   );
 
   const onSubmit = (data: FormValues) => {
-    dispatch(setFilters(data));
+    const payload = {
+      ...data,
+      from_country: originCountry ? originCountry.name.common : "",
+      to_country: destinationCountry ? destinationCountry.name.common : "",
+      origin: originCountry ? "" : originValue,
+      destination: destinationCountry ? "" : destinationValue,
+      page: 1,
+    };
+
+    dispatch(setFilters(payload));
   };
 
   const valueChange = () => {
     // Меняем текстовые значения в форме
-    const currentOrigin = getValues("origin");
-    const currentDestination = getValues("destination");
-    setValue("origin", currentDestination);
-    setValue("destination", currentOrigin);
+    const currentOrigin = getValues("from_country");
+    const currentDestination = getValues("to_country");
+    setValue("from_country", currentDestination);
+    setValue("to_country", currentOrigin);
 
     // Меняем стейт текстовых значений
     setOriginValue(currentDestination);
@@ -79,12 +96,12 @@ export const SearchForm = () => {
           onChange={(val) => {
             setOriginValue(val);
             setOriginCountry(null); // сбрасываем флаг при ручном вводе
-            setValue("origin", val);
+            setValue("from_country", val);
           }}
           onSelect={(country) => {
             setOriginCountry(country);
             setOriginValue(country.name.common);
-            setValue("origin", country.name.common);
+            setValue("from_country", country.name.common);
           }}
         />
 
@@ -101,12 +118,12 @@ export const SearchForm = () => {
           onChange={(val) => {
             setDestinationValue(val);
             setDestinationCountry(null);
-            setValue("destination", val);
+            setValue("to_country", val);
           }}
           onSelect={(country) => {
             setDestinationCountry(country);
             setDestinationValue(country.name.common);
-            setValue("destination", country.name.common);
+            setValue("to_country", country.name.common);
           }}
         />
       </div>

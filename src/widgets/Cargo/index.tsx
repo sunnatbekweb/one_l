@@ -9,11 +9,25 @@ import { fetchCargos } from "./model/cargoSlice";
 import { useTranslation } from "react-i18next";
 import { SearchFilter } from "@/shared/ui/Modal/SearchFilterModal";
 import { SearchSettings } from "@/shared/ui/Modal/SearchSettings";
+import { RouteCard } from "@/entities/RouteCard";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import axios from "axios";
+
+export interface RouteData {
+  origin: string;
+  destination: string;
+  total: number;
+}
 
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
   const isFilterActive =
-    filters.origin !== "" || filters.destination !== "" || filters.type !== "";
+    !!filters.from_country ||
+    !!filters.to_country ||
+    !!filters.origin ||
+    !!filters.destination ||
+    !!filters.type;
+
   const { cargos, isloading, error } = useSelector(
     (state: RootState) => state.cargos
   );
@@ -23,19 +37,29 @@ export const Cargo = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [filterModal, setFilterModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
+  const [routes, setRoutes] = useState<RouteData[]>();
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
-    dispatch(fetchCargos({ page: selected + 1, ...filters }));
+    dispatch(fetchCargos({ ...filters, page: selected + 1 }));
   };
 
   const handleUpdate = () => {
-    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+    dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
+  };
+
+  const getRoutes = async () => {
+    const response = await axios.get(`${baseUrl}/top-cargos/`);
+    setRoutes(response.data);
   };
 
   useEffect(() => {
-    dispatch(fetchCargos({ page: currentPage + 1, ...filters }));
+    dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
   }, [currentPage, filters]);
+
+  useEffect(() => {
+    getRoutes();
+  }, []);
 
   return (
     <section className="py-[15px] mx-auto" id={"pagination_top"}>
@@ -117,19 +141,32 @@ export const Cargo = () => {
             <div className="text-red-500 text-center">{error}</div>
           ) : (
             <div className="grid grid-cols-1">
-              {cargos.results.length > 0 ? (
-                <div>
-                  {cargos?.results.map((cargo) => (
-                    <CargoCard key={cargo.id} cargo={cargo} />
-                  ))}
-                  <Pagination
-                    pageCount={cargos.count}
-                    onPageChange={handlePageChange}
-                    forcePage={currentPage}
-                  />
-                </div>
+              {isFilterActive ? (
+                cargos.results.length > 0 ? (
+                  <div>
+                    {cargos?.results.map((cargo) => (
+                      <CargoCard key={cargo.id} cargo={cargo} />
+                    ))}
+                    <Pagination
+                      pageCount={cargos.count}
+                      onPageChange={handlePageChange}
+                      forcePage={currentPage}
+                    />
+                  </div>
+                ) : (
+                  <div className="col-span-full text-center">
+                    {t("noCargo")}
+                  </div>
+                )
               ) : (
-                <div className="col-span-full text-center">{t("noCargo")}</div>
+                routes?.map((route, index) => (
+                  <RouteCard
+                    key={index}
+                    origin={route.origin}
+                    destination={route.destination}
+                    total={route.total}
+                  />
+                ))
               )}
             </div>
           )}
