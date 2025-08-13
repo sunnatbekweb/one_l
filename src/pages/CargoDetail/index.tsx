@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
-// import { formatCustomDate } from "@/shared/lib/formatDate";
+import { formatCustomDate } from "@/shared/lib/formatDate";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { useTranslation } from "react-i18next";
 import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
@@ -18,7 +18,7 @@ export const CargoDetail = () => {
   const { cargo, isLoading, error } = useSelector(
     (state: RootState) => state.cargo
   );
-  // const formattedDate = formatCustomDate(cargo?.date || "");
+  const formattedDate = formatCustomDate(cargo?.date || "");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -58,42 +58,36 @@ export const CargoDetail = () => {
                   <IoMdResize />
                 </button>
               </div>
-              <p className={`text-lg ${!showInfo && "line-clamp-1"}`}>{cargo?.info}</p>
-              {/* <div className={`flex-col gap-4 ${showInfo ? "flex" : "hidden"}`}>
-                <div className="flex items-center gap-x-3">
-                  <strong className={"text-lg line-clamp-1"}>
-                    {cargo?.origin}
-                  </strong>
-                  <HiOutlineArrowNarrowRight />
-                  <strong className={"text-lg line-clamp-1"}>
-                    {cargo?.destination}
-                  </strong>
-                  {cargo?.km && <div>{cargo?.km?.toLocaleString()} км</div>}
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {cargo?.type && <p>{cargo?.type}</p>}
-                  {cargo?.car_type && <p>{cargo?.car_type}</p>}
-                  {cargo?.weight && (
-                    <p>
-                      {cargo?.weight && cargo?.weight > 1000
-                        ? cargo.weight / 1000
-                        : cargo?.weight}{" "}
-                      т
-                    </p>
-                  )}
-                  {cargo?.volume && (
-                    <p>
-                      {cargo?.volume && cargo?.volume > 1000
-                        ? cargo.volume / 1000
-                        : cargo?.volume}{" "}
-                      м³
-                    </p>
-                  )}
-                  {formattedDate && <p>{formattedDate}</p>}
-                  {cargo?.price && <p>{cargo?.price}</p>}
-                  {cargo?.temperature && <p>{cargo?.temperature}°C</p>}
-                </div>
-              </div> */}
+              <div className={`text-lg ${!showInfo && "line-clamp-1"}`}>
+                <p>{cargo?.info}</p>
+                <p>
+                  {[
+                    cargo?.origin,
+                    cargo?.destination,
+                    cargo?.type,
+                    cargo?.weight
+                      ? `${cargo.weight > 1000 ? cargo.weight / 1000 : cargo.weight} т`
+                      : null,
+                    cargo?.car_type,
+                    cargo?.volume
+                      ? `${cargo.volume > 1000 ? cargo.volume / 1000 : cargo.volume} м³`
+                      : null,
+                    formattedDate || null,
+                    typeof cargo?.price === "number"
+                      ? `${cargo.price.toLocaleString()} ${
+                          cargo.price <= 100_000
+                            ? "USD"
+                            : cargo.price <= 999_999
+                              ? "RUB"
+                              : "UZS"
+                        }`
+                      : t("fraxt"),
+                    cargo?.temperature ? `${cargo.temperature}°C` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                </p>
+              </div>
             </div>
 
             <div className="mt-[30px] flex items-center justify-center gap-6">
