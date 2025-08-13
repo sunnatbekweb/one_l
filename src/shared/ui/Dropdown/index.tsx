@@ -29,20 +29,36 @@ export const CountriesDropdown = React.forwardRef<
 
     const popularCountries = useMemo(() => {
       const targetNames = [
-        "Uzbekistan",
         "Russia",
-        "Kyrgyzstan",
-        "Kazakhstan",
-        "Tajikistan",
-        "Belarus",
+        "Uzbekistan",
         "Turkey",
+        "Belarus",
+        "Kazakhstan",
+        "Kyrgyzstan",
+        "Tajikistan",
       ];
-      return countries.filter((c) =>
-        targetNames.some(
-          (name) => c.name.common.toLowerCase() === name.toLowerCase()
+
+      return countries
+        .filter((c) =>
+          targetNames.some(
+            (name) => c.name.common.toLowerCase() === name.toLowerCase()
+          )
         )
-      );
+        .sort(
+          (a, b) =>
+            targetNames.indexOf(
+              targetNames.find(
+                (name) => name.toLowerCase() === a.name.common.toLowerCase()
+              )!
+            ) -
+            targetNames.indexOf(
+              targetNames.find(
+                (name) => name.toLowerCase() === b.name.common.toLowerCase()
+              )!
+            )
+        );
     }, [countries]);
+
     const filteredCountries = useMemo(() => {
       const q = searchTerm.trim().toLowerCase();
 
