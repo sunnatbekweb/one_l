@@ -104,7 +104,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
               alt={originFlag.flags.alt}
             />
           )}
-          <strong className={"text-xs sm:text-base line-clamp-1"}>
+          <strong className={"text-base sm:text-xl line-clamp-1"}>
             {cargo?.origin}
           </strong>
         </div>
@@ -124,7 +124,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
               alt={destinationFlag.flags.alt}
             />
           )}
-          <strong className={"text-xs sm:text-base line-clamp-1"}>
+          <strong className={"text-base sm:text-xl line-clamp-1"}>
             {cargo?.destination}
           </strong>
         </div>
@@ -132,21 +132,21 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 
       <div className={styles["search-result__details"]}>
         <div className="flex items-center gap-x-1">
-          <FaRegCalendarAlt />
+          <FaRegCalendarAlt fontSize={18} />
           <span>{formattedDate}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaTruck />
+          <FaTruck fontSize={18} />
           <span className="line-clamp-1">{cargo?.car_type}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaWeightHanging />
+          <FaWeightHanging fontSize={18} />
           <span>
             {cargo?.weight > 1000 ? cargo.weight / 1000 : cargo?.weight}т
           </span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaMaximize />
+          <FaMaximize fontSize={18} />
           <span>
             {cargo?.volume > 1000 ? cargo.volume / 1000 : cargo?.volume}
             м³
@@ -154,7 +154,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         </div>
         {cargo?.temperature && (
           <div className="flex items-center gap-x-1">
-            <FaTemperatureHalf />
+            <FaTemperatureHalf fontSize={18} />
             <span>{cargo?.temperature}°C</span>
           </div>
         )}
