@@ -1,14 +1,20 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { setLang } from "@/shared/lib/setLang";
 import Cookies from "js-cookie";
 import styles from "./loader.module.css";
-import { useEffect } from "react";
 
 export const Welcome = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { i18n } = useTranslation();
+
+  // iOS aniqlash funksiyasi
+  const isIOS = () => {
+    if (typeof navigator === "undefined") return false;
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
 
   useEffect(() => {
     i18n.changeLanguage(setLang());
@@ -16,19 +22,18 @@ export const Welcome = () => {
     const tg = (window as any).Telegram?.WebApp;
 
     if (tg) {
-      // iOS-da ba'zan kechikib yuklanadi, shuning uchun callback bilan ishlaymiz
-      const initExpand = () => {
-        tg.ready();
-        setTimeout(() => {
-          tg.expand();
-        }, 50); // 50ms delay iOS uchun optimal
-      };
+      tg.ready();
 
-      if (document.readyState === "complete") {
-        initExpand();
+      if (!isIOS()) {
+        // Faqat Android yoki boshqa platformalarda avtomatik kengaytirish
+        tg.expand();
       } else {
-        window.addEventListener("load", initExpand);
-        return () => window.removeEventListener("load", initExpand);
+        // iOS’da foydalanuvchi interaction bo‘lishi kerak
+        const onTap = () => {
+          tg.expand();
+          document.removeEventListener("click", onTap); // Bir marta ishlaydi
+        };
+        document.addEventListener("click", onTap);
       }
     }
 
