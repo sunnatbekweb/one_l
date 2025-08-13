@@ -141,8 +141,6 @@ export const CountriesDropdown = React.forwardRef<
             onFocus={() => {
               setFromAnywhereValue("");
               setAnywhereValue("");
-              setFromAnywhereValue("");
-              setAnywhereValue("");
               setSearchTerm("");
               onChange("");
               setIsOpen(true);
@@ -157,6 +155,8 @@ export const CountriesDropdown = React.forwardRef<
             onFocus={() => {
               setFromAnywhereValue("");
               setAnywhereValue("");
+              setSearchTerm("");
+              onChange("");
               setIsOpen(true);
             }}
             onChange={(e) => setSearchTerm(e.target.value)}
