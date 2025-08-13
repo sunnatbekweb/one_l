@@ -80,15 +80,17 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           </span>
         </span>
         <span className={styles["search-result__price"]}>
-          {cargo?.price && (
+          {typeof cargo?.price === "number" ? (
             <>
               {cargo.price.toLocaleString()}{" "}
-              {cargo.price > 1_000_000
-                ? "UZS"
-                : cargo.price > 100_000
+              {cargo.price <= 100_000
+                ? "USD"
+                : cargo.price <= 999_999
                   ? "RUB"
-                  : "USD"}
+                  : "UZS"}
             </>
+          ) : (
+            "Фрахт"
           )}
         </span>
       </div>
@@ -110,7 +112,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           <span>📍</span>
           <div className={styles["distance-center"]}>
             <div className={styles["distance-center-line"]}></div>
-            <div>{cargo?.km?.toLocaleString()} км</div>
+            {cargo?.km && <div>{cargo?.km?.toLocaleString()} км</div>}
           </div>
           <span>📍</span>
         </div>
