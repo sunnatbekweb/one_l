@@ -41,7 +41,7 @@ export const Welcome = () => {
             alt="Logo icon"
           />
         </div>
-        <h1 className="font-bold text-6xl italic">1LOG</h1>
+        <h1 className="font-bold text-6xl text-blue-950 italic">1LOG</h1>
         <div className="absolute left-1/2 -translate-x-1/2 bottom-[10%]">
           <span className={styles.loader}></span>
         </div>
