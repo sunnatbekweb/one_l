@@ -83,11 +83,15 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           {typeof cargo?.price === "number" ? (
             <>
               {cargo.price.toLocaleString()}{" "}
-              {cargo.price <= 100_000
-                ? "USD"
-                : cargo.price <= 999_999
-                  ? "RUB"
-                  : "UZS"}
+              {cargo.price >= 1 && cargo.price < 1000
+                ? "UZS"
+                : cargo.price >= 1000 && cargo.price <= 100_000
+                  ? "USD"
+                  : cargo.price > 100_000 && cargo.price <= 999_999
+                    ? "RUB"
+                    : cargo.price > 1_000_000
+                      ? "UZS"
+                      : ""}
             </>
           ) : (
             t("fraxt")
