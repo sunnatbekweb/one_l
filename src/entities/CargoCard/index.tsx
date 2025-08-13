@@ -80,7 +80,16 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           </span>
         </span>
         <span className={styles["search-result__price"]}>
-          {cargo?.price?.toLocaleString()}
+          {cargo?.price && (
+            <>
+              {cargo.price.toLocaleString()}{" "}
+              {cargo.price > 1_000_000
+                ? "UZS"
+                : cargo.price > 100_000
+                  ? "RUB"
+                  : "USD"}
+            </>
+          )}
         </span>
       </div>
 
