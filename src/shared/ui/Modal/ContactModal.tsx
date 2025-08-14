@@ -37,36 +37,43 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
           {t("contactModal.title")}
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:px-6 mt-4 sm:mt-8 mb-2">
-          <div className="flex items-center gap-x-4">
-            <div>
-              <FaUser className="text-xl sm:text-3xl" />
+          {cargo?.username && (
+            <div className="flex items-center gap-x-4">
+              <div>
+                <FaUser className="text-xl sm:text-3xl" />
+              </div>
+              <span className="text-sm sm:text-xl">{cargo?.username}</span>
             </div>
-            <span className="text-sm sm:text-xl">{cargo?.username}</span>
-          </div>
-          <div className="flex items-center gap-x-4">
-            <div>
-              <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
+          )}
+          {cargo?.username && (
+            <div className="flex items-center gap-x-4">
+              <div>
+                <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
+              </div>
+              <span className="text-sm sm:text-xl">
+                {i18n.language === "ru" ? t("contactModal.write_in") : ""}
+                <Link
+                  to={
+                    `${cargo?.username !== null && `https://t.me/${cargo?.username}`}` ||
+                    ""
+                  }
+                  target="_blank"
+                  className="text-[#659df2]"
+                  onClick={() =>
+                    dispatch(
+                      updateCargoActions({
+                        cargoId: cargo?.id || 0,
+                        data: { chatted_telegram: true },
+                      })
+                    )
+                  }
+                >
+                  Telegram
+                </Link>
+                {i18n.language !== "ru" ? ` ${t("contactModal.write_in")}` : ""}
+              </span>
             </div>
-            <span className="text-sm sm:text-xl">
-              {i18n.language === "ru" ? t("contactModal.write_in") : ""}
-              <Link
-                to={`https://t.me/${cargo?.username}` || "https://t.me/"}
-                target="_blank"
-                className="text-[#659df2]"
-                onClick={() =>
-                  dispatch(
-                    updateCargoActions({
-                      cargoId: cargo?.id || 0,
-                      data: { chatted_telegram: true },
-                    })
-                  )
-                }
-              >
-                Telegram
-              </Link>
-              {i18n.language !== "ru" ? ` ${t("contactModal.write_in")}` : ""}
-            </span>
-          </div>
+          )}
           <div className="flex items-center gap-x-4">
             <div>
               <FaPhoneSquareAlt className="text-xl sm:text-3xl" color="lime" />

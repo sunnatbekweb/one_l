@@ -93,7 +93,7 @@ export const SearchForm = () => {
           countries={countries}
           value={originValue}
           selectedCountry={originCountry}
-          fromAnywhere="Откуда угодно"
+          fromAnywhere={t("fromAnywhere")}
           onChange={(val) => {
             setOriginValue(val);
             setOriginCountry(null);
@@ -116,7 +116,7 @@ export const SearchForm = () => {
           countries={countries}
           value={destinationValue}
           selectedCountry={destinationCountry}
-          anywhere="Куда угодно"
+          anywhere={t("anywhere")}
           onChange={(val) => {
             setDestinationValue(val);
             setDestinationCountry(null);

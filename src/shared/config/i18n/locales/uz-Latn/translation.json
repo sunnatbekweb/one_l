@@ -76,5 +76,7 @@
     "subtitle": "Barcha saqlangan yuklar shu sahifada ko‘rinadi.",
     "noCargo": "Yuklar topilmadi",
     "cargoSubtitle": "Barcha yuklar shu yerda ko‘rinadi."
-  }
+  },
+  "fromAnywhere": "Qayerdan bo‘lsa ham",
+  "anywhere": "Qayerga bo‘lsa ham"
 }
