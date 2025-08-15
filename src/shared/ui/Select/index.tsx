@@ -5,11 +5,11 @@ import styles from "./style.module.css";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   icon: React.ReactElement;
-  types: CargoType[];
+  car_type: CargoType[];
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ icon, types, ...props }, ref) => {
+  ({ icon, car_type, ...props }, ref) => {
     const { t } = useTranslation();
 
     return (
@@ -19,14 +19,16 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           {...props}
           className={`w-full truncate whitespace-nowrap overflow-hidden text-ellipsis border rounded ${
-            props.value === undefined ? "text-[#959595]" : "text-black"
+            props.value === "all" ? "text-[#959595]" : "text-black"
           }`}
         >
-          <option value="" selected disabled>{t("cargo_type")}</option>
+          <option value="all" selected disabled>
+            {t("cargo_type")}
+          </option>
           <option value="">{t("all_cargo_type")}</option>
-          {types.map((t, index) => (
+          {car_type.map((t, index) => (
             <option key={index} value={t.type}>
-              {t.type}
+              {t.car_type}
             </option>
           ))}
         </select>

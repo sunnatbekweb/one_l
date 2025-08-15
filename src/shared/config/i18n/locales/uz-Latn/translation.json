@@ -40,7 +40,7 @@
     "notifications": "Bildirishnomalar",
     "applications": "Arizalar"
   },
-  "cargo_type":"Transport turlari",
+  "cargo_type": "Transport turlari",
   "all_cargo_type": "Barcha transport turlari",
   "detail": "Batafsil",
   "showContacts": "Kontaktlarni ko‘rsatish",
@@ -79,5 +79,17 @@
     "cargoSubtitle": "Barcha yuklar shu yerda ko‘rinadi."
   },
   "fromAnywhere": "Qayerdan bo‘lsa ham",
-  "anywhere": "Qayerga bo‘lsa ham"
+  "anywhere": "Qayerga bo‘lsa ham",
+  "notification": {
+    "title": "🔔Qaysi bildirishnomalarni yoqishni tanlang:",
+    "subtitle1": "Faqat kerakli bildirishnomalarni oling",
+    "subtitle2": "Siz bitta yoki bir nechta variantni yoqishingiz mumkin:",
+    "option1_bold": "Yo‘nalish bo‘yicha",
+    "option1_normal": "kerakli marshrut bo‘yicha yangi so‘rovlar paydo bo‘lganda",
+    "option2_bold": "Yuk bo‘yicha",
+    "option2_normal": "sizga mos yangi yuklar haqida bildirishnoma",
+    "option3_bold": "Ega bo‘yicha",
+    "option3_normal": "mijozingiz yangi so‘rovlar joylaganda"
+  },
+  "done": "Tayyor"
 }

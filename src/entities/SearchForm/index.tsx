@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { fetchCargoType } from "./model/cargoTypeSlice";
 import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
 import { setFilters } from "@/features/filters/model/filterSlice";
 import { Select } from "@/shared/ui/Select";
@@ -12,33 +10,16 @@ import { FaTruck } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { fetchCountries } from "@/shared/model/restCountriesSlice.ts";
 import type { Country } from "@/shared/types/apiType.ts";
-
-interface FormValues {
-  from_country: string;
-  to_country: string;
-  origin: string;
-  destination: string;
-  type: string;
-}
+import { fetchTransportType } from "./model/transportTypeSlice";
 
 export const SearchForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { type } = useSelector((state: RootState) => state.types);
+  const { car_type } = useSelector((state: RootState) => state.transportType);
   const { countries } = useSelector((state: RootState) => state.counties);
-
-  const { register, handleSubmit, setValue, getValues } = useForm<FormValues>({
-    defaultValues: {
-      from_country: "",
-      to_country: "",
-      origin: "",
-      destination: "",
-      type: "",
-    },
-  });
 
   const { t } = useTranslation();
 
-  // Отдельный стейт для каждого инпута
+  // Локальные состояния
   const [originValue, setOriginValue] = useState("");
   const [originCountry, setOriginCountry] = useState<Country | null>(null);
 
@@ -47,13 +28,19 @@ export const SearchForm = () => {
     null
   );
 
-  const onSubmit = (data: FormValues) => {
+  const [carTypeValue, setCarTypeValue] = useState("all");
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     const payload = {
-      ...data,
-      from_country: originCountry ? originCountry.name.common : "",
-      to_country: destinationCountry ? destinationCountry.name.common : "",
+      from_country: originCountry ? originCountry.name.common : originValue,
+      to_country: destinationCountry
+        ? destinationCountry.name.common
+        : destinationValue,
       origin: originCountry ? "" : originValue,
       destination: destinationCountry ? "" : destinationValue,
+      car_type: carTypeValue,
     };
 
     dispatch(setFilters(payload));
@@ -61,29 +48,23 @@ export const SearchForm = () => {
   };
 
   const valueChange = () => {
-    // Меняем текстовые значения в форме
-    const currentOrigin = getValues("from_country");
-    const currentDestination = getValues("to_country");
-    setValue("from_country", currentDestination);
-    setValue("to_country", currentOrigin);
+    // Меняем значения
+    setOriginValue(destinationValue);
+    setDestinationValue(originValue);
 
-    // Меняем стейт текстовых значений
-    setOriginValue(currentDestination);
-    setDestinationValue(currentOrigin);
-
-    // Меняем выбранные страны (чтобы флаги поменялись)
+    // Меняем выбранные страны
     const tempCountry = originCountry;
     setOriginCountry(destinationCountry);
     setDestinationCountry(tempCountry);
   };
 
   useEffect(() => {
-    dispatch(fetchCargoType());
+    dispatch(fetchTransportType());
     dispatch(fetchCountries());
   }, [dispatch]);
 
   return (
-    <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-y-4" onSubmit={onSubmit}>
       <div className="relative flex flex-col gap-y-4">
         {/* Origin */}
         <CountriesDropdown
@@ -97,12 +78,10 @@ export const SearchForm = () => {
           onChange={(val) => {
             setOriginValue(val);
             setOriginCountry(null);
-            setValue("from_country", val);
           }}
           onSelect={(country) => {
             setOriginCountry(country);
             setOriginValue(country.name.common);
-            setValue("from_country", country.name.common);
           }}
         />
 
@@ -120,12 +99,10 @@ export const SearchForm = () => {
           onChange={(val) => {
             setDestinationValue(val);
             setDestinationCountry(null);
-            setValue("to_country", val);
           }}
           onSelect={(country) => {
             setDestinationCountry(country);
             setDestinationValue(country.name.common);
-            setValue("to_country", country.name.common);
           }}
         />
       </div>
@@ -133,8 +110,9 @@ export const SearchForm = () => {
       <Select
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
-        types={type}
-        {...register("type")}
+        car_type={car_type}
+        value={carTypeValue}
+        onChange={(e) => setCarTypeValue(e.target.value)}
       />
 
       <button

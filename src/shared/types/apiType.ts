@@ -8,7 +8,8 @@ export interface Cargos {
 }
 
 export interface CargoType {
-  type: string | number | undefined;
+  type?: string | number | undefined;
+  car_type?: string | undefined 
 }
 
 export type Country = {

@@ -6,7 +6,7 @@ export interface FilterState {
   to_country: string;
   origin: string;
   destination: string;
-  type: string;
+  car_type: string;
 }
 
 const initialState: FilterState = {
@@ -15,7 +15,7 @@ const initialState: FilterState = {
   to_country: "",
   origin: "",
   destination: "",
-  type: "",
+  car_type: "",
 };
 
 const filterSlice = createSlice({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { sendBookmarkCargo } from "@/widgets/BookmarkList/model/postBookmarkSlice";
@@ -21,6 +21,7 @@ import {
   FaWeightHanging,
 } from "react-icons/fa";
 import styles from "./style.module.css";
+import { NotificationModal } from "@/shared/ui/Modal/NotificationModal";
 
 interface CargoCardProps {
   cargo: Cargo;
@@ -28,6 +29,7 @@ interface CargoCardProps {
 
 export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
   const { t } = useTranslation();
+  const [notificationModal, setNotificationModal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
   const isBookmarked = bookmarks.some(
@@ -56,6 +58,10 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
     }
   };
 
+  const closeModal = () => {
+    setNotificationModal(false);
+  };
+
   const formattedDate = formatCustomDate(cargo.date);
   const relativeCreatedAt = formatRelativeDate(cargo.created_at);
 
@@ -73,7 +79,9 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
               <FaRegBookmark fontSize={18} />
             )}
           </button>
-          <FaRegBell fontSize={18} />
+          <button onClick={() => setNotificationModal(true)}>
+            <FaRegBell fontSize={18} />
+          </button>
           <span className="flex items-center gap-x-1">
             <FaRegClock fontSize={18} />
             <span className="text-sm text-gray-500">{relativeCreatedAt}</span>
@@ -189,6 +197,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           </span>
         </span>
       </div>
+      <NotificationModal modal={notificationModal} close={closeModal} />
     </div>
   );
 };

@@ -74,25 +74,30 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               </span>
             </div>
           )}
-          <div className="flex items-center gap-x-4">
-            <div>
-              <FaPhoneSquareAlt className="text-xl sm:text-3xl" color="lime" />
+          {cargo?.phone && (
+            <div className="flex items-center gap-x-4">
+              <div>
+                <FaPhoneSquareAlt
+                  className="text-xl sm:text-3xl"
+                  color="lime"
+                />
+              </div>
+              <Link
+                to={`tel:${cargo?.phone}`}
+                className="text-sm sm:text-xl"
+                onClick={() =>
+                  dispatch(
+                    updateCargoActions({
+                      cargoId: cargo?.id || 0,
+                      data: { phoned: true },
+                    })
+                  )
+                }
+              >
+                {cargo?.phone}
+              </Link>
             </div>
-            <Link
-              to={`tel:${cargo?.phone}`}
-              className="text-sm sm:text-xl"
-              onClick={() =>
-                dispatch(
-                  updateCargoActions({
-                    cargoId: cargo?.id || 0,
-                    data: { phoned: true },
-                  })
-                )
-              }
-            >
-              {cargo?.phone}
-            </Link>
-          </div>
+          )}
           <div className="flex items-center gap-x-4">
             <div>
               <FaGlobe className="text-xl sm:text-3xl" />
