@@ -29,7 +29,7 @@ export interface Cargo {
 
 export type CargoParams = {
   page?: number;
-  type?: string;
+  car_type?: string;
   from_country?: string;
   to_country?: string;
   origin: string;

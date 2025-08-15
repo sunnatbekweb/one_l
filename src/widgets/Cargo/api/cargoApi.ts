@@ -7,7 +7,7 @@ export const getCargos = async (params: CargoParams) => {
   const query = new URLSearchParams();
 
   if (params.page) query.append("page", params.page.toString());
-  if (params.type) query.append("type", params.type);
+  if (params.car_type) query.append("car_type", params.car_type);
   if (params.from_country) query.append("from_country", params.from_country);
   if (params.to_country) query.append("to_country", params.to_country);
   if (params.origin) query.append("origin", params.origin);

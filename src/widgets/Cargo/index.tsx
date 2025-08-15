@@ -25,6 +25,14 @@ export const Cargo = () => {
     (state: RootState) => state.cargos
   );
 
+  const isFilterActive = Object.values({
+    from_country: filters.from_country,
+    to_country: filters.to_country,
+    origin: filters.origin,
+    destination: filters.destination,
+    type: filters.car_type,
+  }).some(Boolean);
+
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,70 +70,72 @@ export const Cargo = () => {
             {t("popular_directions")}
           </h2>
         ) : (
-          <div className="my-5">
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t("found_cargos", { count: cargos?.count }),
-              }}
-            />
-            <div>
-              <div className="flex items-center justify-between ">
-                <button
-                  onClick={handleUpdate}
-                  disabled={isloading}
-                  className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
-                >
-                  <FaRotate />
-                  <span>{t("search_head.update")}</span>
-                </button>
-                <div className="flex items-center">
-                  {/* Filter modal */}
+          isFilterActive && (
+            <div className="my-5">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: t("found_cargos", { count: cargos?.count }),
+                }}
+              />
+              <div>
+                <div className="flex items-center justify-between ">
                   <button
-                    onClick={() => setFilterModal(true)}
-                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                    onClick={handleUpdate}
+                    disabled={isloading}
+                    className="flex items-center gap-x-1 px-4 py-1.5 bg-[#7c8fe7] text-white rounded-md font-medium"
                   >
-                    <FaFilter fontSize={20} />
-                    <span className="font-medium text-sm">
-                      {t("search_head.filters")}
-                    </span>
+                    <FaRotate />
+                    <span>{t("search_head.update")}</span>
                   </button>
-                  <SearchFilter
-                    modal={filterModal}
-                    close={() => setFilterModal(false)}
-                  />
+                  <div className="flex items-center">
+                    {/* Filter modal */}
+                    <button
+                      onClick={() => setFilterModal(true)}
+                      className="flex flex-col gap-y-1.5 items-center p-2.5"
+                    >
+                      <FaFilter fontSize={20} />
+                      <span className="font-medium text-sm">
+                        {t("search_head.filters")}
+                      </span>
+                    </button>
+                    <SearchFilter
+                      modal={filterModal}
+                      close={() => setFilterModal(false)}
+                    />
 
-                  {/* Settings modal */}
-                  <button
-                    onClick={() => setSettingsModal(true)}
-                    className="flex flex-col gap-y-1.5 items-center p-2.5"
+                    {/* Settings modal */}
+                    <button
+                      onClick={() => setSettingsModal(true)}
+                      className="flex flex-col gap-y-1.5 items-center p-2.5"
+                    >
+                      <FaSliders fontSize={20} />
+                      <span className="font-medium text-sm">
+                        {t("search_head.settings")}
+                      </span>
+                    </button>
+                    <SearchSettings
+                      modal={settingsModal}
+                      close={() => setSettingsModal(false)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>{t("sort.title")}</div>
+
+                  <select
+                    name="sort_by"
+                    id="sort_by"
+                    className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
                   >
-                    <FaSliders fontSize={20} />
-                    <span className="font-medium text-sm">
-                      {t("search_head.settings")}
-                    </span>
-                  </button>
-                  <SearchSettings
-                    modal={settingsModal}
-                    close={() => setSettingsModal(false)}
-                  />
+                    <option value="0">{t("sort.createdAt")}</option>
+                    <option value="1">{t("sort.loadDate")}</option>
+                    <option value="2">{t("sort.price")}</option>
+                    <option value="3">{t("sort.rating")}</option>
+                  </select>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <div>{t("sort.title")}</div>
-
-                <select
-                  name="sort_by"
-                  id="sort_by"
-                  className="px-2.5 py-1.5 cursor-pointer bg-white border-2 border-[#ccc] rounded-md"
-                >
-                  <option value="0">{t("sort.createdAt")}</option>
-                  <option value="1">{t("sort.loadDate")}</option>
-                  <option value="2">{t("sort.price")}</option>
-                  <option value="3">{t("sort.rating")}</option>
-                </select>
-              </div>
             </div>
-          </div>
+          )
         )}
         <div>
           {isloading ? (
