@@ -76,7 +76,10 @@
     "title": "Saqlanganlar hozircha yo‘q",
     "subtitle": "Barcha saqlangan yuklar shu sahifada ko‘rinadi.",
     "noCargo": "Yuklar topilmadi",
-    "cargoSubtitle": "Barcha yuklar shu yerda ko‘rinadi."
+    "cargoSubtitle": "Barcha yuklar shu yerda ko‘rinadi.",
+    "noNotification": "Yangi so‘rovlardan xabardor bo‘ling",
+    "notificationSubtitle": "Mos keladigan so‘rov paydo bo‘lganda sizga xabar beramiz",
+    "goSearch": "Qidiruvga o‘tish"
   },
   "fromAnywhere": "Qayerdan bo‘lsa ham",
   "anywhere": "Qayerga bo‘lsa ham",

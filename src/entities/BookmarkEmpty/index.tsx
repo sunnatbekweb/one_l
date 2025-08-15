@@ -12,13 +12,9 @@ export const BookmarkEmpty = () => {
         className={styles.bookmarkEmptyImage}
       />
 
-      <h2 className={styles.bookmarkEmptyTitle} data-i18n="bookmark.emptyTitle">
-        {t("empty.title")}
-      </h2>
+      <h2 className={styles.bookmarkEmptyTitle}>{t("empty.title")}</h2>
 
-      <p className={styles.bookmarkEmptyDescription}>
-        {t("empty.subtitle")}
-      </p>
+      <p className={styles.bookmarkEmptyDescription}>{t("empty.subtitle")}</p>
 
       <Link to="/" className={styles.goHomeButton}>
         {t("page_block.link")}
