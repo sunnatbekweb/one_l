@@ -117,8 +117,8 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             />
           )}
           <strong className={"text-base sm:text-xl line-clamp-1"}>
-            {cargo?.origin?.length > 10
-              ? cargo?.origin.slice(0, 10)
+            {cargo?.origin?.length > 8
+              ? cargo?.origin.slice(0, 8) + "..."
               : cargo?.origin}
           </strong>
         </div>
@@ -139,8 +139,8 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             />
           )}
           <strong className={"text-base sm:text-xl line-clamp-1"}>
-            {cargo?.destination?.length > 10
-              ? cargo?.destination.slice(0, 10)
+            {cargo?.destination?.length > 8
+              ? cargo?.destination.slice(0, 8) + "..."
               : cargo?.destination}
           </strong>
         </div>
