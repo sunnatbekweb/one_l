@@ -22,6 +22,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             props.value === undefined ? "text-[#959595]" : "text-black"
           }`}
         >
+          <option value="" selected disabled>{t("cargo_type")}</option>
           <option value="">{t("all_cargo_type")}</option>
           {types.map((t, index) => (
             <option key={index} value={t.type}>

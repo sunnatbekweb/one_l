@@ -40,6 +40,7 @@
     "notifications": "Bildirishnomalar",
     "applications": "Arizalar"
   },
+  "cargo_type":"Transport turlari",
   "all_cargo_type": "Barcha transport turlari",
   "detail": "Batafsil",
   "showContacts": "Kontaktlarni ko‘rsatish",
