@@ -18,11 +18,12 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           {...props}
+          defaultValue={"all"}
           className={`w-full truncate whitespace-nowrap overflow-hidden text-ellipsis border rounded ${
             props.value === "all" ? "text-[#959595]" : "text-black"
           }`}
         >
-          <option value="all" selected disabled>
+          <option value="all" disabled>
             {t("cargo_type")}
           </option>
           <option value="">{t("all_cargo_type")}</option>
