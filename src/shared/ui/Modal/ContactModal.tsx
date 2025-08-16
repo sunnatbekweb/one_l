@@ -51,7 +51,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
               </div>
               <span className="text-sm sm:text-xl">
-                {i18n.language === "ru" ? t("contactModal.write_in") : ""}
+                {i18n.language === "ru" ? t("contactModal.write_in") : ""}{" "}
                 <Link
                   to={
                     `${cargo?.username !== null && `https://t.me/${cargo?.username}`}` ||

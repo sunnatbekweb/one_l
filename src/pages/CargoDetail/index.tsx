@@ -1,32 +1,49 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
+import axios from "axios";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import Cookies from "js-cookie";
 import { formatCustomDate } from "@/shared/lib/formatDate";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
-import { useTranslation } from "react-i18next";
 import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
 import { IoIosArrowBack, IoMdResize } from "react-icons/io";
+import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
 
 export const CargoDetail = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [showInfo, setShowInfo] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState();
   const { cargo, isLoading, error } = useSelector(
     (state: RootState) => state.cargo
   );
   const formattedDate = formatCustomDate(cargo?.date || "");
 
+  const [subscribeModal, setSubscribeModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => setIsModalOpen(false);
+
+  const getSubscribe = async () => {
+    const response = await axios.get(
+      `${baseUrl}/user/finder/${Cookies.get("user_id")}/`
+    );
+
+    setIsSubscribed(response.data.success);
+  };
 
   useEffect(() => {
     if (!isModalOpen) {
       dispatch(fetchCargo(Number(id)));
     }
   }, [isModalOpen, dispatch, id]);
+
+  useEffect(() => {
+    getSubscribe();
+  }, []);
 
   return (
     <section className="py-[15px]">
@@ -117,12 +134,22 @@ export const CargoDetail = () => {
         )}
       </div>
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() =>
+          isSubscribed ? setIsModalOpen(true) : setSubscribeModal(true)
+        }
         className="block w-3/4 sm:w-3/5 mx-auto p-4 bg-[#041e90] rounded-xl font-semibold text-lg sm:text-xl text-white mt-8"
       >
         {t("showContacts")}
       </button>
-      <ContactModal modal={isModalOpen} close={closeModal} cargo={cargo} />
+      <ContactModal
+        modal={isModalOpen}
+        close={() => setIsModalOpen(false)}
+        cargo={cargo}
+      />
+      <SubscribeModal
+        modal={subscribeModal}
+        close={() => setSubscribeModal(false)}
+      />
     </section>
   );
 };
