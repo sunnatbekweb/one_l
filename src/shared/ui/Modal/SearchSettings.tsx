@@ -20,7 +20,7 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
     date: "",
     weight: "",
     volume: "",
-    type: "",
+    car_type: "",
   });
 
   const handleChange = (
@@ -151,14 +151,14 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
                 </select>
               </label>
             </div>
-            <label htmlFor="type" className="flex flex-col gap-2">
+            <label htmlFor="car_type" className="flex flex-col gap-2">
               <span>{t("form.type")}:</span>
               <select
-                name="type"
-                id="type"
+                name="car_type"
+                id="car_type"
                 className="border px-3 py-1.5 rounded-sm"
                 onChange={handleChange}
-                value={formData.type}
+                value={formData.car_type}
               >
                 <option value="">{t("all_cargo_type")}</option>
                 {type.map((t, index) => (
