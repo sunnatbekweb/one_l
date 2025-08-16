@@ -19,6 +19,8 @@ export interface RouteData {
   total: number;
 }
 
+const PAGE_SIZE = 10;
+
 export const Cargo = () => {
   const filters = useSelector((state: RootState) => state.filters);
   const { cargos, isloading, error } = useSelector(
@@ -38,7 +40,7 @@ export const Cargo = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [filterModal, setFilterModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
-  const [routes, setRoutes] = useState<RouteData[]>();
+  const [routes, setRoutes] = useState<RouteData[]>([]);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
@@ -50,13 +52,17 @@ export const Cargo = () => {
   };
 
   const getRoutes = async () => {
-    const response = await axios.get(`${baseUrl}/top-cargos/`);
-    setRoutes(response.data);
+    try {
+      const response = await axios.get(`${baseUrl}/top-cargos/`);
+      setRoutes(response.data);
+    } catch (e) {
+      console.error("Ошибка при получении популярных направлений:", e);
+    }
   };
 
   useEffect(() => {
     dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
-  }, [currentPage, filters]);
+  }, [currentPage, filters, dispatch]);
 
   useEffect(() => {
     getRoutes();
@@ -70,7 +76,8 @@ export const Cargo = () => {
             {t("popular_directions")}
           </h2>
         ) : (
-          isFilterActive && (
+          isFilterActive &&
+          sessionStorage.getItem("viewMode") === "search" && ( // 👈 исправлено viewModa → viewMode
             <div className="my-5">
               <p
                 dangerouslySetInnerHTML={{
@@ -151,7 +158,7 @@ export const Cargo = () => {
                       <CargoCard key={cargo.id} cargo={cargo} />
                     ))}
                     <Pagination
-                      pageCount={cargos.count}
+                      pageCount={Math.ceil(cargos.count / PAGE_SIZE)} // 👈 исправлено
                       onPageChange={handlePageChange}
                       forcePage={currentPage}
                     />
