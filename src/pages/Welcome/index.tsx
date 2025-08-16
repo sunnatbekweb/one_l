@@ -11,21 +11,23 @@ export const Welcome = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    i18n.changeLanguage(setLang());
-
     sessionStorage.setItem("viewMode", "popular");
 
     if (params.id && params.lang) {
       Cookies.set("user_id", params.id ?? "");
       Cookies.set("lang", params.lang ?? "ru");
+    }
 
+    i18n.changeLanguage(setLang());
+
+    if (params.id && params.lang) {
       const timer = setTimeout(() => {
         navigate("/");
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [params.id, params.lang, i18n, navigate]);
 
   return (
     <main
