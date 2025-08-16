@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "@/widgets/Header";
 import { Navbar } from "@/widgets/Navbar";
 import { Outlet } from "react-router-dom";
@@ -6,6 +6,8 @@ import { I18nProvider } from "./providers/i18nProvider";
 import { isTMA, init, viewport } from "@telegram-apps/sdk";
 
 function App() {
+  const [isTgReady, setIsTgReady] = useState(false);
+
   async function initTg() {
     if (await isTMA()) {
       init();
@@ -18,15 +20,18 @@ function App() {
       if (viewport.requestFullscreen.isAvailable()) {
         await viewport.requestFullscreen();
       }
+
+      setIsTgReady(true);
     }
   }
 
   useEffect(() => {
     initTg();
   }, []);
+
   return (
     <I18nProvider>
-      <div className="main-container">
+      <div className={`main-container ${isTgReady && "pt-[100px]"}`}>
         <Header />
         <main>
           <Outlet />

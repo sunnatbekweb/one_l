@@ -61,8 +61,19 @@ export const Cargo = () => {
   };
 
   useEffect(() => {
+    setCurrentPage(0);
+  }, [filters]);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(cargos.count / PAGE_SIZE);
+
+    if (currentPage >= totalPages && totalPages > 0) {
+      setCurrentPage(0);
+      return;
+    }
+
     dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
-  }, [currentPage, filters, dispatch]);
+  }, [currentPage, filters, dispatch, cargos.count]);
 
   useEffect(() => {
     getRoutes();
