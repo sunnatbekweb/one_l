@@ -12,6 +12,7 @@ import { ContactModal } from "@/shared/ui/Modal/ContactModal";
 import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
 import { IoIosArrowBack, IoMdResize } from "react-icons/io";
 import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
+import { useCurrency } from "@/entities/CargoCard/lib/useCurrency";
 
 export const CargoDetail = () => {
   const { id } = useParams();
@@ -92,17 +93,9 @@ export const CargoDetail = () => {
                       : null,
                     formattedDate || null,
                     typeof cargo?.price === "number"
-                      ? `${cargo.price.toLocaleString()} ${
-                          cargo.price >= 1 && cargo.price < 1000
-                            ? "UZS"
-                            : cargo.price >= 1000 && cargo.price <= 100_000
-                              ? "USD"
-                              : cargo.price > 100_000 && cargo.price <= 999_999
-                                ? "RUB"
-                                : cargo.price > 1_000_000
-                                  ? "UZS"
-                                  : ""
-                        }`
+                      ? `${cargo.price.toLocaleString()} ${useCurrency(
+                          cargo.price
+                        )}`
                       : t("fraxt"),
                     cargo?.temperature ? `${cargo.temperature}°C` : null,
                   ]

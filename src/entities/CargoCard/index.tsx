@@ -22,6 +22,7 @@ import {
 } from "react-icons/fa";
 import styles from "./style.module.css";
 import { NotificationModal } from "@/shared/ui/Modal/NotificationModal";
+import { useCurrency } from "./lib/useCurrency";
 
 interface CargoCardProps {
   cargo: Cargo;
@@ -90,16 +91,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         <span className={styles["search-result__price"]}>
           {typeof cargo?.price === "number" ? (
             <>
-              {cargo.price.toLocaleString()}{" "}
-              {cargo.price >= 1 && cargo.price < 1000
-                ? "UZS"
-                : cargo.price >= 1000 && cargo.price <= 100_000
-                  ? "USD"
-                  : cargo.price > 100_000 && cargo.price <= 999_999
-                    ? "RUB"
-                    : cargo.price > 1_000_000
-                      ? "UZS"
-                      : ""}
+              {cargo.price.toLocaleString()} {useCurrency(cargo.price)}
             </>
           ) : (
             t("fraxt")
