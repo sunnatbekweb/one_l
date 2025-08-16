@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MdOutlinePayment } from "react-icons/md";
 import "./modal.css";
+import { useTranslation } from "react-i18next";
 
 interface ModalProps {
   modal: boolean;
@@ -8,13 +9,16 @@ interface ModalProps {
 }
 
 export const SubscribeModal: React.FC<ModalProps> = ({ modal, close }) => {
+  const { t } = useTranslation();
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
       <div onClick={(e) => e.stopPropagation()} className="modal_content">
         <MdOutlinePayment size={64} className="text-yellow-500 mx-auto mb-3" />
-        <h2 className="font-bold text-2xl text-center"> У вас нет подписки</h2>
+        <h2 className="font-bold text-2xl text-center">
+          {t("subscribe.title")}
+        </h2>
         <p className="text-gray-600 text-center my-3">
-          Оплатите подписку в боте, чтобы пользоваться сервисом.
+          {t("subscribe.subtitle")}
         </p>
         <div className="flex justify-center">
           <Link
@@ -22,7 +26,7 @@ export const SubscribeModal: React.FC<ModalProps> = ({ modal, close }) => {
             target="_blank"
             className="button_short"
           >
-            Оплатить в боте
+            {t("subscribe.button")}
           </Link>
         </div>
       </div>

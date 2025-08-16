@@ -94,5 +94,10 @@
     "option3_bold": "Ega bo‘yicha",
     "option3_normal": "mijozingiz yangi so‘rovlar joylaganda"
   },
-  "done": "Tayyor"
+  "done": "Tayyor",
+  "subscribe": {
+    "title": "Sizda obuna yo‘q",
+    "subtitle": "Xizmatdan foydalanish uchun bot orqali obunani to‘lang.",
+    "button": "Bot orqali to‘lash"
+  }
 }
