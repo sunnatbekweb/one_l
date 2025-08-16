@@ -1,9 +1,29 @@
+import { useEffect } from "react";
 import { Header } from "@/widgets/Header";
 import { Navbar } from "@/widgets/Navbar";
 import { Outlet } from "react-router-dom";
 import { I18nProvider } from "./providers/i18nProvider";
+import { isTMA, init, viewport } from "@telegram-apps/sdk";
 
 function App() {
+  async function initTg() {
+    if (await isTMA()) {
+      init();
+
+      if (viewport.mount.isAvailable()) {
+        await viewport.mount();
+        viewport.expand();
+      }
+
+      if (viewport.requestFullscreen.isAvailable()) {
+        await viewport.requestFullscreen();
+      }
+    }
+  }
+
+  useEffect(() => {
+    initTg();
+  }, []);
   return (
     <I18nProvider>
       <div className="main-container">
