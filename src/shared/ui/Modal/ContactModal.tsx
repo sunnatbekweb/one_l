@@ -82,8 +82,8 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                   color="lime"
                 />
               </div>
-              <Link
-                to={`tel:${cargo?.phone}`}
+              <a
+                href={`tel:${cargo?.phone}`}
                 className="text-sm sm:text-xl"
                 onClick={() =>
                   dispatch(
@@ -95,9 +95,10 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 }
               >
                 {cargo?.phone}
-              </Link>
+              </a>
             </div>
           )}
+
           <div className="flex items-center gap-x-4">
             <div>
               <FaGlobe className="text-xl sm:text-3xl" />
@@ -117,8 +118,10 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             <div>
               <FaShareSquare className="text-xl sm:text-3xl" />
             </div>
-            <Link
-              to={`https://t.me/share/url?text=${encodeURIComponent(message)}`}
+            <a
+              href={`https://t.me/share/url?text=${encodeURIComponent(message)}`}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() =>
                 dispatch(
                   updateCargoActions({
@@ -130,7 +133,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               className="text-sm sm:text-xl"
             >
               {t("contactModal.share")}
-            </Link>
+            </a>
           </div>
         </div>
       </div>
