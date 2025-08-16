@@ -28,6 +28,7 @@
 .main-container {
   width: 100%;
   margin: 0 auto;
+  padding-top: 60px;
   position: relative;
   background-image: url(../../assets/images/site-bg.jpg);
   background-repeat: no-repeat;
