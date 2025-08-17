@@ -170,7 +170,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 
       <div className={styles["search-result__footer"]}>
         <span className={styles["search-result__cargo"]}>📦 {cargo?.type}</span>
-        <div>
+        <div className="flex justify-center">
           <Link
             to={`/cargo/${cargo?.id}`}
             className={`${styles["search-result__more"]} btn-more`}
@@ -178,16 +178,19 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             {t("detail")}
           </Link>
         </div>
-        <span className={styles["search-result__company"]}>
-          <span className={`flex items-center gap-1 text-xs sm:text-sm`}>
-            {cargo?.username}
+        <div className={styles["search-result__company"]}>
+          <p className={`flex items-center gap-1 text-xs sm:text-sm`}>
+            <span className="line-clamp-2">
+              {cargo?.firs_tname}
+              {cargo?.last_name}
+            </span>
             <img
               src="https://img.icons8.com/?size=512&id=2sZ0sdlG9kWP&format=png"
               alt="image-icon"
               className="w-4 h-4 sm:w-5 sm:h-5"
             />
-          </span>
-        </span>
+          </p>
+        </div>
       </div>
       <NotificationModal modal={notificationModal} close={closeModal} />
     </div>

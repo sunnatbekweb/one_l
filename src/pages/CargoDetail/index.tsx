@@ -9,7 +9,13 @@ import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import Cookies from "js-cookie";
 import { formatCustomDate } from "@/shared/lib/formatDate";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
-import { FaEye, FaPhoneAlt, FaShareSquare, FaTelegram } from "react-icons/fa";
+import {
+  FaEye,
+  FaPhoneAlt,
+  FaShareSquare,
+  FaTelegram,
+  FaWhatsappSquare,
+} from "react-icons/fa";
 import { IoIosArrowBack, IoMdResize } from "react-icons/io";
 import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
 import { useCurrency } from "@/entities/CargoCard/lib/useCurrency";
@@ -79,29 +85,40 @@ export const CargoDetail = () => {
               </div>
               <div className={`text-lg ${!showInfo && "line-clamp-1"}`}>
                 <p>{cargo?.info}</p>
-                <p>
+                <p className="whitespace-pre-line">
                   {[
                     cargo?.origin,
                     cargo?.destination,
+
                     cargo?.type,
+
                     cargo?.weight
                       ? `${cargo.weight > 1000 ? cargo.weight / 1000 : cargo.weight} т`
                       : null,
+
                     cargo?.car_type,
+
                     cargo?.volume
                       ? `${cargo.volume > 1000 ? cargo.volume / 1000 : cargo.volume} м³`
                       : null,
+
                     formattedDate || null,
+
                     typeof cargo?.price === "number"
-                      ? `${cargo.price.toLocaleString()} ${useCurrency(
-                          cargo.price
-                        )}`
+                      ? `${cargo.price.toLocaleString()} ${useCurrency(cargo.price)}`
                       : t("fraxt"),
+
                     cargo?.temperature ? `${cargo.temperature}°C` : null,
                   ]
                     .filter(Boolean)
-                    .join(" ")}
+                    .join("\n")}
                 </p>
+                {/* <p
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      cargo?.source_message?.replace(/\n/g, "<br />") || "",
+                  }}
+                /> */}
               </div>
             </div>
 
@@ -111,12 +128,16 @@ export const CargoDetail = () => {
                 <span>{cargo?.viewed}</span>
               </div>
               <div className="flex gap-2 items-center font-medium">
+                <FaPhoneAlt fontSize={24} color="gray" />
+                <span>{cargo?.phoned}</span>
+              </div>
+              <div className="flex gap-2 items-center font-medium">
                 <FaTelegram fontSize={24} color="gray" />
                 <span>{cargo?.chatted_telegram}</span>
               </div>
               <div className="flex gap-2 items-center font-medium">
-                <FaPhoneAlt fontSize={24} color="gray" />
-                <span>{cargo?.phoned}</span>
+                <FaWhatsappSquare fontSize={24} color="gray" />
+                <span>{cargo?.chatted_whatsup}</span>
               </div>
               <div className="flex gap-2 items-center font-medium">
                 <FaShareSquare fontSize={24} color="gray" />

@@ -4,6 +4,7 @@ export interface Cargo {
   created_at: string;
   updated_at: string;
   source: string;
+  source_message: string;
   origin: string;
   origin_country: string;
   destination: string;
@@ -23,6 +24,8 @@ export interface Cargo {
   car_type: string;
   payment_type: string;
   username: string;
+  firs_tname: string;
+  last_name: string;
   whatsup: string | null;
   info: string;
 }

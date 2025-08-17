@@ -10,6 +10,7 @@ import {
   FaShareSquare,
   FaTelegram,
   FaUser,
+  FaWhatsappSquare,
 } from "react-icons/fa";
 import "./modal.css";
 import { useTranslation } from "react-i18next";
@@ -45,35 +46,6 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               <span className="text-sm sm:text-xl">{cargo?.username}</span>
             </div>
           )}
-          {cargo?.username && (
-            <div className="flex items-center gap-x-4">
-              <div>
-                <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
-              </div>
-              <span className="text-sm sm:text-xl">
-                {i18n.language === "ru" ? t("contactModal.write_in") : ""}{" "}
-                <Link
-                  to={
-                    `${cargo?.username !== null && `https://t.me/${cargo?.username}`}` ||
-                    ""
-                  }
-                  target="_blank"
-                  className="text-[#659df2]"
-                  onClick={() =>
-                    dispatch(
-                      updateCargoActions({
-                        cargoId: cargo?.id || 0,
-                        data: { chatted_telegram: true },
-                      })
-                    )
-                  }
-                >
-                  Telegram
-                </Link>
-                {i18n.language !== "ru" ? ` ${t("contactModal.write_in")}` : ""}
-              </span>
-            </div>
-          )}
           {cargo?.phone && (
             <div className="flex items-center gap-x-4">
               <div>
@@ -98,7 +70,61 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               </a>
             </div>
           )}
-
+          {cargo?.username && (
+            <div className="flex items-center gap-x-4">
+              <div>
+                <FaTelegram className="text-xl sm:text-3xl text-[#659df2]" />
+              </div>
+              <span className="text-sm sm:text-xl">
+                {i18n.language === "ru" && t("contactModal.write_in")}{" "}
+                <Link
+                  to={
+                    `${cargo?.username !== null && `https://t.me/${cargo?.username}`}` ||
+                    ""
+                  }
+                  target="_blank"
+                  className="text-[#659df2]"
+                  onClick={() =>
+                    dispatch(
+                      updateCargoActions({
+                        cargoId: cargo?.id || 0,
+                        data: { chatted_telegram: true },
+                      })
+                    )
+                  }
+                >
+                  Telegram
+                </Link>
+                {i18n.language !== "ru" && ` ${t("contactModal.write_in")}`}
+              </span>
+            </div>
+          )}
+          {cargo?.whatsup && (
+            <div className="flex items-center gap-x-4">
+              <div>
+                <FaWhatsappSquare className="text-xl sm:text-3xl text-[#34C759]" />
+              </div>
+              <span>
+                {i18n.language === "ru" && t("contactModal.write_in")}{" "}
+                <Link
+                  to={`https://wa.me/${cargo?.whatsup}`}
+                  target="_blank"
+                  className="text-[#34C759]"
+                  onClick={() =>
+                    dispatch(
+                      updateCargoActions({
+                        cargoId: cargo?.id || 0,
+                        data: { chatted_whatsup: true },
+                      })
+                    )
+                  }
+                >
+                  WhatsApp
+                </Link>
+                {i18n.language !== "ru" && ` ${t("contactModal.write_in")}`}
+              </span>
+            </div>
+          )}
           <div className="flex items-center gap-x-4">
             <div>
               <FaGlobe className="text-xl sm:text-3xl" />
