@@ -140,21 +140,29 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 
       <div className={styles["search-result__details"]}>
         <div className="flex items-center gap-x-1">
-          <FaRegCalendarAlt fontSize={18} />
+          <div>
+            <FaRegCalendarAlt fontSize={18} />
+          </div>
           <span className="line-clamp-1">{formattedDate}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaTruck fontSize={18} />
+          <div>
+            <FaTruck fontSize={18} />
+          </div>
           <span className="line-clamp-1">{cargo?.car_type}</span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaWeightHanging fontSize={18} />
+          <div>
+            <FaWeightHanging fontSize={18} />
+          </div>
           <span>
             {cargo?.weight > 1000 ? cargo.weight / 1000 : cargo?.weight}т
           </span>
         </div>
         <div className="flex items-center gap-x-1">
-          <FaMaximize fontSize={18} />
+          <div>
+            <FaMaximize fontSize={18} />
+          </div>
           <span>
             {cargo?.volume > 1000 ? cargo.volume / 1000 : cargo?.volume}
             м³
@@ -162,7 +170,9 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         </div>
         {cargo?.temperature && (
           <div className="flex items-center gap-x-1">
-            <FaTemperatureHalf fontSize={18} />
+            <div>
+              <FaTemperatureHalf fontSize={18} />
+            </div>
             <span>{cargo?.temperature}°C</span>
           </div>
         )}
