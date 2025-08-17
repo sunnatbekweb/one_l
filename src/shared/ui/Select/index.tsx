@@ -27,11 +27,13 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {t("cargo_type")}
           </option>
           <option value="">{t("all_cargo_type")}</option>
-          {car_type.map((t, index) => (
-            <option key={index} value={t.type}>
-              {t.car_type}
-            </option>
-          ))}
+          {car_type
+            .filter((t) => t.car_type !== null)
+            .map((t, index) => (
+              <option key={index} value={t.type}>
+                {t.car_type}
+              </option>
+            ))}
         </select>
       </div>
     );

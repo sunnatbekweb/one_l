@@ -179,7 +179,9 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
       </div>
 
       <div className={styles["search-result__footer"]}>
-        <span className={styles["search-result__cargo"]}>📦 {cargo?.type}</span>
+        <span className={styles["search-result__cargo"]}>
+          {cargo?.type && `📦 ${cargo?.type}`}
+        </span>
         <div className="flex justify-center">
           <Link
             to={`/cargo/${cargo?.id}`}

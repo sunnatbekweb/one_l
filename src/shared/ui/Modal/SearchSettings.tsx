@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCargos } from "@/widgets/Cargo/model/cargoSlice";
 import { useTranslation } from "react-i18next";
 import type { AppDispatch, RootState } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";
 import "./modal.css";
+import { fetchTransportType } from "@/entities/SearchForm/model/transportTypeSlice";
 
 interface ModalProps {
   modal: boolean;
@@ -12,7 +13,9 @@ interface ModalProps {
 }
 
 export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
-  const { type } = useSelector((state: RootState) => state.types);
+  const dispatch = useDispatch<AppDispatch>();
+  const { car_type } = useSelector((state: RootState) => state.transportType);
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<CargoParams>({
     origin: "",
     destination: "",
@@ -29,13 +32,15 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(fetchCargos(formData));
     close();
   };
+
+  useEffect(() => {
+    dispatch(fetchTransportType());
+  }, [dispatch]);
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -161,11 +166,13 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
                 value={formData.car_type}
               >
                 <option value="">{t("all_cargo_type")}</option>
-                {type.map((t, index) => (
-                  <option key={index} value={t.type}>
-                    {t.type}
-                  </option>
-                ))}
+                {car_type
+                  .filter((t) => t?.car_type !== null)
+                  .map((t, index) => (
+                    <option key={index} value={t.car_type}>
+                      {t.car_type}
+                    </option>
+                  ))}
               </select>
             </label>
           </div>
