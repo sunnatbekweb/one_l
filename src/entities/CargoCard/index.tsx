@@ -141,7 +141,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
       <div className={styles["search-result__details"]}>
         <div className="flex items-center gap-x-1">
           <FaRegCalendarAlt fontSize={18} />
-          <span>{formattedDate}</span>
+          <span className="line-clamp-1">{formattedDate}</span>
         </div>
         <div className="flex items-center gap-x-1">
           <FaTruck fontSize={18} />
