@@ -38,12 +38,14 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
           {t("contactModal.title")}
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:px-6 mt-4 sm:mt-8 mb-2">
-          {cargo?.username && (
+          {cargo?.firs_tname && cargo.last_name && (
             <div className="flex items-center gap-x-4">
               <div>
                 <FaUser className="text-xl sm:text-3xl" />
               </div>
-              <span className="text-sm sm:text-xl">{cargo?.username}</span>
+              <span className="text-sm sm:text-xl">
+                {cargo?.firs_tname} {cargo?.last_name}
+              </span>
             </div>
           )}
           {cargo?.phone && (

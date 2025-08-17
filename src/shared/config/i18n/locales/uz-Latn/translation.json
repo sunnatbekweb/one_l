@@ -17,7 +17,13 @@
     "find": "Topish",
     "settingsTitle": "Qidiruv sozlamalari",
     "filtersTitle": "Qidiruv filtrlari",
-    "filtersSubtitle": "Arizalarni qidirish uchun filterni tanlang"
+    "filtersSubtitle": "Arizalarni qidirish uchun filterni tanlang",
+    "filterOption1": "Faqat to‘g‘ridan-to‘g‘ri buyurtmalardan",
+    "filterOption2": "Faqat tasdiqlanganlardan",
+    "filterOption3": "Yuk tashish narxi",
+    "filterOption3_1": "Narx bilan",
+    "filterOption3_2": "Naqd pulsiz",
+    "filterOption3_3": "Naqd"
   },
   "info_title_top": {
     "line1": "ZAMONAVIY LOGISTIKA UCHUN",

@@ -17,7 +17,13 @@
     "find": "Найти",
     "settingsTitle": "Параметры поиска",
     "filtersTitle": "Фильтры поиска",
-    "filtersSubtitle": "Выберите фильтры для поиска заявок"
+    "filtersSubtitle": "Выберите фильтры для поиска заявок",
+    "filterOption1": "Только от прямых заказов",
+    "filterOption2": "Только от верифицированных",
+    "filterOption3": "Стоимость перевозки",
+    "filterOption3_1": "Со стоимостю",
+    "filterOption3_2": "безналичный",
+    "filterOption3_3": "наличные"
   },
   "info_title_top": {
     "line1": "ЦИФРОВАЯ ПЛАТФОРМА",

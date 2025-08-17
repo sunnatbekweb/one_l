@@ -17,7 +17,13 @@
     "find": "Топиш",
     "settingsTitle": "Қидирув созламалари",
     "filtersTitle": "Қидирув филтрлари",
-    "filtersSubtitle": "Аризаларни қидириш учун фильтрни танланг"
+    "filtersSubtitle": "Аризаларни қидириш учун фильтрни танланг",
+    "filterOption1": "Фақат тўғридан-тўғри буюртмалардан",
+    "filterOption2": "Фақат тасдиқланганлардан",
+    "filterOption3": "Юк ташиш нархи",
+    "filterOption3_1": "Нарх билан",
+    "filterOption3_2": "Нақд пулсиз",
+    "filterOption3_3": "Нақд"
   },
   "info_title_top": {
     "line1": "ЗАМОНАВИЙ ЛОГИСТИКА УЧУН",
