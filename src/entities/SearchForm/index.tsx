@@ -34,12 +34,11 @@ export const SearchForm = () => {
     e.preventDefault();
 
     const payload = {
-      from_country: originCountry ? originCountry.name.common : originValue,
-      to_country: destinationCountry
-        ? destinationCountry.name.common
-        : destinationValue,
-      origin: originCountry ? "" : originValue,
-      destination: destinationCountry ? "" : destinationValue,
+      from_country: originCountry ? originCountry.name.common : "",
+      to_country: destinationCountry ? destinationCountry.name.common : "",
+      origin: !originCountry && originValue ? originValue : "",
+      destination:
+        !destinationCountry && destinationValue ? destinationValue : "",
       car_type: carTypeValue,
     };
 

@@ -153,7 +153,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           <div>
             <FaTruck fontSize={18} />
           </div>
-          <span className="line-clamp-1">{cargo?.car_type}</span>
+          <span className="line-clamp-1">
+            {cargo?.car_type?.length > 6
+              ? cargo?.car_type.slice(0, 6)
+              : cargo?.car_type}
+          </span>
         </div>
         <div className="flex items-center gap-x-1">
           <div>
