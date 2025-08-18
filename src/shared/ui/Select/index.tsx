@@ -8,6 +8,18 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   car_type: CargoType[];
 }
 
+export const types = [
+  {
+    value: "Тент",
+  },
+  {
+    value: "Реф",
+  },
+  {
+    value: "Паравоз",
+  },
+];
+
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ icon, car_type, ...props }, ref) => {
     const { t } = useTranslation();
@@ -27,11 +39,11 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {t("cargo_type")}
           </option>
           <option value="">{t("all_cargo_type")}</option>
-          {car_type
-            .filter((t) => t.car_type !== null)
+          {types
+            .filter((t) => t.value !== null)
             .map((t, index) => (
-              <option key={index} value={t.type}>
-                {t.car_type}
+              <option key={index} value={t.value}>
+                {t.value}
               </option>
             ))}
         </select>

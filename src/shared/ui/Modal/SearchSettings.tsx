@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchCargos } from "@/widgets/CargoWrapper/model/cargoSlice";
 import { useTranslation } from "react-i18next";
-import type { AppDispatch, RootState } from "@/app/store";
+import type { AppDispatch } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";
-import "./modal.css";
 import { fetchTransportType } from "@/entities/SearchForm/model/transportTypeSlice";
+import { types } from "../Select";
+import "./modal.css";
 
 interface ModalProps {
   modal: boolean;
@@ -14,7 +15,6 @@ interface ModalProps {
 
 export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { car_type } = useSelector((state: RootState) => state.transportType);
   const { t } = useTranslation();
   const [formData, setFormData] = useState<CargoParams>({
     origin: "",
@@ -166,11 +166,11 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
                 value={formData.car_type}
               >
                 <option value="">{t("all_cargo_type")}</option>
-                {car_type
-                  .filter((t) => t?.car_type !== null)
+                {types
+                  .filter((t) => t?.value !== null)
                   .map((t, index) => (
-                    <option key={index} value={t.car_type}>
-                      {t.car_type}
+                    <option key={index} value={t.value}>
+                      {t.value}
                     </option>
                   ))}
               </select>
