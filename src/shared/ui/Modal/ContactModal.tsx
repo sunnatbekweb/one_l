@@ -150,8 +150,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             <button
               onClick={() => {
                 shareToTelegram(
-                  "Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой!",
-                  "https://t.me/one_log_bot"
+                  `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.\n\nСмотри сам: https://t.me/one_log_bot\n\nБесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`
                 );
 
                 dispatch(
