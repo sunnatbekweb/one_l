@@ -25,12 +25,8 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
 
-  const text = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
-
-Смотри сам: https://t.me/one_log_bot
-
-Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
-  const shareLink = `https://t.me/share/url?text=${encodeURIComponent(text)}`;
+  const text = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой!`;
+  const url = "https://t.me/one_log_bot";
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -152,7 +148,18 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                window.open(shareLink, "_blank");
+                if (navigator.share) {
+                  navigator.share({
+                    title: "1LOG",
+                    text,
+                    url,
+                  });
+                } else {
+                  const shareLink = `https://t.me/share/url?text=${encodeURIComponent(
+                    `${text}\n\n${url}`
+                  )}`;
+                  window.open(shareLink, "_blank");
+                }
 
                 dispatch(
                   updateCargoActions({
