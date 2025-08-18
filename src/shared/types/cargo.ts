@@ -24,7 +24,7 @@ export interface Cargo {
   car_type: string;
   payment_type: string;
   username: string;
-  firs_tname: string;
+  first_name: string;
   last_name: string;
   whatsup: string | null;
   info: string;
