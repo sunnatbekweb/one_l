@@ -56,22 +56,25 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                   color="lime"
                 />
               </div>
-              <a
-                href={`tel:${cargo?.phone}`}
-                className="text-sm sm:text-xl"
-                onClick={() =>
+              <button
+                className="text-sm sm:text-xl underline"
+                onClick={() => {
+                  const phone = cargo.phone.replace(/\s+/g, "");
+                  window.open(`tel:${phone}`, "_blank");
+
                   dispatch(
                     updateCargoActions({
                       cargoId: cargo?.id || 0,
                       data: { phoned: true },
                     })
-                  )
-                }
+                  );
+                }}
               >
-                {cargo?.phone}
-              </a>
+                {cargo.phone}
+              </button>
             </div>
           )}
+
           {cargo?.username && (
             <div className="flex items-center gap-x-4">
               <div>
