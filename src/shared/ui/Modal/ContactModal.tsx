@@ -25,11 +25,14 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
 
-  const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
-
-Смотри сам: https://t.me/one_log_bot
-
+  const text = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
 Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
+
+  const url = "https://t.me/one_log_bot";
+
+  const shareLink = `https://t.me/share/url?url=${encodeURIComponent(
+    url
+  )}&text=${encodeURIComponent(text)}`;
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -151,39 +154,23 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                const text = message;
-
                 if (navigator.share) {
-                  navigator
-                    .share({
-                      title: "Share Cargo",
-                      text: text,
-                      url: `https://t.me/share/url?text=${encodeURIComponent(text)}`,
-                    })
-                    .then(() => {
-                      dispatch(
-                        updateCargoActions({
-                          cargoId: cargo?.id || 0,
-                          data: { shared: true },
-                        })
-                      );
-                    })
-                    .catch((err) => {
-                      console.error("❌ Ошибка при share:", err);
-                    });
+                  navigator.share({
+                    title: "1LOG",
+                    text,
+                    url,
+                  });
                 } else {
-                  window.location.href = `https://t.me/share/url?text=${encodeURIComponent(
-                    text
-                  )}`;
-                  dispatch(
-                    updateCargoActions({
-                      cargoId: cargo?.id || 0,
-                      data: { shared: true },
-                    })
-                  );
+                  window.open(shareLink, "_blank");
                 }
+
+                dispatch(
+                  updateCargoActions({
+                    cargoId: cargo?.id || 0,
+                    data: { shared: true },
+                  })
+                );
               }}
-              className="text-sm sm:text-xl"
             >
               {t("contactModal.share")}
             </button>
