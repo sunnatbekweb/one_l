@@ -2,14 +2,42 @@ import { useTranslation } from "react-i18next";
 import "./modal.css";
 import { Slider } from "../Input/Slider";
 import { FaBox, FaMapMarkedAlt, FaUser } from "react-icons/fa";
+import axios from "axios";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import Cookies from "js-cookie";
+import { useState } from "react";
 
 interface ModalProps {
   modal: boolean;
   close: () => void;
+  origin: string;
+  destination: string;
 }
 
-export const NotificationModal: React.FC<ModalProps> = ({ modal, close }) => {
+export const NotificationModal: React.FC<ModalProps> = ({
+  modal,
+  close,
+  origin,
+  destination,
+}) => {
   const { t } = useTranslation();
+  const [routeNotify, setRouteNotify] = useState(false);
+
+  const setNotification = async (enabled: boolean) => {
+    if (enabled) {
+      await axios.post(`${baseUrl}/user/save-route/`, {
+        user: Cookies.get("user_id"),
+        origin,
+        destination,
+      });
+    } else {
+      await axios.post(`${baseUrl}/user/save-route/`, {
+        user: Cookies.get("user_id"),
+        origin,
+        destination,
+      });
+    }
+  };
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -29,9 +57,7 @@ export const NotificationModal: React.FC<ModalProps> = ({ modal, close }) => {
           <div className="my-5 flex flex-col gap-y-3">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
-                <div>
-                  <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
-                </div>
+                <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
                 <span>
                   <span className="font-semibold">
                     {t("notification.option1_bold")}
@@ -39,10 +65,13 @@ export const NotificationModal: React.FC<ModalProps> = ({ modal, close }) => {
                   — {t("notification.option1_normal")}
                 </span>
               </div>
-
-              <div>
-                <Slider />
-              </div>
+              <Slider
+                checked={routeNotify}
+                onChange={(v) => {
+                  setRouteNotify(v);
+                  setNotification(v);
+                }}
+              />
             </div>
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">

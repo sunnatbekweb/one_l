@@ -206,7 +206,12 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           )}
         </div>
       </div>
-      <NotificationModal modal={notificationModal} close={closeModal} />
+      <NotificationModal
+        modal={notificationModal}
+        close={closeModal}
+        origin={cargo?.origin}
+        destination={cargo?.destination}
+      />
     </div>
   );
 };
