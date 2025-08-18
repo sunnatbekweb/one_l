@@ -208,11 +208,6 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
                 ? cargo?.last_name.slice(0, 8)
                 : cargo?.last_name}
             </span>
-            <img
-              src="https://img.icons8.com/?size=512&id=2sZ0sdlG9kWP&format=png"
-              alt="image-icon"
-              className="w-4 h-4 sm:w-5 sm:h-5"
-            />
           </p>
         </div>
       </div>
