@@ -14,7 +14,7 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import "./modal.css";
-import { shareToTelegram } from "@/shared/lib/share";
+// import { shareToTelegram } from "@/shared/lib/share";
 
 interface ModalProps {
   modal: boolean;
@@ -25,9 +25,13 @@ interface ModalProps {
 export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
+  const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
 
-  // const text = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой!`;
-  // const url = "https://t.me/one_log_bot";
+Смотри сам: https://t.me/one_log_bot
+
+Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
+
+  const tgUrl = `tg://msg_url?url=${encodeURIComponent(message)}`;
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -149,9 +153,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                shareToTelegram(
-                  `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.\n\nСмотри сам: https://t.me/one_log_bot\n\nБесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`
-                );
+                window.location.href = tgUrl;
 
                 dispatch(
                   updateCargoActions({
