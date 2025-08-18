@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCargos } from "@/widgets/Cargo/model/cargoSlice";
+import { fetchCargos } from "@/widgets/CargoWrapper/model/cargoSlice";
 import { useTranslation } from "react-i18next";
 import type { AppDispatch, RootState } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";

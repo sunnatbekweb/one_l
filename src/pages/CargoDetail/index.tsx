@@ -7,10 +7,12 @@ import axios from "axios";
 import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
 import { Cargo } from "@/entities/Cargo";
 import { IoIosArrowBack } from "react-icons/io";
+import { useScroll } from "@/shared/lib/useScrollTop";
 
 export const CargoDetail = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+  useScroll();
 
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +43,6 @@ export const CargoDetail = () => {
         <h2 className="font-medium text-3xl absolute left-1/2 -translate-x-1/2">
           {t("detail")}
         </h2>
-        <div></div>
       </div>
       <Cargo
         id={id}

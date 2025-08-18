@@ -1,6 +1,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import styles from "./style.module.css";
-import type { RouteData } from "./../../widgets/Cargo/index";
+import type { RouteData } from "../../widgets/CargoWrapper/index";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { setFilters } from "@/features/filters/model/filterSlice";

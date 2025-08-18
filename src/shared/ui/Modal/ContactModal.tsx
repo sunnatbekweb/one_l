@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
-import { updateCargoActions } from "@/widgets/Cargo/model/cargoPatchSlice";
+import { updateCargoActions } from "@/widgets/CargoWrapper/model/cargoPatchSlice";
+import { useTranslation } from "react-i18next";
 import {
   FaGlobe,
   FaPhoneSquareAlt,
@@ -13,7 +14,6 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import "./modal.css";
-import { useTranslation } from "react-i18next";
 
 interface ModalProps {
   modal: boolean;

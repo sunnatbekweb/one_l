@@ -1,12 +1,12 @@
 import { SearchContainer } from "@/widgets/SearchBox";
-import { Cargo } from "@/widgets/Cargo";
+import { CargoWrapper } from "@/widgets/CargoWrapper";
 import { SearchInfo } from "@/widgets/SearchInfo";
 
 export const Search = () => {
   return (
     <>
       <SearchContainer />
-      <Cargo />
+      <CargoWrapper />
       <SearchInfo />
     </>
   );

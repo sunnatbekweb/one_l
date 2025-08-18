@@ -1,8 +1,10 @@
 import { NotificationEmpty } from "@/entities/NotificationEmpty";
+import { useScroll } from "@/shared/lib/useScrollTop";
 import { useTranslation } from "react-i18next";
 
 export const Notifications = () => {
   const { t } = useTranslation();
+  useScroll();
   return (
     <section>
       <div className="py-[15px]">

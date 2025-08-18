@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { fetchCargo } from "@/widgets/Cargo/model/oneCargoSlice";
+import { fetchCargo } from "@/widgets/CargoWrapper/model/oneCargoSlice";
 import { useTranslation } from "react-i18next";
 import { formatCustomDate } from "@/shared/lib/formatDate";
 import { useCurrency } from "../CargoCard/lib/useCurrency";
@@ -86,25 +86,18 @@ export const Cargo = ({
                 {[
                   cargo?.origin,
                   cargo?.destination,
-
                   cargo?.type,
-
                   cargo?.weight
                     ? `${cargo.weight > 1000 ? cargo.weight / 1000 : cargo.weight} т`
                     : null,
-
                   cargo?.car_type,
-
                   cargo?.volume
                     ? `${cargo.volume > 1000 ? cargo.volume / 1000 : cargo.volume} м³`
                     : null,
-
                   formatCustomDate(cargo?.date || "") || null,
-
                   typeof cargo?.price === "number"
                     ? `${cargo.price.toLocaleString()} ${useCurrency(cargo.price)}`
                     : t("fraxt"),
-
                   cargo?.temperature ? `${cargo.temperature}°C` : null,
                 ]
                   .filter(Boolean)

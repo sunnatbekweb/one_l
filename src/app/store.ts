@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { cargoReducer } from "@/widgets/Cargo/model/cargoSlice";
+import { cargoReducer } from "@/widgets/CargoWrapper/model/cargoSlice";
 import { bookmarkReducer } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { statisticsReducer } from "@/widgets/SearchInfo/model/statisticsSlice";
 import { createBookmarkReducer } from "@/widgets/BookmarkList/model/postBookmarkSlice";
 import { typeReducer } from "@/entities/SearchForm/model/cargoTypeSlice";
 import { filterReducer } from "@/features/filters/model/filterSlice";
-import { oneCargoReducer } from "@/widgets/Cargo/model/oneCargoSlice";
+import { oneCargoReducer } from "@/widgets/CargoWrapper/model/oneCargoSlice";
 import { countriesReducer } from "@/shared/model/restCountriesSlice.ts";
 import { transportTypeReducer } from "@/entities/SearchForm/model/transportTypeSlice";
 

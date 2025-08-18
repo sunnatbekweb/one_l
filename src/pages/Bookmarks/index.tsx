@@ -1,8 +1,10 @@
+import { useScroll } from "@/shared/lib/useScrollTop";
 import { BookmarkList } from "@/widgets/BookmarkList";
 import { useTranslation } from "react-i18next";
 
 export const Bookmarks = () => {
   const { t } = useTranslation();
+  useScroll();
 
   return (
     <section>
