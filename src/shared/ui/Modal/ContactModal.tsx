@@ -149,22 +149,23 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             <div>
               <FaShareSquare className="text-xl sm:text-3xl" />
             </div>
-            <a
-              href={`https://t.me/share/url?text=${encodeURIComponent(message)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
+            <button
+              onClick={() => {
+                window.open(
+                  `https://t.me/share/url?text=${encodeURIComponent(message)}`,
+                  "_blank"
+                );
                 dispatch(
                   updateCargoActions({
                     cargoId: cargo?.id || 0,
                     data: { shared: true },
                   })
-                )
-              }
+                );
+              }}
               className="text-sm sm:text-xl"
             >
               {t("contactModal.share")}
-            </a>
+            </button>
           </div>
         </div>
       </div>

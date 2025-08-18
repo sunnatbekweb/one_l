@@ -36,6 +36,10 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
   const isBookmarked = bookmarks.some(
     (bookmark) => bookmark?.cargo?.id === cargo?.id
   );
+  const { notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
+  const isNotified = notifications.some((n) => n?.id === cargo.id);
 
   const handleBookmark = () => {
     const userId = Number(Cookies.get("user_id"));
@@ -192,9 +196,13 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         </div>
         <div className={styles["search-result__company"]}>
           <p className={`flex items-center gap-1 text-xs sm:text-sm`}>
-            <span className="line-clamp-2">
-              {cargo?.first_name}
-              {cargo?.last_name}
+            <span className="line-clamp-1">
+              {cargo?.first_name?.length > 8
+                ? cargo?.first_name.slice(0, 8)
+                : cargo?.first_name}
+              {cargo?.last_name?.length > 8
+                ? cargo?.last_name.slice(0, 8)
+                : cargo?.last_name}
             </span>
             <img
               src="https://img.icons8.com/?size=512&id=2sZ0sdlG9kWP&format=png"
@@ -209,6 +217,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         close={closeModal}
         origin={cargo?.origin}
         destination={cargo?.destination}
+        isNotified={isNotified}
       />
     </div>
   );

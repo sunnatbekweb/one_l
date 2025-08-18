@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/app/store";
 import { Slider } from "../Input/Slider";
+import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -12,6 +15,7 @@ interface ModalProps {
   close: () => void;
   origin: string;
   destination: string;
+  isNotified: boolean;
 }
 
 export const NotificationModal: React.FC<ModalProps> = ({
@@ -19,23 +23,35 @@ export const NotificationModal: React.FC<ModalProps> = ({
   close,
   origin,
   destination,
+  isNotified,
 }) => {
   const { t } = useTranslation();
-  const [routeNotify, setRouteNotify] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState(false);
 
   const setNotification = async (enabled: boolean) => {
-    if (enabled) {
-      await axios.post(`${baseUrl}/user/save-route/`, {
-        user: Cookies.get("user_id"),
-        origin,
-        destination,
-      });
-    } else {
-      await axios.post(`${baseUrl}/user/save-route/`, {
-        user: Cookies.get("user_id"),
-        origin,
-        destination,
-      });
+    try {
+      setLoading(true);
+
+      if (enabled) {
+        await axios.post(`${baseUrl}/user/save-route/`, {
+          user: Cookies.get("user_id"),
+          origin,
+          destination,
+        });
+      } else {
+        await axios.post(`${baseUrl}/user/delete-route/`, {
+          user: Cookies.get("user_id"),
+          origin,
+          destination,
+        });
+      }
+
+      dispatch(fetchNotifications());
+    } catch (err) {
+      console.error("Ошибка при обновлении уведомления", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,11 +82,9 @@ export const NotificationModal: React.FC<ModalProps> = ({
                 </span>
               </div>
               <Slider
-                checked={routeNotify}
-                onChange={(v) => {
-                  setRouteNotify(v);
-                  setNotification(v);
-                }}
+                checked={isNotified}
+                disabled={loading}
+                onChange={(v) => setNotification(v)}
               />
             </div>
             <div className="flex items-center justify-between gap-5">
