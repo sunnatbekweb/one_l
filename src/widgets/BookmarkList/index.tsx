@@ -7,35 +7,35 @@ import { BookmarkEmpty } from "@/entities/BookmarkEmpty";
 import { useTranslation } from "react-i18next";
 
 export const BookmarkList = () => {
-	const dispatch = useDispatch<AppDispatch>();
-	const { bookmarks, isloading, error } = useSelector(
-		(state: RootState) => state.bookmarks
-	);
-	const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { bookmarks, isloading, error } = useSelector(
+    (state: RootState) => state.bookmarks
+  );
+  const { t } = useTranslation();
 
-	useEffect(() => {
-		dispatch(fetchBookmarks());
-	}, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchBookmarks());
+  }, [dispatch]);
 
-	return (
-		<div className="mt-7">
-			{isloading ? (
-				<div className="text-center">{t("loading")}</div>
-			) : error ? (
-				<div className="text-red-500 text-center">{error}</div>
-			) : (
-				<div className="grid grid-cols-1">
-					{bookmarks?.length > 0 ? (
-						<div>
-							{bookmarks.map(bookmark => (
-								<CargoCard key={bookmark.id} cargo={bookmark.cargo} />
-							))}
-						</div>
-					) : (
-						<BookmarkEmpty />
-					)}
-				</div>
-			)}
-		</div>
-	);
+  return (
+    <div className="mt-7">
+      {isloading ? (
+        <div className="text-center">{t("loading")}</div>
+      ) : error ? (
+        <div className="text-red-500 text-center">{error}</div>
+      ) : (
+        <div className="grid grid-cols-1">
+          {bookmarks?.length > 0 ? (
+            <div>
+              {bookmarks.map((bookmark) => (
+                <CargoCard key={bookmark.id} cargo={bookmark.cargo} />
+              ))}
+            </div>
+          ) : (
+            <BookmarkEmpty />
+          )}
+        </div>
+      )}
+    </div>
+  );
 };

@@ -8,6 +8,7 @@ import { filterReducer } from "@/features/filters/model/filterSlice";
 import { oneCargoReducer } from "@/widgets/CargoWrapper/model/oneCargoSlice";
 import { countriesReducer } from "@/shared/model/restCountriesSlice.ts";
 import { transportTypeReducer } from "@/entities/SearchForm/model/transportTypeSlice";
+import { notificationReducer } from "@/entities/NotificationList/model/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     filters: filterReducer,
     counties: countriesReducer,
     transportType: transportTypeReducer,
+    notifications: notificationReducer,
   },
 });
 

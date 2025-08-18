@@ -1,11 +1,11 @@
-import { useTranslation } from "react-i18next";
-import "./modal.css";
-import { Slider } from "../Input/Slider";
-import { FaBox, FaMapMarkedAlt, FaUser } from "react-icons/fa";
-import axios from "axios";
-import { baseUrl } from "@/shared/lib/updatedBackendUrl";
-import Cookies from "js-cookie";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Slider } from "../Input/Slider";
+import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { FaBox, FaMapMarkedAlt, FaUser } from "react-icons/fa";
+import "./modal.css";
 
 interface ModalProps {
   modal: boolean;

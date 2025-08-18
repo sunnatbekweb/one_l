@@ -7,14 +7,19 @@ import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
+import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
 
 export const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
+  const { notifications } = useSelector(
+    (state: RootState) => state.notifications
+  );
   const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchBookmarks());
+    dispatch(fetchNotifications());
   }, [dispatch]);
 
   return (
@@ -46,6 +51,11 @@ export const Navbar = () => {
         >
           <FaBell fontSize={20} />
           <span>{t("nav.notifications")}</span>
+          {notifications.length > 0 && (
+            <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
+              {notifications.length}
+            </strong>
+          )}
         </NavLink>
         <NavLink
           to={"applications/"}

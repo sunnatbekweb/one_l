@@ -34,7 +34,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
   const isBookmarked = bookmarks.some(
-    (bookmark) => bookmark.cargo.id === cargo.id
+    (bookmark) => bookmark?.cargo?.id === cargo?.id
   );
 
   const handleBookmark = () => {
@@ -63,11 +63,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
     setNotificationModal(false);
   };
 
-  const formattedDate = formatCustomDate(cargo.date);
-  const relativeCreatedAt = formatRelativeDate(cargo.created_at);
+  const formattedDate = formatCustomDate(cargo?.date || "");
+  const relativeCreatedAt = formatRelativeDate(cargo?.created_at || "");
 
-  const { flag: originFlag } = useCountryFlag(cargo.origin_country);
-  const { flag: destinationFlag } = useCountryFlag(cargo.destination_country);
+  const { flag: originFlag } = useCountryFlag(cargo?.origin_country);
+  const { flag: destinationFlag } = useCountryFlag(cargo?.destination_country);
 
   return (
     <div className={styles["search-result"]}>
@@ -91,7 +91,7 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
         <span className={styles["search-result__price"]}>
           {typeof cargo?.price === "number" ? (
             <>
-              {cargo.price.toLocaleString()} {useCurrency(cargo.price)}
+              {cargo?.price?.toLocaleString()} {useCurrency(cargo?.price)}
             </>
           ) : (
             t("fraxt")
