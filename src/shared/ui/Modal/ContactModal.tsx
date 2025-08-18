@@ -146,62 +146,27 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                <button
-                  onClick={() => {
-                    const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
+                const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
 
 Смотри сам: https://t.me/one_log_bot
 
 Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
 
-                    // 1. Проверяем Web Share API
-                    if (navigator.share) {
-                      navigator
-                        .share({
-                          text: message,
-                        })
-                        .then(() => {
-                          dispatch(
-                            updateCargoActions({
-                              cargoId: cargo?.id || 0,
-                              data: { shared: true },
-                            })
-                          );
-                        })
-                        .catch((err) => console.error("Share error:", err));
-                    } else {
-                      // 2. Пробуем tg:// схему
-                      const tgUrl = `tg://msg_url?url=${encodeURIComponent(message)}`;
-                      const win = window.open(tgUrl, "_blank");
+                // Telegram deep link
+                const tgUrl = `tg://msg_url?url=${encodeURIComponent(message)}`;
 
-                      // 3. Если браузер заблокировал tg://, открываем fallback
-                      setTimeout(() => {
-                        if (
-                          !win ||
-                          win.closed ||
-                          typeof win.closed === "undefined"
-                        ) {
-                          window.open(
-                            `https://t.me/share/url?url=${encodeURIComponent(
-                              "https://t.me/one_log_bot"
-                            )}&text=${encodeURIComponent(message)}`,
-                            "_blank"
-                          );
-                        }
-                      }, 800);
+                // Сразу пробуем tg:// (важно: синхронно в onClick)
+                window.location.href = tgUrl;
 
-                      dispatch(
-                        updateCargoActions({
-                          cargoId: cargo?.id || 0,
-                          data: { shared: true },
-                        })
-                      );
-                    }
-                  }}
-                  className="text-sm sm:text-xl"
-                >
-                  {t("contactModal.share")}
-                </button>;
+                // Fallback через 800мс → откроется в браузере
+                setTimeout(() => {
+                  window.open(
+                    `https://t.me/share/url?url=${encodeURIComponent(
+                      "https://t.me/one_log_bot"
+                    )}&text=${encodeURIComponent(message)}`,
+                    "_blank"
+                  );
+                }, 800);
 
                 dispatch(
                   updateCargoActions({
@@ -210,6 +175,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                   })
                 );
               }}
+              className="text-sm sm:text-xl"
             >
               {t("contactModal.share")}
             </button>
