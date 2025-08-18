@@ -1,5 +1,5 @@
 import { NotificationEmpty } from "@/entities/NotificationEmpty";
-import { useScroll } from "@/shared/lib/useScrollTop";
+import { useScroll } from "@/shared/lib/useScroll";
 import { useTranslation } from "react-i18next";
 
 export const Notifications = () => {
