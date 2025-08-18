@@ -151,16 +151,37 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                window.open(
-                  `https://t.me/share/url?text=${encodeURIComponent(message)}`,
-                  "_blank"
-                );
-                dispatch(
-                  updateCargoActions({
-                    cargoId: cargo?.id || 0,
-                    data: { shared: true },
-                  })
-                );
+                const text = message;
+
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: "Share Cargo",
+                      text: text,
+                      url: `https://t.me/share/url?text=${encodeURIComponent(text)}`,
+                    })
+                    .then(() => {
+                      dispatch(
+                        updateCargoActions({
+                          cargoId: cargo?.id || 0,
+                          data: { shared: true },
+                        })
+                      );
+                    })
+                    .catch((err) => {
+                      console.error("❌ Ошибка при share:", err);
+                    });
+                } else {
+                  window.location.href = `https://t.me/share/url?text=${encodeURIComponent(
+                    text
+                  )}`;
+                  dispatch(
+                    updateCargoActions({
+                      cargoId: cargo?.id || 0,
+                      data: { shared: true },
+                    })
+                  );
+                }
               }}
               className="text-sm sm:text-xl"
             >
