@@ -7,7 +7,7 @@ import { fetchNotifications } from "@/entities/NotificationList/model/notificati
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { FaBox, FaMapMarkedAlt, FaUser } from "react-icons/fa";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import "./modal.css";
 
 interface ModalProps {
@@ -29,17 +29,14 @@ export const NotificationModal: React.FC<ModalProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
 
-  // Инициализация: берём из cookie или с сервера
   const [localChecked, setLocalChecked] = useState<boolean>(() => {
     const saved = Cookies.get(`notify_${origin}_${destination}`);
     return saved ? JSON.parse(saved) : isNotified;
   });
 
-  // Если с сервера пришли новые данные — обновляем cookie и state
   useEffect(() => {
     const saved = Cookies.get(`notify_${origin}_${destination}`);
     if (!saved) {
-      // если cookie ещё не было — тогда обновляем из сервера
       setLocalChecked(isNotified);
       Cookies.set(
         `notify_${origin}_${destination}`,
@@ -50,7 +47,7 @@ export const NotificationModal: React.FC<ModalProps> = ({
   }, [isNotified, origin, destination]);
 
   const setNotification = async (enabled: boolean) => {
-    setLocalChecked(enabled); // UI обновляем сразу
+    setLocalChecked(enabled);
 
     if (enabled) {
       Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(true), {
@@ -75,11 +72,10 @@ export const NotificationModal: React.FC<ModalProps> = ({
           destination,
         });
       }
-      dispatch(fetchNotifications()); // подтягиваем актуальное
+      dispatch(fetchNotifications());
     } catch (err) {
       console.error("Ошибка при обновлении уведомления", err);
 
-      // откат
       setLocalChecked(!enabled);
       if (enabled) {
         Cookies.remove(`notify_${origin}_${destination}`);
@@ -100,14 +96,6 @@ export const NotificationModal: React.FC<ModalProps> = ({
           {t("nav.notifications")}
         </h2>
         <div className="sm:px-10 py-5">
-          <strong className="font-bold">{t("notification.title")}</strong>
-          <br /> <br />
-          <p>
-            {t("notification.subtitle1")}
-            <br />
-            <br />
-            {t("notification.subtitle2")}
-          </p>
           <div className="my-5 flex flex-col gap-y-3">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
@@ -124,32 +112,6 @@ export const NotificationModal: React.FC<ModalProps> = ({
                 disabled={loading}
                 onChange={(v) => setNotification(v)}
               />
-            </div>
-
-            <div className="flex items-center justify-between gap-5">
-              <div className="flex items-start gap-2 text-sm sm:text-base">
-                <FaBox className="mt-0.5 text-amber-300 text-lg" />
-                <span>
-                  <span className="font-semibold">
-                    {t("notification.option2_bold")}
-                  </span>{" "}
-                  — {t("notification.option2_normal")}
-                </span>
-              </div>
-              <Slider disabled />
-            </div>
-
-            <div className="flex items-center justify-between gap-5">
-              <div className="flex items-start gap-2 text-sm sm:text-base">
-                <FaUser className="mt-0.5 text-gray-500 text-lg" />
-                <span>
-                  <span className="font-semibold">
-                    {t("notification.option3_bold")}
-                  </span>{" "}
-                  — {t("notification.option3_normal")}
-                </span>
-              </div>
-              <Slider disabled />
             </div>
           </div>
         </div>
