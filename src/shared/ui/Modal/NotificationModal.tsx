@@ -99,7 +99,9 @@ export const NotificationModal: React.FC<ModalProps> = ({
           <div className="my-5 flex flex-col gap-y-3">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
-                <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
+                <div>
+                  <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
+                </div>
                 <span>
                   <span className="font-semibold">
                     {t("notification.option1_bold")}
