@@ -49,7 +49,7 @@ export const CargoDetail = () => {
       />
       <button
         onClick={() =>
-          isSubscribed ? setIsModalOpen(true) : setSubscribeModal(true)
+           setIsModalOpen(true) 
         }
         className="block w-3/4 sm:w-3/5 mx-auto p-4 bg-[#041e90] rounded-xl font-semibold text-lg sm:text-xl text-white mt-8"
       >
