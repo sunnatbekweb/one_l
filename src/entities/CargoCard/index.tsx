@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import {
+  FaBell,
   FaBookmark,
   FaRegBell,
   FaRegBookmark,
@@ -40,6 +41,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
     (state: RootState) => state.notifications
   );
   const isNotified = notifications.some((n) => n?.id === cargo.id);
+
+  const cookieChecked = Cookies.get(
+    `notify_${cargo?.origin}_${cargo?.destination}`
+  );
+  const isBellActive = cookieChecked ? JSON.parse(cookieChecked) : isNotified;
 
   const handleBookmark = () => {
     const userId = Number(Cookies.get("user_id"));
@@ -85,8 +91,13 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
             )}
           </button>
           <button onClick={() => setNotificationModal(true)}>
-            <FaRegBell fontSize={18} />
+            {isBellActive ? (
+              <FaBell fontSize={18} />
+            ) : (
+              <FaRegBell fontSize={18} />
+            )}
           </button>
+
           <span className="flex items-center gap-x-1">
             <FaRegClock fontSize={18} />
             <span className="text-sm text-gray-500">{relativeCreatedAt}</span>

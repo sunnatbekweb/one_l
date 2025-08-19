@@ -36,7 +36,9 @@ export const NotificationModal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     const saved = Cookies.get(`notify_${origin}_${destination}`);
-    if (!saved) {
+    if (saved) {
+      setLocalChecked(JSON.parse(saved));
+    } else {
       setLocalChecked(isNotified);
       Cookies.set(
         `notify_${origin}_${destination}`,
