@@ -145,19 +145,25 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               <FaShareSquare className="text-xl sm:text-3xl" />
             </div>
             <button
-              onClick={() => {
+              onClick={async () => {
                 const message = t("shareMessage");
 
-                const tgUrl = `tg://msg_url?url=${encodeURIComponent(message)}`;
-
-                window.location.href = tgUrl;
-
-                setTimeout(() => {
-                  window.open(
-                    `https://t.me/share/url?text=${encodeURIComponent(message)}`,
-                    "_blank"
-                  );
-                }, 800);
+                try {
+                  if (navigator.share) {
+                    await navigator.share({
+                      text: message,
+                    });
+                  } else {
+                    window.open(
+                      `https://t.me/share/url?url=${encodeURIComponent(
+                        "https://t.me/one_log_bot"
+                      )}&text=${encodeURIComponent(message)}`,
+                      "_blank"
+                    );
+                  }
+                } catch (err) {
+                  console.error("Share failed:", err);
+                }
 
                 dispatch(
                   updateCargoActions({
