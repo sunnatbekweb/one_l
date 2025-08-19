@@ -155,9 +155,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                     });
                   } else {
                     window.open(
-                      `https://t.me/share/url?url=${encodeURIComponent(
-                        "https://t.me/one_log_bot"
-                      )}&text=${encodeURIComponent(message)}`,
+                      `https://t.me/share/url?text=${encodeURIComponent(message)}`,
                       "_blank"
                     );
                   }
