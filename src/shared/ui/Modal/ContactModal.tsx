@@ -146,24 +146,15 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             </div>
             <button
               onClick={() => {
-                const message = `Я теперь ищу грузы через 1LOG — просто, удобно и всё под рукой.
+                const message = t("shareMessage");
 
-Смотри сам: https://t.me/one_log_bot
-
-Бесплатный период начнётся автоматически, как только нажмёшь «Подробнее» на заявке.`;
-
-                // Telegram deep link
                 const tgUrl = `tg://msg_url?url=${encodeURIComponent(message)}`;
 
-                // Сразу пробуем tg:// (важно: синхронно в onClick)
                 window.location.href = tgUrl;
 
-                // Fallback через 800мс → откроется в браузере
                 setTimeout(() => {
                   window.open(
-                    `https://t.me/share/url?url=${encodeURIComponent(
-                      "https://t.me/one_log_bot"
-                    )}&text=${encodeURIComponent(message)}`,
+                    `https://t.me/share/url?text=${encodeURIComponent(message)}`,
                     "_blank"
                   );
                 }, 800);
