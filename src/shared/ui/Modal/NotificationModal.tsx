@@ -51,9 +51,14 @@ export const NotificationModal: React.FC<ModalProps> = ({
 
   const setNotification = async (enabled: boolean) => {
     setLocalChecked(enabled); // UI обновляем сразу
-    Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(enabled), {
-      expires: 365,
-    });
+
+    if (enabled) {
+      Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(true), {
+        expires: 365,
+      });
+    } else {
+      Cookies.remove(`notify_${origin}_${destination}`);
+    }
 
     setLoading(true);
     try {
@@ -76,9 +81,13 @@ export const NotificationModal: React.FC<ModalProps> = ({
 
       // откат
       setLocalChecked(!enabled);
-      Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(!enabled), {
-        expires: 365,
-      });
+      if (enabled) {
+        Cookies.remove(`notify_${origin}_${destination}`);
+      } else {
+        Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(true), {
+          expires: 365,
+        });
+      }
     } finally {
       setLoading(false);
     }
