@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/app/store";
@@ -29,10 +29,34 @@ export const NotificationModal: React.FC<ModalProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
 
-  const setNotification = async (enabled: boolean) => {
-    try {
-      setLoading(true);
+  // Инициализация: берём из cookie или с сервера
+  const [localChecked, setLocalChecked] = useState<boolean>(() => {
+    const saved = Cookies.get(`notify_${origin}_${destination}`);
+    return saved ? JSON.parse(saved) : isNotified;
+  });
 
+  // Если с сервера пришли новые данные — обновляем cookie и state
+  useEffect(() => {
+    const saved = Cookies.get(`notify_${origin}_${destination}`);
+    if (!saved) {
+      // если cookie ещё не было — тогда обновляем из сервера
+      setLocalChecked(isNotified);
+      Cookies.set(
+        `notify_${origin}_${destination}`,
+        JSON.stringify(isNotified),
+        { expires: 365 }
+      );
+    }
+  }, [isNotified, origin, destination]);
+
+  const setNotification = async (enabled: boolean) => {
+    setLocalChecked(enabled); // UI обновляем сразу
+    Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(enabled), {
+      expires: 365,
+    });
+
+    setLoading(true);
+    try {
       if (enabled) {
         await axios.post(`${baseUrl}/user/save-route/`, {
           user: Cookies.get("user_id"),
@@ -46,10 +70,15 @@ export const NotificationModal: React.FC<ModalProps> = ({
           destination,
         });
       }
-
-      dispatch(fetchNotifications());
+      dispatch(fetchNotifications()); // подтягиваем актуальное
     } catch (err) {
       console.error("Ошибка при обновлении уведомления", err);
+
+      // откат
+      setLocalChecked(!enabled);
+      Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(!enabled), {
+        expires: 365,
+      });
     } finally {
       setLoading(false);
     }
@@ -73,9 +102,7 @@ export const NotificationModal: React.FC<ModalProps> = ({
           <div className="my-5 flex flex-col gap-y-3">
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
-                <div>
-                  <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
-                </div>
+                <FaMapMarkedAlt className="mt-0.5 text-blue-500 text-lg" />
                 <span>
                   <span className="font-semibold">
                     {t("notification.option1_bold")}
@@ -84,16 +111,15 @@ export const NotificationModal: React.FC<ModalProps> = ({
                 </span>
               </div>
               <Slider
-                checked={isNotified}
+                checked={localChecked}
                 disabled={loading}
                 onChange={(v) => setNotification(v)}
               />
             </div>
+
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
-                <div>
-                  <FaBox className="mt-0.5 text-amber-300 text-lg" />
-                </div>
+                <FaBox className="mt-0.5 text-amber-300 text-lg" />
                 <span>
                   <span className="font-semibold">
                     {t("notification.option2_bold")}
@@ -101,16 +127,12 @@ export const NotificationModal: React.FC<ModalProps> = ({
                   — {t("notification.option2_normal")}
                 </span>
               </div>
-
-              <div>
-                <Slider />
-              </div>
+              <Slider disabled />
             </div>
+
             <div className="flex items-center justify-between gap-5">
               <div className="flex items-start gap-2 text-sm sm:text-base">
-                <div>
-                  <FaUser className="mt-0.5 text-gray-500 text-lg" />
-                </div>
+                <FaUser className="mt-0.5 text-gray-500 text-lg" />
                 <span>
                   <span className="font-semibold">
                     {t("notification.option3_bold")}
@@ -118,10 +140,7 @@ export const NotificationModal: React.FC<ModalProps> = ({
                   — {t("notification.option3_normal")}
                 </span>
               </div>
-
-              <div>
-                <Slider />
-              </div>
+              <Slider disabled />
             </div>
           </div>
         </div>
