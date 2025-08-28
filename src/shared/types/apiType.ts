@@ -9,7 +9,7 @@ export interface Cargos {
 
 export interface CargoType {
   type?: string | number | undefined;
-  car_type?: string | undefined 
+  car_type?: string | undefined;
 }
 
 export type Country = {
@@ -18,6 +18,7 @@ export type Country = {
     svg: string;
     alt: string;
   };
+  cca2: string;
   name: {
     common: string;
     official: string;

@@ -116,11 +116,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
 
       <div className={styles["search-result__route"]}>
         <div className={styles["search-result__city"]}>
-          {originFlag?.flags?.png && (
+          {originFlag && (
             <img
               className="w-5 sm:w-10 h-full object-cover"
-              src={originFlag.flags.png}
-              alt={originFlag.flags.alt}
+              src={originFlag}
+              alt={originFlag}
             />
           )}
           <strong className={"text-base sm:text-xl line-clamp-1"}>
@@ -138,11 +138,11 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
           <span>📍</span>
         </div>
         <div className={styles["search-result__city"]}>
-          {destinationFlag?.flags?.png && (
+          {destinationFlag && (
             <img
               className="w-5 sm:w-10 h-full object-cover"
-              src={destinationFlag.flags.png}
-              alt={destinationFlag.flags.alt}
+              src={destinationFlag}
+              alt={destinationFlag}
             />
           )}
           <strong className={"text-base sm:text-xl line-clamp-1"}>

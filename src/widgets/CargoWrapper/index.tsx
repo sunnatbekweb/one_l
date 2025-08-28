@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { fetchCargos } from "./model/cargoSlice";
-import { useTranslation } from "react-i18next";
 import { SearchSettings } from "@/entities/SearchSettings";
 import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/Pagination";
 import { RouteCard } from "@/entities/RouteCard";
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import axios from "axios";
 
 export interface RouteData {
@@ -32,7 +32,7 @@ export const CargoWrapper = () => {
     type: filters.car_type,
   }).some(Boolean);
 
-  const { t } = useTranslation();
+  const { t } = useAppTrasnlation();
   const dispatch = useDispatch<AppDispatch>();
   const [currentPage, setCurrentPage] = useState(0);
   const [routes, setRoutes] = useState<RouteData[]>([]);

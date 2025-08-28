@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { useTranslation } from "react-i18next";
 import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
+import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
-import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
 
 export const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +15,7 @@ export const Navbar = () => {
   const { notifications } = useSelector(
     (state: RootState) => state.notifications
   );
-  const { t } = useTranslation();
+  const { t } = useAppTrasnlation();
 
   useEffect(() => {
     dispatch(fetchBookmarks());

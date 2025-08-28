@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { FaBars, FaGlobe } from "react-icons/fa";
 import { LangDropdown } from "./ui/LangDropdown";
 import styles from "./style.module.css";
@@ -8,7 +8,7 @@ import styles from "./style.module.css";
 export const Header = () => {
   const [openLangDropdown, setOpenLangDropdown] = useState(false);
   const closeDropdown = () => setOpenLangDropdown(false);
-  const { i18n } = useTranslation();
+  const { i18n } = useAppTrasnlation();
 
   return (
     <header className={`${styles.headerSection}`}>

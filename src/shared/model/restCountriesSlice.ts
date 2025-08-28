@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCountries } from "../api/restCountries";
+import type { Country } from "../types/apiType";
 
 type countriesState = {
-  countries: [];
+  countries: Country[];
   isloading: boolean;
   error: string | null;
 };

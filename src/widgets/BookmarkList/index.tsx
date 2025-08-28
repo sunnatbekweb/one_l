@@ -4,14 +4,14 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { fetchBookmarks } from "./model/getBookmarkSlice";
 import { CargoCard } from "@/entities/CargoCard";
 import { BookmarkEmpty } from "@/entities/BookmarkEmpty";
-import { useTranslation } from "react-i18next";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 
 export const BookmarkList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { bookmarks, isloading, error } = useSelector(
     (state: RootState) => state.bookmarks
   );
-  const { t } = useTranslation();
+  const { t } = useAppTrasnlation();
 
   useEffect(() => {
     dispatch(fetchBookmarks());
