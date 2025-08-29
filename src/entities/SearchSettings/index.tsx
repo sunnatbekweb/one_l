@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
-import { fetchCargos } from "@/widgets/CargoWrapper/model/cargoSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 import { useTranslation } from "react-i18next";
 import { SearchFilter } from "@/shared/ui/Modal/SearchFilterModal";
 import { SearchSettings as SettingsModal } from "@/shared/ui/Modal/SearchSettings";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
+import { useLazyGetCargosQuery } from "@/app/api";
 
 interface SettingsProps {
-  resultCount: number;
+  resultCount: number | undefined;
   currentPage: number;
   isloading: boolean;
 }
@@ -22,12 +22,15 @@ export const SearchSettings: React.FC<SettingsProps> = ({
   const { t } = useTranslation();
   const [filterModal, setFilterModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
+
   const filters = useSelector((state: RootState) => state.filters);
 
+  const [triggerGetCargos] = useLazyGetCargosQuery();
+
   const handleUpdate = () => {
-    dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
+    triggerGetCargos({ ...filters, page: currentPage + 1 });
   };
+
   return (
     <div className="my-5">
       <p

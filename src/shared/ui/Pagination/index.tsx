@@ -27,7 +27,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         }}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
-        pageCount={pageCount}
+        pageCount={pageCount || 0}
         forcePage={forcePage}
         containerClassName={styles.pagination}
         pageClassName={styles.page}

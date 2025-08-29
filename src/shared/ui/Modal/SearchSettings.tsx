@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchCargos } from "@/widgets/CargoWrapper/model/cargoSlice";
 import { useTranslation } from "react-i18next";
 import type { AppDispatch } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";
 import { fetchTransportType } from "@/entities/SearchForm/model/transportTypeSlice";
 import { types } from "../Select";
 import "./modal.css";
+import { useLazyGetCargosQuery } from "@/app/api";
 
 interface ModalProps {
   modal: boolean;
@@ -26,6 +26,8 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
     car_type: "",
   });
 
+  const [trigger] = useLazyGetCargosQuery();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -34,7 +36,7 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(fetchCargos(formData));
+    trigger(formData);
     close();
   };
 

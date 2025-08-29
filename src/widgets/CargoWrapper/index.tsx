@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
-import { fetchCargos } from "./model/cargoSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 import { SearchSettings } from "@/entities/SearchSettings";
 import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/Pagination";
 import { RouteCard } from "@/entities/RouteCard";
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
+import { useLazyGetCargosQuery } from "@/app/api";
 import axios from "axios";
 
 export interface RouteData {
@@ -20,9 +20,9 @@ const PAGE_SIZE = 5;
 
 export const CargoWrapper = () => {
   const filters = useSelector((state: RootState) => state.filters);
-  const { cargos, isloading, error } = useSelector(
-    (state: RootState) => state.cargos
-  );
+  const [currentPage, setCurrentPage] = useState(0);
+  const [routes, setRoutes] = useState<RouteData[]>([]);
+  const [trigger, { data, isLoading, error }] = useLazyGetCargosQuery();
 
   const isFilterActive = Object.values({
     from_country: filters.from_country,
@@ -33,13 +33,9 @@ export const CargoWrapper = () => {
   }).some(Boolean);
 
   const { t } = useAppTrasnlation();
-  const dispatch = useDispatch<AppDispatch>();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [routes, setRoutes] = useState<RouteData[]>([]);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
-    dispatch(fetchCargos({ ...filters, page: selected + 1 }));
   };
 
   const getRoutes = async () => {
@@ -56,22 +52,18 @@ export const CargoWrapper = () => {
   }, [filters]);
 
   useEffect(() => {
-    const totalPages = Math.ceil(cargos.count / PAGE_SIZE);
-
-    if (currentPage >= totalPages && totalPages > 0) {
-      setCurrentPage(0);
-      return;
-    }
-
-    dispatch(fetchCargos({ ...filters, page: currentPage + 1 }));
-  }, [currentPage, filters, dispatch, cargos.count]);
-
-  useEffect(() => {
     getRoutes();
   }, []);
 
+  useEffect(() => {
+    trigger({
+      ...filters,
+      page: currentPage + 1,
+    });
+  }, [filters, currentPage, trigger]);
+
   return (
-    <section className="py-[15px] mx-auto" id={"pagination_top"}>
+    <section className="py-[15px] mx-auto" id="pagination_top">
       <div>
         {sessionStorage.getItem("viewMode") === "popular" ? (
           <h2 className="max-w-[300px] mx-auto font-semibold text-2xl text-[#595959] text-center">
@@ -81,27 +73,29 @@ export const CargoWrapper = () => {
           isFilterActive &&
           sessionStorage.getItem("viewMode") === "search" && (
             <SearchSettings
-              resultCount={cargos?.count}
+              resultCount={data?.count}
               currentPage={currentPage}
-              isloading={isloading}
+              isloading={isLoading}
             />
           )
         )}
         <div>
-          {isloading ? (
+          {isLoading ? (
             <div className="text-center">{t("loading")}</div>
           ) : error ? (
-            <div className="text-red-500 text-center">{error}</div>
+            <div className="text-red-500 text-center">
+              {JSON.stringify(error)}
+            </div>
           ) : (
             <div className="grid grid-cols-1">
               {sessionStorage.getItem("viewMode") === "search" ? (
-                cargos.results.length > 0 ? (
+                (data?.results?.length ?? 0) > 0 ? (
                   <div>
-                    {cargos?.results.map((cargo) => (
+                    {data?.results?.map((cargo) => (
                       <CargoCard key={cargo.id} cargo={cargo} />
                     ))}
                     <Pagination
-                      pageCount={Math.ceil(cargos.count / PAGE_SIZE)}
+                      pageCount={Math.ceil((data?.count || 0) / PAGE_SIZE)}
                       onPageChange={handlePageChange}
                       forcePage={currentPage}
                     />

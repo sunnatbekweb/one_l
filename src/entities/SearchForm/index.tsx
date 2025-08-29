@@ -19,15 +19,12 @@ export const SearchForm = () => {
 
   const { t } = useTranslation();
 
-  // Локальные состояния
   const [originValue, setOriginValue] = useState("");
   const [originCountry, setOriginCountry] = useState<Country | null>(null);
-
   const [destinationValue, setDestinationValue] = useState("");
   const [destinationCountry, setDestinationCountry] = useState<Country | null>(
     null
   );
-
   const [carTypeValue, setCarTypeValue] = useState("all");
 
   const onSubmit = (e: React.FormEvent) => {
@@ -47,11 +44,9 @@ export const SearchForm = () => {
   };
 
   const valueChange = () => {
-    // Меняем значения
     setOriginValue(destinationValue);
     setDestinationValue(originValue);
 
-    // Меняем выбранные страны
     const tempCountry = originCountry;
     setOriginCountry(destinationCountry);
     setDestinationCountry(tempCountry);

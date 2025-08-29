@@ -30,6 +30,11 @@ export interface Cargo {
   info: string;
 }
 
+export interface CargoApi {
+  count: number;
+  results: Cargo[];
+}
+
 export type CargoParams = {
   page?: number;
   car_type?: string;
