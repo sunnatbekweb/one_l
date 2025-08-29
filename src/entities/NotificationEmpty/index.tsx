@@ -1,7 +1,7 @@
 import { BsBellSlashFill } from "react-icons/bs";
-import styles from "./style.module.css";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import styles from "./style.module.css";
 
 export const NotificationEmpty = () => {
   const { t } = useTranslation();

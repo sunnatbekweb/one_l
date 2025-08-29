@@ -10,7 +10,7 @@
 }
 
 .notificationEmptyTitle {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
   line-height: normal;
@@ -35,3 +35,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+
+@media screen and (max-width: 575px) {
+  .emptyContainer {
+    height: 60vh;
+    padding: 0 2rem;
+  }
+}
+

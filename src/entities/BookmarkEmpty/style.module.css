@@ -50,3 +50,10 @@
 .goHomeButton:hover {
   background-color: #005fa3;
 }
+
+@media screen and (max-width: 575px) {
+  .bookmarkEmptyContainer {
+    height: fit-content;
+    padding: 0 2rem;
+  }
+}
