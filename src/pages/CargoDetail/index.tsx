@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { Cargo } from "@/entities/Cargo";
 import { IoIosArrowBack } from "react-icons/io";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const CargoDetail = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t } = useAppTrasnlation();
 
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isSubscribed, setIsSubscribed] = useState();
 
   const getSubscribe = async () => {
