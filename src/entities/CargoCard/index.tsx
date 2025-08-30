@@ -3,7 +3,7 @@ import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { sendBookmarkCargo } from "@/widgets/BookmarkList/model/postBookmarkSlice";
 import { removeBookmarkCargo } from "@/widgets/BookmarkList/model/deleteBookmarkSlice";
-import { useCountryFlag } from "@/entities/CargoCard/lib/useCountryFlag.ts";
+import { useCountryFlag } from "@/shared/lib/useCountryFlag";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";

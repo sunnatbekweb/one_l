@@ -1,8 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import flag_ru from "../../../assets/icons/flag_ru.svg";
-import flag_uz from "../../../assets/icons/flag_uz.svg";
 import Cookies from "js-cookie";
+import { useCountryFlag } from "@/shared/lib/useCountryFlag";
 
 interface DropdownProps {
   isOpen: boolean;
@@ -11,6 +10,8 @@ interface DropdownProps {
 
 export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
   const { i18n } = useTranslation();
+  const { flag: uzFlag } = useCountryFlag("UZ");
+  const { flag: ruFlag } = useCountryFlag("RU");
 
   const handleLanguageChange = (lng: string) => {
     let code = "0";
@@ -34,7 +35,11 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         className="flex items-center gap-x-2 py-0.5 w-full"
       >
         <div className="w-2/5">
-          <img src={flag_ru} alt="Flag RU" className="w-full object-cover" />
+          <img
+            src={ruFlag || ""}
+            alt="Flag RU"
+            className="w-full object-cover"
+          />
         </div>
         <span
           className={`font-semibold text-sm ${
@@ -49,7 +54,11 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         className="flex items-center gap-x-2 py-0.5 w-full"
       >
         <div className="w-2/5">
-          <img src={flag_uz} alt="Flag UZ" className="w-full object-cover" />
+          <img
+            src={uzFlag || ""}
+            alt="Flag UZ"
+            className="w-full object-cover"
+          />
         </div>
         <span
           className={`font-semibold text-sm ${
@@ -65,7 +74,7 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
       >
         <div className="w-2/5">
           <img
-            src={flag_uz}
+            src={uzFlag || ""}
             alt="Flag UZ Cyr"
             className="w-full object-cover"
           />
