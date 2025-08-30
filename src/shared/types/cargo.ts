@@ -47,3 +47,10 @@ export type CargoParams = {
   weight?: string;
   volume?: string;
 };
+
+export type UpdateData = {
+  phoned?: boolean;
+  shared?: boolean;
+  chatted_telegram?: boolean;
+  chatted_whatsup?: boolean;
+};

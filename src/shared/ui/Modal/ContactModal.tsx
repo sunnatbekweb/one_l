@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "@/app/store";
-import type { Cargo } from "@/shared/types/cargo";
-import { updateCargoActions } from "@/widgets/CargoWrapper/model/cargoPatchSlice";
+import type { Cargo, UpdateData } from "@/shared/types/cargo";
 import { useTranslation } from "react-i18next";
 import {
   FaGlobe,
@@ -14,7 +11,7 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import "./modal.css";
-// import { shareToTelegram } from "@/shared/lib/share";
+import { usePatchCargoActionsMutation } from "@/app/api";
 
 interface ModalProps {
   modal: boolean;
@@ -23,8 +20,18 @@ interface ModalProps {
 }
 
 export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
-  const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
+  const [patchCargo] = usePatchCargoActionsMutation();
+
+  const handleClick = async (field: keyof UpdateData) => {
+    if (!cargo?.id) return;
+    try {
+      await patchCargo({ cargoId: cargo.id, data: { [field]: true } }).unwrap();
+      console.log("Обновлено!");
+    } catch (err) {
+      console.error("Ошибка:", err);
+    }
+  };
 
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
@@ -56,13 +63,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 onClick={() => {
                   const phone = cargo.phone.replace(/\s+/g, "");
                   window.open(`tel:${phone}`, "_blank");
-
-                  dispatch(
-                    updateCargoActions({
-                      cargoId: cargo?.id || 0,
-                      data: { phoned: true },
-                    })
-                  );
+                  handleClick("phoned");
                 }}
               >
                 {cargo.phone}
@@ -78,20 +79,10 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
               <span className="text-sm sm:text-xl">
                 {i18n.language === "ru" && t("contactModal.write_in")}{" "}
                 <Link
-                  to={
-                    `${cargo?.username !== null && `https://t.me/${cargo?.username}`}` ||
-                    ""
-                  }
+                  to={`https://t.me/${cargo?.username}`}
                   target="_blank"
                   className="text-[#659df2]"
-                  onClick={() =>
-                    dispatch(
-                      updateCargoActions({
-                        cargoId: cargo?.id || 0,
-                        data: { chatted_telegram: true },
-                      })
-                    )
-                  }
+                  onClick={() => handleClick("chatted_telegram")}
                 >
                   Telegram
                 </Link>
@@ -110,14 +101,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                   to={`https://wa.me/${cargo?.whatsup}`}
                   target="_blank"
                   className="text-[#34C759]"
-                  onClick={() =>
-                    dispatch(
-                      updateCargoActions({
-                        cargoId: cargo?.id || 0,
-                        data: { chatted_whatsup: true },
-                      })
-                    )
-                  }
+                  onClick={() => handleClick("chatted_whatsup")}
                 >
                   WhatsApp
                 </Link>
@@ -147,12 +131,9 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
             <button
               onClick={async () => {
                 const message = t("shareMessage");
-
                 try {
                   if (navigator.share) {
-                    await navigator.share({
-                      text: message,
-                    });
+                    await navigator.share({ text: message });
                   } else {
                     window.open(
                       `https://t.me/share/url?text=${encodeURIComponent(message)}`,
@@ -162,13 +143,7 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 } catch (err) {
                   console.error("Share failed:", err);
                 }
-
-                dispatch(
-                  updateCargoActions({
-                    cargoId: cargo?.id || 0,
-                    data: { shared: true },
-                  })
-                );
+                handleClick("shared");
               }}
               className="text-sm sm:text-xl"
             >
