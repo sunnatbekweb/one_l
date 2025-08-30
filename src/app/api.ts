@@ -45,13 +45,7 @@ export const oneLogApi = createApi({
         const fields = Object.entries(data).filter(
           ([_, value]) => value !== undefined
         );
-
-        if (fields.length !== 1) {
-          throw new Error("Должен быть только один параметр для обновления");
-        }
-
         const [field, value] = fields[0];
-
         return {
           url: `/cargo/${cargoId}/`,
           method: "PATCH",
