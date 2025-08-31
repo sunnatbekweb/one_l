@@ -2,23 +2,22 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
-import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
 import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
+import { useGetBookmarksQuery } from "@/features/bookmark/bookmarkApi";
 
 export const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
+  const { data } = useGetBookmarksQuery();
   const { notifications } = useSelector(
     (state: RootState) => state.notifications
   );
   const { t } = useAppTrasnlation();
 
   useEffect(() => {
-    dispatch(fetchBookmarks());
     dispatch(fetchNotifications());
   }, [dispatch]);
 
@@ -35,9 +34,9 @@ export const Navbar = () => {
         >
           <FaBookmark fontSize={20} />
           <span>{t("nav.bookmarks")}</span>
-          {bookmarks.length > 0 && (
+          {(data?.length ?? 0) > 0 && (
             <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
-              {bookmarks.length}
+              {data?.length}
             </strong>
           )}
         </NavLink>

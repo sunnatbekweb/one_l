@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
-import { fetchBookmarks } from "@/widgets/BookmarkList/model/getBookmarkSlice";
-import { sendBookmarkCargo } from "@/widgets/BookmarkList/model/postBookmarkSlice";
-import { removeBookmarkCargo } from "@/widgets/BookmarkList/model/deleteBookmarkSlice";
 import { useCountryFlag } from "@/shared/lib/useCountryFlag";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
+import {  useSelector } from "react-redux";
+import type {  RootState } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -24,17 +21,19 @@ import {
 import styles from "./style.module.css";
 import { NotificationModal } from "@/shared/ui/Modal/NotificationModal";
 import { useCurrency } from "./lib/useCurrency";
+import {
+  useCreateBookmarkMutation,
+  useDeleteBookmarkMutation,
+  useGetBookmarksQuery,
+} from "@/features/bookmark/bookmarkApi";
 
-interface CargoCardProps {
-  cargo: Cargo;
-}
-
-export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
+export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
   const { t } = useTranslation();
   const [notificationModal, setNotificationModal] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const { bookmarks } = useSelector((state: RootState) => state.bookmarks);
-  const isBookmarked = bookmarks.some(
+  const [createBookmark] = useCreateBookmarkMutation();
+  const [deleteBookmark] = useDeleteBookmarkMutation();
+  const { data } = useGetBookmarksQuery()
+  const isBookmarked = data?.some(
     (bookmark) => bookmark?.cargo?.id === cargo?.id
   );
   const { notifications } = useSelector(
@@ -48,23 +47,15 @@ export const CargoCard: React.FC<CargoCardProps> = ({ cargo }) => {
   const isBellActive = cookieChecked ? JSON.parse(cookieChecked) : isNotified;
 
   const handleBookmark = () => {
-    const userId = Number(Cookies.get("user_id"));
-
     if (isBookmarked) {
-      const bookmark = bookmarks.find((b) => b.cargo.id === cargo.id);
+      const bookmark = data?.find((b) => b.cargo.id === cargo.id);
       if (bookmark) {
-        dispatch(removeBookmarkCargo(bookmark.id)).then(() => {
-          dispatch(fetchBookmarks());
-        });
+        deleteBookmark(bookmark?.id);
       }
     } else {
-      dispatch(
-        sendBookmarkCargo({
-          user: userId,
-          cargo: cargo.id,
-        })
-      ).then(() => {
-        dispatch(fetchBookmarks());
+      createBookmark({
+        user: Number(Cookies.get("user_id")),
+        cargo: cargo?.id,
       });
     }
   };

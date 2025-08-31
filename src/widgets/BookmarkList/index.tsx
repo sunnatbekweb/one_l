@@ -1,34 +1,24 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
-import { fetchBookmarks } from "./model/getBookmarkSlice";
+import { useGetBookmarksQuery } from "@/features/bookmark/bookmarkApi";
+import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { CargoCard } from "@/entities/CargoCard";
 import { BookmarkEmpty } from "@/entities/BookmarkEmpty";
-import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 
 export const BookmarkList = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { bookmarks, isloading, error } = useSelector(
-    (state: RootState) => state.bookmarks
-  );
+  const { data, isLoading, error } = useGetBookmarksQuery();
   const { t } = useAppTrasnlation();
-
-  useEffect(() => {
-    dispatch(fetchBookmarks());
-  }, [dispatch]);
 
   return (
     <div className="mt-7">
-      {isloading ? (
+      {isLoading ? (
         <div className="text-center">{t("loading")}</div>
       ) : error ? (
-        <div className="text-red-500 text-center">{error}</div>
+        <div className="text-red-500 text-center">{JSON.stringify(error)}</div>
       ) : (
         <div className="grid grid-cols-1">
-          {bookmarks?.length > 0 ? (
+          {(data?.length ?? 0) > 0 ? (
             <div>
-              {bookmarks.map((bookmark) => (
-                <CargoCard key={bookmark.id} cargo={bookmark.cargo} />
+              {data?.map((bookmark) => (
+                <CargoCard key={bookmark.id} cargo={bookmark?.cargo} />
               ))}
             </div>
           ) : (

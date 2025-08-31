@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { AppDispatch } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";
 import { fetchTransportType } from "@/entities/SearchForm/model/transportTypeSlice";
-import { useLazyGetCargosQuery } from "@/app/api";
+import { useLazyGetCargosQuery } from "@/features/cargo/cargoApi";
 import { types } from "../Select";
 import "./modal.css";
 

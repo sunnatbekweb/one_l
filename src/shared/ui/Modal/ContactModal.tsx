@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePatchCargoActionsMutation } from "@/features/cargo/cargoApi";
 import type { Cargo, UpdateData } from "@/shared/types/cargo";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,7 +12,6 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import "./modal.css";
-import { usePatchCargoActionsMutation } from "@/app/api";
 
 interface ModalProps {
   modal: boolean;

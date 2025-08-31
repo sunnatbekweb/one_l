@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store";
 import { useTranslation } from "react-i18next";
+import { useLazyGetCargosQuery } from "@/features/cargo/cargoApi";
 import { SearchFilter } from "@/shared/ui/Modal/SearchFilterModal";
 import { SearchSettings as SettingsModal } from "@/shared/ui/Modal/SearchSettings";
 import { FaRotate, FaSliders } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
-import { useLazyGetCargosQuery } from "@/app/api";
 
 interface SettingsProps {
   resultCount: number | undefined;

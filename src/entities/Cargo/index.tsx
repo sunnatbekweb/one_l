@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { formatCustomDate } from "@/shared/lib/formatDate";
 import { useCurrency } from "../CargoCard/lib/useCurrency";
 import { ContactModal } from "@/shared/ui/Modal/ContactModal";
-import { useGetCargoByIdQuery } from "@/app/api";
+import { useGetCargoByIdQuery } from "@/features/cargo/cargoApi";
 import { Counts } from "./ui/Counts";
 import {
   FaEye,

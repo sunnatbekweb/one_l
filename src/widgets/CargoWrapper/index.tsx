@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store";
 import { SearchSettings } from "@/entities/SearchSettings";
+import { useLazyGetCargosQuery } from "@/features/cargo/cargoApi";
 import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/Pagination";
 import { RouteCard } from "@/entities/RouteCard";
 import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
-import { useLazyGetCargosQuery } from "@/app/api";
 import axios from "axios";
 
 export interface RouteData {
