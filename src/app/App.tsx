@@ -28,11 +28,8 @@ function App() {
   }
 
   useEffect(() => {
-    const allCookies = Cookies.get();
-    Object.keys(allCookies).forEach((key) => {
-      if (key.startsWith("notify_")) {
-        Cookies.remove(key);
-      }
+    Object.keys(Cookies.get()).forEach((cookieName) => {
+      Cookies.remove(cookieName);
     });
 
     initTg();
