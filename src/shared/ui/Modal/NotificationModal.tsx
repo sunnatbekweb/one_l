@@ -36,15 +36,10 @@ export const NotificationModal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     const saved = Cookies.get(`notify_${origin}_${destination}`);
-    if (saved) {
+    if (saved !== undefined) {
       setLocalChecked(JSON.parse(saved));
     } else {
       setLocalChecked(isNotified);
-      Cookies.set(
-        `notify_${origin}_${destination}`,
-        JSON.stringify(isNotified),
-        { expires: 365 }
-      );
     }
   }, [isNotified, origin, destination]);
 
@@ -74,6 +69,7 @@ export const NotificationModal: React.FC<ModalProps> = ({
           destination,
         });
       }
+
       dispatch(fetchNotifications());
     } catch (err) {
       console.error("Ошибка при обновлении уведомления", err);
