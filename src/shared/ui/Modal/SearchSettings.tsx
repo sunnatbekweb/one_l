@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { AppDispatch } from "@/app/store";
 import type { CargoParams } from "@/shared/types/cargo";
-import { fetchTransportType } from "@/entities/SearchForm/model/transportTypeSlice";
 import { useLazyGetCargosQuery } from "@/features/cargo/cargoApi";
 import { types } from "../Select";
 import "./modal.css";
 
-interface ModalProps {
+export const SearchSettings = ({
+  modal,
+  close,
+}: {
   modal: boolean;
   close: () => void;
-}
-
-export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
-  const dispatch = useDispatch<AppDispatch>();
+}) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<CargoParams>({
     origin: "",
@@ -40,10 +37,6 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
     close();
   };
 
-  useEffect(() => {
-    dispatch(fetchTransportType());
-  }, [dispatch]);
-
   return (
     <div onClick={close} className={`modal ${modal ? "open" : ""}`}>
       <div onClick={(e) => e.stopPropagation()} className="modal_content">
@@ -51,7 +44,6 @@ export const SearchSettings: React.FC<ModalProps> = ({ modal, close }) => {
           <h2 className="font-bold text-xl">Фильтры поиска</h2>
           <div className="grid grid-cols-1 gap-3 my-5">
             <div className="flex items-center justify-center gap-5">
-              {/* Radio инпуты не нужны */}
               <label className="flex items-center gap-2">
                 <input
                   type="radio"

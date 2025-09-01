@@ -10,11 +10,9 @@ import { FaTruck } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { fetchCountries } from "@/shared/model/restCountriesSlice.ts";
 import type { Country } from "@/shared/types/apiType.ts";
-import { fetchTransportType } from "./model/transportTypeSlice";
 
 export const SearchForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { car_type } = useSelector((state: RootState) => state.transportType);
   const { countries } = useSelector((state: RootState) => state.counties);
 
   const { t } = useTranslation();
@@ -53,7 +51,6 @@ export const SearchForm = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchTransportType());
     dispatch(fetchCountries());
   }, [dispatch]);
 
@@ -104,7 +101,6 @@ export const SearchForm = () => {
       <Select
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
-        car_type={car_type}
         value={carTypeValue}
         onChange={(e) => setCarTypeValue(e.target.value)}
       />

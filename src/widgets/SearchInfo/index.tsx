@@ -1,20 +1,12 @@
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import type { AppDispatch, RootState } from "@/app/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useGetStatisticsQuery } from "@/features/statistics/statisticsApi";
 import { StatisticsCard } from "@/entities/StatisticsCard";
-import { fetchStatistics } from "./model/statisticsSlice";
 import { FaUsers } from "react-icons/fa";
 import { BsFillBoxFill } from "react-icons/bs";
 
 export const SearchInfo = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
-  const { statistics } = useSelector((state: RootState) => state.statistics);
-
-  useEffect(() => {
-    dispatch(fetchStatistics());
-  }, [dispatch]);
+  const { data: statistics } = useGetStatisticsQuery();
 
   return (
     <section className="py-[15px] mx-auto">
@@ -28,12 +20,12 @@ export const SearchInfo = () => {
         </p>
         <div className="my-[15px] grid grid-cols-1 sm:grid-cols-3 gap-[15px]">
           <StatisticsCard
-            users={statistics.users}
+            users={statistics?.users}
             text={t("statistics.users")}
             icon={<FaUsers fontSize={35} />}
           />
           <StatisticsCard
-            cargos={statistics.cargos}
+            cargos={statistics?.cargos}
             text={t("statistics.cargos")}
             icon={<BsFillBoxFill fontSize={35} />}
           />

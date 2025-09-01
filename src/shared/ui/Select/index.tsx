@@ -1,11 +1,9 @@
 import React from "react";
-import type { CargoType } from "@/shared/types/apiType";
 import { useTranslation } from "react-i18next";
 import styles from "./style.module.css";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   icon: React.ReactElement;
-  car_type: CargoType[];
 }
 
 export const types = [
@@ -21,7 +19,7 @@ export const types = [
 ];
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ icon, car_type, ...props }, ref) => {
+  ({ icon, ...props }, ref) => {
     const { t } = useTranslation();
 
     return (

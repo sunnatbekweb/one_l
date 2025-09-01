@@ -1,25 +1,15 @@
-import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
-import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
+import { useGetBookmarksQuery } from "@/features/bookmark/bookmarkApi";
+import { useGetNotificationsQuery } from "@/features/notification/notificationApi";
 import { FaBell, FaBookmark, FaSearch } from "react-icons/fa";
 import { FaCirclePlus, FaFileLines } from "react-icons/fa6";
 import styles from "./style.module.css";
-import { useGetBookmarksQuery } from "@/features/bookmark/bookmarkApi";
 
 export const Navbar = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data } = useGetBookmarksQuery();
-  const { notifications } = useSelector(
-    (state: RootState) => state.notifications
-  );
+  const { data: bookmarks } = useGetBookmarksQuery();
+  const { data: notifications } = useGetNotificationsQuery();
   const { t } = useAppTrasnlation();
-
-  useEffect(() => {
-    dispatch(fetchNotifications());
-  }, [dispatch]);
 
   return (
     <nav className={`${styles.navbarSection}`}>
@@ -34,9 +24,9 @@ export const Navbar = () => {
         >
           <FaBookmark fontSize={20} />
           <span>{t("nav.bookmarks")}</span>
-          {(data?.length ?? 0) > 0 && (
+          {(bookmarks?.length ?? 0) > 0 && (
             <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
-              {data?.length}
+              {bookmarks?.length}
             </strong>
           )}
         </NavLink>
@@ -50,9 +40,9 @@ export const Navbar = () => {
         >
           <FaBell fontSize={20} />
           <span>{t("nav.notifications")}</span>
-          {notifications.length > 0 && (
+          {(notifications?.length ?? 0) > 0 && (
             <strong className={`${styles.navSavedCount}`} id="nav-saved-count">
-              {notifications.length}
+              {notifications?.length}
             </strong>
           )}
         </NavLink>

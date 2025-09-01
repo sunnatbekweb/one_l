@@ -6,23 +6,19 @@ import { useLazyGetCargosQuery } from "@/features/cargo/cargoApi";
 import { CargoCard } from "@/entities/CargoCard";
 import { Pagination } from "@/shared/ui/Pagination";
 import { RouteCard } from "@/entities/RouteCard";
-import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
-import axios from "axios";
-
-export interface RouteData {
-  origin: string;
-  destination: string;
-  total: number;
-}
-
-const PAGE_SIZE = 5;
+import { useGetTopRoutesQuery } from "@/features/routes/routesApi";
 
 export const CargoWrapper = () => {
+  const { t } = useAppTrasnlation();
   const filters = useSelector((state: RootState) => state.filters);
   const [currentPage, setCurrentPage] = useState(0);
-  const [routes, setRoutes] = useState<RouteData[]>([]);
   const [trigger, { data, isLoading, error }] = useLazyGetCargosQuery();
+  const {
+    data: topRoutes,
+    isLoading: topRoutesLoading,
+    error: topRoutesError,
+  } = useGetTopRoutesQuery();
 
   const isFilterActive = Object.values({
     from_country: filters.from_country,
@@ -32,28 +28,13 @@ export const CargoWrapper = () => {
     type: filters.car_type,
   }).some(Boolean);
 
-  const { t } = useAppTrasnlation();
-
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
-  };
-
-  const getRoutes = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/top-cargos/`);
-      setRoutes(response.data);
-    } catch (e) {
-      console.error("Ошибка при получении популярных направлений:", e);
-    }
   };
 
   useEffect(() => {
     setCurrentPage(0);
   }, [filters]);
-
-  useEffect(() => {
-    getRoutes();
-  }, []);
 
   useEffect(() => {
     trigger({
@@ -95,7 +76,7 @@ export const CargoWrapper = () => {
                       <CargoCard key={cargo.id} cargo={cargo} />
                     ))}
                     <Pagination
-                      pageCount={Math.ceil((data?.count || 0) / PAGE_SIZE)}
+                      pageCount={Math.ceil((data?.count || 0) / 5)}
                       onPageChange={handlePageChange}
                       forcePage={currentPage}
                     />
@@ -105,8 +86,14 @@ export const CargoWrapper = () => {
                     {t("noCargo")}
                   </div>
                 )
-              ) : (
-                routes?.map((route, index) => (
+              ) : topRoutesLoading ? (
+                <div className="text-center">{t("loading")}</div>
+              ) : topRoutesError ? (
+                <div className="text-red-500 text-center">
+                  {JSON.stringify(topRoutesError)}
+                </div>
+              ) : (topRoutes?.length ?? 0) > 0 ? (
+                topRoutes?.map((route, index) => (
                   <RouteCard
                     key={index}
                     origin={route.origin}
@@ -114,6 +101,8 @@ export const CargoWrapper = () => {
                     total={route.total}
                   />
                 ))
+              ) : (
+                <div className="col-span-full text-center">{t("noCargo")}</div>
               )}
             </div>
           )}

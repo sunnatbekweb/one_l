@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { baseUrl } from "@/shared/lib/updatedBackendUrl";
 import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
+import { useGetSubscribeQuery } from "@/features/subscribe/subscribeApi";
 import { Cargo } from "@/entities/Cargo";
 import { IoIosArrowBack } from "react-icons/io";
-import axios from "axios";
 
 export const CargoDetail = () => {
   const { id } = useParams();
@@ -13,18 +12,12 @@ export const CargoDetail = () => {
 
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState();
+  const [isSubscribed, setIsSubscribed] = useState<boolean>();
 
-  const getSubscribe = async () => {
-    const response = await axios.get(
-      `${baseUrl}/user/finder/${localStorage.getItem("user_id")}/`
-    );
-
-    setIsSubscribed(response.data.success);
-  };
+  const { data: subscribe } = useGetSubscribeQuery();
 
   useEffect(() => {
-    getSubscribe();
+    setIsSubscribed(subscribe?.success);
   }, []);
 
   return (
