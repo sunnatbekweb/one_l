@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import Cookies from "js-cookie";
 import { useCountryFlag } from "@/shared/lib/useCountryFlag";
 
 interface DropdownProps {
@@ -18,7 +17,7 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
     if (lng === "uz-Latn") code = "1";
     if (lng === "uz-Cyrl") code = "2";
 
-    Cookies.set("lang", code);
+    localStorage.setItem("lang", code);
     i18n.changeLanguage(lng);
     onClose();
   };

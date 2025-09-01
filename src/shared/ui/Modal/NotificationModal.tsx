@@ -6,7 +6,6 @@ import {
   useDeleteRouteMutation,
 } from "@/features/routes/routesApi";
 import { FaMapMarkedAlt } from "react-icons/fa";
-import Cookies from "js-cookie";
 import "./modal.css";
 
 interface ModalProps {
@@ -34,12 +33,16 @@ export const NotificationModal: React.FC<ModalProps> = ({
     setLoading(true);
     try {
       if (enabled) {
-        addRoute({ origin, destination, user: Number(Cookies.get("user_id")) });
+        addRoute({
+          origin,
+          destination,
+          user: Number(localStorage.getItem("user_id")),
+        });
       } else {
         deleteRoute({
           origin,
           destination,
-          user: Number(Cookies.get("user_id")),
+          user: Number(localStorage.getItem("user_id")),
         });
       }
     } catch (err) {

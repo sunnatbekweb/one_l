@@ -5,7 +5,6 @@ import { SubscribeModal } from "@/shared/ui/Modal/SubscribeModal";
 import { useAppTrasnlation } from "@/shared/lib/useAppTrasnlation";
 import { Cargo } from "@/entities/Cargo";
 import { IoIosArrowBack } from "react-icons/io";
-import Cookies from "js-cookie";
 import axios from "axios";
 
 export const CargoDetail = () => {
@@ -18,7 +17,7 @@ export const CargoDetail = () => {
 
   const getSubscribe = async () => {
     const response = await axios.get(
-      `${baseUrl}/user/finder/${Cookies.get("user_id")}/`
+      `${baseUrl}/user/finder/${localStorage.getItem("user_id")}/`
     );
 
     setIsSubscribed(response.data.success);

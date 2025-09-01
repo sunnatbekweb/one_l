@@ -4,7 +4,6 @@ import { useCountryFlag } from "@/shared/lib/useCountryFlag";
 import type { Cargo } from "@/shared/types/cargo";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import {
   FaBell,
@@ -51,7 +50,7 @@ export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
       }
     } else {
       createBookmark({
-        user: Number(Cookies.get("user_id")),
+        user: Number(localStorage.getItem("user_id")),
         cargo: cargo?.id,
       });
     }

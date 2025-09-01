@@ -1,7 +1,5 @@
-import Cookies from "js-cookie";
-
 export function setLang(langFromParams?: string) {
-  switch (langFromParams ?? Cookies.get("lang")) {
+  switch (langFromParams ?? localStorage.getItem("lang")) {
     case "0":
       return "ru";
     case "1":

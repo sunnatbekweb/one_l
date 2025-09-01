@@ -1,5 +1,4 @@
 import { oneLogApi } from "@/app/api";
-import Cookies from "js-cookie";
 
 type Route = {
   user: string;
@@ -10,7 +9,7 @@ type Route = {
 export const routesApi = oneLogApi.injectEndpoints({
   endpoints: (builder) => ({
     getRoutes: builder.query<Route[], void>({
-      query: () => `/user/routes/${Number(Cookies.get("user_id"))}/`,
+      query: () => `/user/routes/${Number(localStorage.getItem("user_id"))}/`,
       providesTags: ["Routes"],
     }),
     addRoute: builder.mutation<
