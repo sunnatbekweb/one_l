@@ -35,11 +35,9 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         className="flex items-center gap-x-2 py-0.5 w-full"
       >
         <div className="w-2/5">
-          <img
-            src={ruFlag || ""}
-            alt="Flag RU"
-            className="w-full object-cover"
-          />
+          {ruFlag && (
+            <img src={ruFlag} alt="Flag RU" className="w-full object-cover" />
+          )}
         </div>
         <span
           className={`font-semibold text-sm ${
@@ -54,11 +52,9 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         className="flex items-center gap-x-2 py-0.5 w-full"
       >
         <div className="w-2/5">
-          <img
-            src={uzFlag || ""}
-            alt="Flag UZ"
-            className="w-full object-cover"
-          />
+          {uzFlag && (
+            <img src={uzFlag} alt="Flag UZ" className="w-full object-cover" />
+          )}
         </div>
         <span
           className={`font-semibold text-sm ${
@@ -73,11 +69,9 @@ export const LangDropdown: React.FC<DropdownProps> = ({ isOpen, onClose }) => {
         className="flex items-center gap-x-2 py-0.5 w-full"
       >
         <div className="w-2/5">
-          <img
-            src={uzFlag || ""}
-            alt="Flag UZ Cyr"
-            className="w-full object-cover"
-          />
+          {uzFlag && (
+            <img src={uzFlag} alt="Flag UZ" className="w-full object-cover" />
+          )}
         </div>
         <span
           className={`font-semibold text-sm ${
