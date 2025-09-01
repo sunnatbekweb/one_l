@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 import { I18nProvider } from "./providers/i18nProvider";
 import { isTMA, init, viewport } from "@telegram-apps/sdk";
 import { useScrollTop } from "@/shared/lib/useScroll";
-import Cookies from "js-cookie";
 
 function App() {
   const [isTgReady, setIsTgReady] = useState(false);
@@ -28,10 +27,6 @@ function App() {
   }
 
   useEffect(() => {
-    Object.keys(Cookies.get()).forEach((cookieName) => {
-      Cookies.remove(cookieName);
-    });
-
     initTg();
   }, []);
 

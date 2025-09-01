@@ -11,6 +11,10 @@ export const Welcome = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
+    Object.keys(Cookies.get()).forEach((cookieName) => {
+      Cookies.remove(cookieName);
+    });
+
     sessionStorage.setItem("viewMode", "popular");
 
     if (params.id && params.lang) {
