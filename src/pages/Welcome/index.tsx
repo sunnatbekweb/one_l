@@ -11,12 +11,6 @@ export const Welcome = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      Object.keys(Cookies.get()).forEach((cookieName) => {
-        Cookies.remove(cookieName);
-      });
-      alert("Cookies have been cleared for iOS devices.");
-    }
     sessionStorage.setItem("viewMode", "popular");
 
     if (params.id && params.lang) {
