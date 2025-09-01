@@ -30,16 +30,20 @@ export const NotificationModal: React.FC<ModalProps> = ({
   const [loading, setLoading] = useState(false);
 
   const [localChecked, setLocalChecked] = useState<boolean>(() => {
-    const saved = Cookies.get(`notify_${origin}_${destination}`);
+    const saved = localStorage.getItem(`notify_${origin}_${destination}`);
     return saved ? JSON.parse(saved) : isNotified;
   });
 
   useEffect(() => {
-    const saved = Cookies.get(`notify_${origin}_${destination}`);
-    if (saved !== undefined) {
+    const saved = localStorage.getItem(`notify_${origin}_${destination}`);
+    if (saved !== null) {
       setLocalChecked(JSON.parse(saved));
     } else {
       setLocalChecked(isNotified);
+      localStorage.setItem(
+        `notify_${origin}_${destination}`,
+        JSON.stringify(isNotified)
+      );
     }
   }, [isNotified, origin, destination]);
 
@@ -47,11 +51,12 @@ export const NotificationModal: React.FC<ModalProps> = ({
     setLocalChecked(enabled);
 
     if (enabled) {
-      Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(true), {
-        expires: 365,
-      });
+      localStorage.setItem(
+        `notify_${origin}_${destination}`,
+        JSON.stringify(true)
+      );
     } else {
-      Cookies.remove(`notify_${origin}_${destination}`);
+      localStorage.removeItem(`notify_${origin}_${destination}`);
     }
 
     setLoading(true);
@@ -76,11 +81,12 @@ export const NotificationModal: React.FC<ModalProps> = ({
 
       setLocalChecked(!enabled);
       if (enabled) {
-        Cookies.remove(`notify_${origin}_${destination}`);
+        localStorage.removeItem(`notify_${origin}_${destination}`);
       } else {
-        Cookies.set(`notify_${origin}_${destination}`, JSON.stringify(true), {
-          expires: 365,
-        });
+        localStorage.setItem(
+          `notify_${origin}_${destination}`,
+          JSON.stringify(true)
+        );
       }
     } finally {
       setLoading(false);
