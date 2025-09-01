@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "@/app/store";
 import { Slider } from "../Input/Slider";
-import { fetchNotifications } from "@/entities/NotificationList/model/notificationSlice";
-import { baseUrl } from "@/shared/lib/updatedBackendUrl";
-import axios from "axios";
-import Cookies from "js-cookie";
+import {
+  useAddRouteMutation,
+  useDeleteRouteMutation,
+} from "@/features/routes/routesApi";
 import { FaMapMarkedAlt } from "react-icons/fa";
+import Cookies from "js-cookie";
 import "./modal.css";
 
 interface ModalProps {
@@ -15,7 +14,7 @@ interface ModalProps {
   close: () => void;
   origin: string;
   destination: string;
-  isNotified: boolean;
+  isChecked: boolean;
 }
 
 export const NotificationModal: React.FC<ModalProps> = ({
@@ -23,71 +22,28 @@ export const NotificationModal: React.FC<ModalProps> = ({
   close,
   origin,
   destination,
-  isNotified,
+  isChecked,
 }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
 
-  const [localChecked, setLocalChecked] = useState<boolean>(() => {
-    const saved = localStorage.getItem(`notify_${origin}_${destination}`);
-    return saved ? JSON.parse(saved) : isNotified;
-  });
-
-  useEffect(() => {
-    const saved = localStorage.getItem(`notify_${origin}_${destination}`);
-    if (saved !== null) {
-      setLocalChecked(JSON.parse(saved));
-    } else {
-      setLocalChecked(isNotified);
-      localStorage.setItem(
-        `notify_${origin}_${destination}`,
-        JSON.stringify(isNotified)
-      );
-    }
-  }, [isNotified, origin, destination]);
+  const [addRoute] = useAddRouteMutation();
+  const [deleteRoute] = useDeleteRouteMutation();
 
   const setNotification = async (enabled: boolean) => {
-    setLocalChecked(enabled);
-
-    if (enabled) {
-      localStorage.setItem(
-        `notify_${origin}_${destination}`,
-        JSON.stringify(true)
-      );
-    } else {
-      localStorage.removeItem(`notify_${origin}_${destination}`);
-    }
-
     setLoading(true);
     try {
       if (enabled) {
-        await axios.post(`${baseUrl}/user/save-route/`, {
-          user: Cookies.get("user_id"),
-          origin,
-          destination,
-        });
+        addRoute({ origin, destination, user: Number(Cookies.get("user_id")) });
       } else {
-        await axios.post(`${baseUrl}/user/delete-route/`, {
-          user: Cookies.get("user_id"),
+        deleteRoute({
           origin,
           destination,
+          user: Number(Cookies.get("user_id")),
         });
       }
-
-      dispatch(fetchNotifications());
     } catch (err) {
       console.error("Ошибка при обновлении уведомления", err);
-
-      setLocalChecked(!enabled);
-      if (enabled) {
-        localStorage.removeItem(`notify_${origin}_${destination}`);
-      } else {
-        localStorage.setItem(
-          `notify_${origin}_${destination}`,
-          JSON.stringify(true)
-        );
-      }
     } finally {
       setLoading(false);
     }
@@ -114,7 +70,7 @@ export const NotificationModal: React.FC<ModalProps> = ({
                 </span>
               </div>
               <Slider
-                checked={localChecked}
+                checked={isChecked}
                 disabled={loading}
                 onChange={(v) => setNotification(v)}
               />

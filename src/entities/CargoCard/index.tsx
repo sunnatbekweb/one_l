@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
 import { useCountryFlag } from "@/shared/lib/useCountryFlag";
-import {  useSelector } from "react-redux";
-import type {  RootState } from "@/app/store";
 import type { Cargo } from "@/shared/types/cargo";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -26,29 +24,28 @@ import {
   useDeleteBookmarkMutation,
   useGetBookmarksQuery,
 } from "@/features/bookmark/bookmarkApi";
+import { useGetRoutesQuery } from "@/features/routes/routesApi";
 
 export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
   const { t } = useTranslation();
   const [notificationModal, setNotificationModal] = useState(false);
   const [createBookmark] = useCreateBookmarkMutation();
   const [deleteBookmark] = useDeleteBookmarkMutation();
-  const { data } = useGetBookmarksQuery()
-  const isBookmarked = data?.some(
+  const { data: bookmrakData } = useGetBookmarksQuery();
+  const { data: routeData } = useGetRoutesQuery();
+  const isBookmarked = bookmrakData?.some(
     (bookmark) => bookmark?.cargo?.id === cargo?.id
   );
-  const { notifications } = useSelector(
-    (state: RootState) => state.notifications
-  );
-  const isNotified = notifications.some((n) => n?.id === cargo.id);
 
-  const cookieChecked = Cookies.get(
-    `notify_${cargo?.origin}_${cargo?.destination}`
-  );
-  const isBellActive = cookieChecked ? JSON.parse(cookieChecked) : isNotified;
+  const isNotified =
+    routeData?.some(
+      (route) =>
+        route.origin === cargo.origin && route.destination === cargo.destination
+    ) ?? false;
 
   const handleBookmark = () => {
     if (isBookmarked) {
-      const bookmark = data?.find((b) => b.cargo.id === cargo.id);
+      const bookmark = bookmrakData?.find((b) => b.cargo.id === cargo.id);
       if (bookmark) {
         deleteBookmark(bookmark?.id);
       }
@@ -82,7 +79,7 @@ export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
             )}
           </button>
           <button onClick={() => setNotificationModal(true)}>
-            {isBellActive ? (
+            {isNotified ? (
               <FaBell fontSize={18} />
             ) : (
               <FaRegBell fontSize={18} />
@@ -218,7 +215,7 @@ export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
         close={closeModal}
         origin={cargo?.origin}
         destination={cargo?.destination}
-        isNotified={isNotified}
+        isChecked={isNotified}
       />
     </div>
   );

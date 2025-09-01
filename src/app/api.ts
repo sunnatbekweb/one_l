@@ -8,6 +8,6 @@ export const oneLogApi = createApi({
       i18n.language === "ru" ? i18n.language : i18n.language.slice(0, 2)
     }/api/v1`,
   }),
-  tagTypes: ["Cargos", "Bookmarks"],
+  tagTypes: ["Cargos", "Bookmarks", "Routes"],
   endpoints: () => ({}),
 });
