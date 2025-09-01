@@ -1,9 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { formatCustomDate, formatRelativeDate } from "@/shared/lib/formatDate";
+import {
+  useCreateBookmarkMutation,
+  useDeleteBookmarkMutation,
+  useGetBookmarksQuery,
+} from "@/features/bookmark/bookmarkApi";
+import { useGetRoutesQuery } from "@/features/routes/routesApi";
+import { useCurrency } from "./lib/useCurrency";
+import { NotificationModal } from "@/shared/ui/Modal/NotificationModal";
 import { useCountryFlag } from "@/shared/lib/useCountryFlag";
 import type { Cargo } from "@/shared/types/cargo";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { FaMaximize, FaTemperatureHalf } from "react-icons/fa6";
 import {
   FaBell,
@@ -16,14 +24,6 @@ import {
   FaWeightHanging,
 } from "react-icons/fa";
 import styles from "./style.module.css";
-import { NotificationModal } from "@/shared/ui/Modal/NotificationModal";
-import { useCurrency } from "./lib/useCurrency";
-import {
-  useCreateBookmarkMutation,
-  useDeleteBookmarkMutation,
-  useGetBookmarksQuery,
-} from "@/features/bookmark/bookmarkApi";
-import { useGetRoutesQuery } from "@/features/routes/routesApi";
 
 export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
   const { t } = useTranslation();

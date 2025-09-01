@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/app/store";
+import { useDispatch } from "react-redux";
 import { ValueExchangeButton } from "@/features/InputValueExchange/ui/ValueExchangeButton";
 import { setFilters } from "@/features/filters/model/filterSlice";
+import { useGetCountriesQuery } from "@/app/countriesApi";
 import { Select } from "@/shared/ui/Select";
 import { CountriesDropdown } from "@/shared/ui/Dropdown";
 import { FaTruck } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { fetchCountries } from "@/shared/model/restCountriesSlice.ts";
+import type { AppDispatch } from "@/app/store";
 import type { Country } from "@/shared/types/apiType.ts";
 
 export const SearchForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { countries } = useSelector((state: RootState) => state.counties);
-
   const { t } = useTranslation();
-
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: countries } = useGetCountriesQuery();
   const [originValue, setOriginValue] = useState("");
-  const [originCountry, setOriginCountry] = useState<Country | null>(null);
   const [destinationValue, setDestinationValue] = useState("");
+  const [originCountry, setOriginCountry] = useState<Country | null>(null);
   const [destinationCountry, setDestinationCountry] = useState<Country | null>(
     null
   );
@@ -50,10 +48,6 @@ export const SearchForm = () => {
     setDestinationCountry(tempCountry);
   };
 
-  useEffect(() => {
-    dispatch(fetchCountries());
-  }, [dispatch]);
-
   return (
     <form className="flex flex-col gap-y-4" onSubmit={onSubmit}>
       <div className="relative flex flex-col gap-y-4">
@@ -62,7 +56,7 @@ export const SearchForm = () => {
           type="text"
           placeholder={t("form.from")}
           icon={<FaLocationDot />}
-          countries={countries}
+          countries={countries || []}
           value={originValue}
           selectedCountry={originCountry}
           fromAnywhere={t("fromAnywhere")}
@@ -75,15 +69,13 @@ export const SearchForm = () => {
             setOriginValue(country.name.common);
           }}
         />
-
         <ValueExchangeButton valueChange={valueChange} />
-
         {/* Destination */}
         <CountriesDropdown
           type="text"
           placeholder={t("form.to")}
           icon={<FaLocationDot />}
-          countries={countries}
+          countries={countries || []}
           value={destinationValue}
           selectedCountry={destinationCountry}
           anywhere={t("anywhere")}
@@ -97,14 +89,12 @@ export const SearchForm = () => {
           }}
         />
       </div>
-
       <Select
         defaultValue="Тип транспорта"
         icon={<FaTruck />}
         value={carTypeValue}
         onChange={(e) => setCarTypeValue(e.target.value)}
       />
-
       <button
         type="submit"
         className="mt-4 px-5 py-3.5 rounded-lg bg-[#ffa94d] hover:bg-[#ff922b] text-white text-xl font-semibold cursor-pointer duration-300"
