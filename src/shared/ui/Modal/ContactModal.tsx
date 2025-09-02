@@ -46,7 +46,8 @@ export const ContactModal: React.FC<ModalProps> = ({ modal, close, cargo }) => {
                 <FaUser className="text-xl sm:text-3xl" />
               </div>
               <span className="text-sm sm:text-xl">
-                {cargo?.first_name} {cargo?.last_name}
+                {cargo?.first_name} 
+                {/* {cargo?.last_name} */}
               </span>
             </div>
           )}
