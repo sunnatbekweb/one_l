@@ -198,7 +198,7 @@ export const CargoCard = ({ cargo }: { cargo: Cargo }) => {
           <p className={`flex items-center gap-1 text-xs sm:text-sm`}>
             <span className="line-clamp-1">
               {cargo?.first_name?.length > 6
-                ? cargo?.first_name.slice(0, 6)
+                ? cargo?.first_name.slice(0, 6) + "..."
                 : cargo?.first_name}
               {/* {cargo?.last_name?.length > 6
                 ? cargo?.last_name.slice(0, 6)
